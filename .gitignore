@@ -1,3 +1,16 @@
+
+# macOS system files
+.DS_Store
+
+# executable
+a.out
+a.out*
+fractol
+
+#vscode whatever
+.vscode
+.vscode*
+
 # Prerequisites
 *.d
 
