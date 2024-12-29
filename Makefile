@@ -1,6 +1,6 @@
 NAME = cub3d
 
-SRCS_NAME = cub3d.c loops_hooks.c
+SRCS_NAME = cub3d.c loops_hooks.c init_character.c init_world.c mover.c
 SRCS_PATH = ./
 SRCS = $(addprefix $(SRCS_PATH), $(SRCS_NAME))
 

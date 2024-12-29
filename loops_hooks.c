@@ -2,17 +2,19 @@
 
 void	ft_exit_button(void *param)
 {
-	mlx_t *window;
+	t_World_Controller *world;
 
-	window = (mlx_t *)param;
-	if (mlx_is_key_down(window, MLX_KEY_ESCAPE))
-		mlx_close_window(window);
+	world = (t_World_Controller *)param;
+	if (mlx_is_key_down(world->window, MLX_KEY_ESCAPE))
+		mlx_close_window(world->window);
 }
 
-void	init_loops_n_hooks(mlx_t *window)
+void	init_loops_n_hooks(t_World_Controller *world)
 {
-	mlx_loop_hook(window, ft_exit_button, window);
 
-	mlx_loop(window);
-	mlx_terminate(window);
+	mlx_loop_hook(world->window, ft_exit_button, world);
+	mlx_loop_hook(world->window, ft_move_pc, world);
+
+	mlx_loop(world->window);
+	mlx_terminate(world->window);
 }
