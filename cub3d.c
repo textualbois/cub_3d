@@ -15,14 +15,12 @@ int main(int argc, char **argv)
 		y = 0;
 		while (y < HEIGHT)
 		{
-			mlx_put_pixel(world->background, x, y, 0xFFFFAAAA); //bleack yellow background
+			mlx_put_pixel(world->minimap, x, y, 0xFFFFAAAA); //bleack yellow minimap
 			y++;
 		}
 		x++;
 	}
 
-	mlx_image_to_window(world->window, world->background, 0, 0);
-	mlx_image_to_window(world->window, world->player->image, WIDTH / 2, HEIGHT / 2);
 	init_loops_n_hooks(world);
 
 	return (EXIT_SUCCESS);

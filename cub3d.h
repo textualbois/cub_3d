@@ -13,9 +13,14 @@
 #define HEIGHT 800
 
 typedef struct s_IntPair{
-	int x;
-	int y;
+	int32_t x;
+	int32_t y;
 }	t_IntPair;
+
+typedef struct s_IntPtrPair{
+	int32_t *x;
+	int32_t *y;
+}	t_IntPtrPair;
 
 typedef struct s_DoublePair{
 	double x;
@@ -24,7 +29,7 @@ typedef struct s_DoublePair{
 
 typedef struct s_Character{
 	t_IntPair size;
-	t_IntPair pos;
+	t_IntPtrPair pos;
 	float angle;
 	mlx_image_t *image;
 }	t_character;
@@ -32,7 +37,7 @@ typedef struct s_Character{
 typedef struct s_World_Controller{
 	mlx_t *window;
 	t_character *player;
-	mlx_image_t *background;
+	mlx_image_t *minimap;
 }	t_World_Controller;
 
 // inits //

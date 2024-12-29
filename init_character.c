@@ -27,10 +27,12 @@ t_character* init_mini_charachter(mlx_t *window, t_IntPair size, t_IntPair pos)
 	else
 	{
 		player->size = size;
-		player->pos = pos;
 		player->angle = 0;
 		player->image = mlx_new_image(window, size.x, size.y);
 		ft_color_mini_character(player->image, 0xFF0000FF);
+		mlx_image_to_window(window, player->image, pos.x, pos.y);
+		player->pos.x = &player->image->instances[0].x;
+		player->pos.y = &player->image->instances[0].y;
 	}
 	return (player);
 }
