@@ -44,8 +44,9 @@ typedef struct s_World_Controller{
 
 
 
-t_World_Controller *init_world(void);
+t_World_Controller *init_world(int map[]);
 mlx_t *initialize_window(void);
+mlx_image_t *init_minimap(mlx_t *window, int map[]);
 
 
 t_character* init_mini_charachter(mlx_t *window, t_IntPair size, t_IntPair pos);

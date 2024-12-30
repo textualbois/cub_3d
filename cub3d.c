@@ -5,21 +5,20 @@ int main(int argc, char **argv)
 	(void) argc;
 	(void) argv;
 	t_World_Controller *world;
-	int x = 0;
-	int y = 0;
 
-	world = init_world();
-
-	while (x < WIDTH)
+	int map[]=           //the map array. Edit to change level but keep the outer walls
 	{
-		y = 0;
-		while (y < HEIGHT)
-		{
-			mlx_put_pixel(world->minimap, x, y, 0xFFFFAAAA); //bleack yellow minimap
-			y++;
-		}
-		x++;
-	}
+	 1,1,1,1,1,1,1,1,
+	 1,0,1,0,0,0,0,1,
+	 1,0,1,0,0,0,0,1,
+	 1,0,1,0,0,0,0,1,
+	 1,0,0,0,0,0,0,1,
+	 1,0,0,0,0,1,0,1,
+	 1,0,0,0,0,0,0,1,
+	 1,1,1,1,1,1,1,1,	
+	};
+
+	world = init_world(map);
 
 	init_loops_n_hooks(world);
 
