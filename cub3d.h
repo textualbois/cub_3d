@@ -11,6 +11,7 @@
 // default window size
 #define WIDTH 800
 #define HEIGHT 800
+#define PI 3.14159265
 
 typedef struct s_IntPair{
 	int32_t x;
