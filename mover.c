@@ -11,11 +11,11 @@ void ft_move_pc(void* param)
 	player = world->player;
 
 	if (mlx_is_key_down(mlx, MLX_KEY_Q)) {
-		player->angle -= 0.1;  // Decrease angle by 1 degree in radians
+		player->angle += 0.1;  // Decrease angle by 1 degree in radians
 		if (player->angle < 0) player->angle += 2 * PI;  // Wrap around if the angle goes below 0
 	}
 	if (mlx_is_key_down(mlx, MLX_KEY_E)) {
-		player->angle += 0.1;  // Increase angle by 1 degree in radians
+		player->angle -= 0.1;  // Increase angle by 1 degree in radians
 		if (player->angle >= 2 * PI) player->angle -= 2 * PI;  // Wrap around if the angle exceeds 2π
 	}
 	// Moving the character in the direction it faces
