@@ -9,15 +9,15 @@
 
 #define INTERVALS 10
 
-typedef struct {
+typedef struct s_FrameCounter {
 	int frameCounts[INTERVALS];
 	int intervalIndex;
 	double lastUpdateTime;
-}	FrameCounter;
+}	t_FrameCounter;
 
-int		init_frame_counter();
-void	destroy_frame_counter();
-void	update_frame_counter();
-double	get_frame_count();
+t_FrameCounter	*init_frame_counter();
+void			destroy_frame_counter(t_FrameCounter *frameCounter);
+void			update_frame_counter(t_FrameCounter *frameCounter);
+double			get_frame_count(t_FrameCounter *frameCounter);
 
 #endif

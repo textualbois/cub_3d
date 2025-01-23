@@ -1,34 +1,36 @@
 #include "fps.h"
 
-FrameCounter *frameCounter = NULL;
-
 // Initializes the frame counter
-int	init_frame_counter()
+t_FrameCounter	*init_frame_counter()
 {
-	frameCounter = malloc(sizeof(FrameCounter));
+	t_FrameCounter	*frameCounter;
+	
+	frameCounter = malloc(sizeof(t_FrameCounter));
 	if (frameCounter == NULL) {
 		fprintf(stderr, "Failed to allocate memory for the frame counter\n");
-		return(1);
+		return(NULL);
 	}
 	ft_memset(frameCounter->frameCounts, 0, sizeof(frameCounter->frameCounts));
 	frameCounter->intervalIndex = 0;
 	frameCounter->lastUpdateTime = mlx_get_time();
-	return (0);
+	return (frameCounter);
 }
 
 // Destroys the frame counter
-void	destroy_frame_counter()
+void	destroy_frame_counter(t_FrameCounter *frameCounter)
 {
 	free(frameCounter);
 	frameCounter = NULL;
 }
 
 // Updates the frame counter
-void update_frame_counter()
+void update_frame_counter(t_FrameCounter *frameCounter)
 {
-	double currentTime = mlx_get_time();
-	double deltaTime = currentTime - frameCounter->lastUpdateTime;
+	double currentTime;
+	double deltaTime;
 
+	currentTime = mlx_get_time();
+	deltaTime = currentTime - frameCounter->lastUpdateTime;
 	if (deltaTime >= 0.1)
 	{
 		frameCounter->intervalIndex = (frameCounter->intervalIndex + 1) % INTERVALS;
@@ -39,9 +41,11 @@ void update_frame_counter()
 }
 
 // Gets the current frame count (FPS)
-int	get_frame_count()
+int	get_frame_count(t_FrameCounter *frameCounter)
 {
-	int totalFrames = 0;
+	int	totalFrames;
+	
+	totalFrames = 0;
 	for (int i = 0; i < INTERVALS; i++)
 	{
 		totalFrames += frameCounter->frameCounts[i];
