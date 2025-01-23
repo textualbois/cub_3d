@@ -1,4 +1,4 @@
-#include "cub3d.h"
+#include "character.h"
 
 void ft_move_pc(void* param)
 {
