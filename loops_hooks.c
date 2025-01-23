@@ -11,10 +11,10 @@ void	ft_exit_button(void *param)
 
 void	init_loops_n_hooks(t_World_Controller *world)
 {
-
 	mlx_loop_hook(world->window, ft_exit_button, world);
 	mlx_loop_hook(world->window, ft_move_pc, world);
 
 	mlx_loop(world->window);
 	mlx_terminate(world->window);
+	//draw_world(world);
 }
