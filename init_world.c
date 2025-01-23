@@ -1,4 +1,4 @@
-#include "cub3d.h"
+#include "world.h"
 
 t_World_Controller *init_world(int map[])
 {
@@ -13,6 +13,13 @@ t_World_Controller *init_world(int map[])
 	
 	if (!world->player)
 	{
+		free(world);
+		return (NULL);
+	}
+	world->frameCounter = init_frame_counter();
+	if (!world->frameCounter)
+	{
+		free(world->player);
 		free(world);
 		return (NULL);
 	}
