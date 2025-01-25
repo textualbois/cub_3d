@@ -1,6 +1,6 @@
 #include "character.h"
 
-t_character* init_mini_charachter(mlx_t *window, t_IntPair size, t_IntPair pos)
+t_character* init_mini_character(mlx_t *window, t_IntPair size, t_IntPair pos)
 {
 	t_character *player;
 
