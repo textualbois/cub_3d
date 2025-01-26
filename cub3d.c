@@ -20,6 +20,9 @@ int main(int argc, char **argv)
 
 	world = init_world(map);
 
+	init_images(world, map); // not implemented yet
+
+	//pre_draw(world);
 	init_loops_n_hooks(world);
 
 	return (EXIT_SUCCESS);
