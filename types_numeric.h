@@ -24,4 +24,9 @@ typedef struct s_DoublePair{
 	double y;
 }	t_DoublePair;
 
+typedef struct s_DoublePtrPair{
+	double *x;
+	double *y;
+}	t_DoublePtrPair;
+
 #endif
