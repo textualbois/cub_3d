@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:37 by isemin            #+#    #+#             */
-/*   Updated: 2025/01/26 17:12:42 by isemin           ###   ########.fr       */
+/*   Updated: 2025/01/26 19:53:04 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,42 +29,57 @@ void ft_color_mini_character(mlx_image_t *player, int color)
 	}
 }
 
-void ft_color_mini_character_direction(mlx_image_t *player, int color, float angle)
+void ft_color_mini_character_direction(mlx_image_t *character, int color, t_character *player)
 {
-	int x, y;
-	int size = 9;  // Total size of the character image
-	int bodySize = 7;  // Body is centered within 7x7, so it's 5x5
-	int offset = 1;  // Offset for the body to be centered
-	int centerX = size / 2;
-	int centerY = size / 2;
-	int lineLength = 4;  // Length of the directional line, stays within the outer border
+	t_DoublePair	centre;
+	int				offset;
+	t_IntPair		iter;
+	t_DoublePair	end;
 
+	centre.x = character->width / 2;
+	centre.y = character->height / 2;
+	offset = 2; // (character->width - player->size.x) / 2;
 	// Color the main body of the character
-	for (x = offset; x < offset + bodySize; x++) {
-		for (y = offset; y < offset + bodySize; y++) {
-			mlx_put_pixel(player, x, y, color);
+	for (iter.x = offset; iter.x < offset + player->size.x; iter.x++) {
+		for (iter.y = offset; iter.y < offset + player->size.y; iter.y++) {
+			mlx_put_pixel(character, iter.x, iter.y, color);
 		}
 	}
 
-	// Calculate the end point of the line from the center
-	int endX = centerX + (int)(lineLength * cos(angle));
-	int endY = centerY - (int)(lineLength * sin(angle));  // Subtracting because graphical y-axis is inverted
+	// Color the direction of the character
+	end.x = player->pos.x + player->size.x / 2 * cos(player->angle);
+	end.y = player->pos.y + player->size.y / 2 * sin(player->angle);
+	ft_color_line(character, color, player->pos, end);
+}
 
-	// Draw the direction line
-	// Ensure that the line stays within bounds of the image
-	endX = endX < 0 ? 0 : (endX >= size ? size - 1 : endX);
-	endY = endY < 0 ? 0 : (endY >= size ? size - 1 : endY);
+void	ft_color_line(mlx_image_t *img, int color, t_DoublePair start, t_DoublePair end)
+{
+	t_DoublePair	delta;
+	t_IntPair		sign;
+	t_DoublePair	error;
+	t_DoublePair	iter;
 
-	// Bresenham's line algorithm for better line drawing
-	int dx = abs(endX - centerX), sx = centerX < endX ? 1 : -1;
-	int dy = -abs(endY - centerY), sy = centerY < endY ? 1 : -1;
-	int err = dx + dy, e2;  // Error value e_xy
-
-	for (;;) {  // The loop will break when the line is completely drawn
-		mlx_put_pixel(player, centerX, centerY, 0xFFFFFFFF);  // Draw in white for visibility
-		if (centerX == endX && centerY == endY) break;
-		e2 = 2 * err;
-		if (e2 >= dy) { err += dy; centerX += sx; }
-		if (e2 <= dx) { err += dx; centerY += sy; }
+	delta.x = fabs(end.x - start.x);
+	delta.y = fabs(end.y - start.y);
+	sign.x = start.x < end.x ? 1 : -1;
+	sign.y = start.y < end.y ? 1 : -1;
+	error.x = delta.x - delta.y;
+	iter = start;
+	//while (fabs(iter.x - end.x) > 0.5 || fabs(iter.y - end.y) > 0.5)
+	while (iter.x <= end.x * sign.x || iter.y <= end.y * sign.y)
+	{
+		mlx_put_pixel(img, (int)iter.x, (int)iter.y, color);
+		error.y = error.x * 2;
+		if (error.y > -delta.y)
+		{
+			error.x -= delta.y;
+			iter.x += sign.x;
+		}
+		if (error.y < delta.x)
+		{
+			error.x += delta.x;
+			iter.y += sign.y;
+		}
 	}
+	//mlx_put_pixel(img, (int)end.x, (int)end.y, color);
 }
