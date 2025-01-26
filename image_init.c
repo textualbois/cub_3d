@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:23 by isemin            #+#    #+#             */
-/*   Updated: 2025/01/26 18:34:51 by isemin           ###   ########.fr       */
+/*   Updated: 2025/01/26 20:17:03 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,7 @@ mlx_image_t	*init_image_mini_character(mlx_t *window, t_character *player,
 	miniCharacter = mlx_new_image(window, size.x, size.y);
 	if (miniCharacter)
 	{
-		ft_color_mini_character_direction(miniCharacter, 0xFF0000FF,
-			player->angle);
+		ft_color_mini_character_direction(miniCharacter, 0xFF0000FF, player);
 	}
 	return (miniCharacter);
 }
@@ -49,7 +48,6 @@ mlx_image_t	*init_image_minimap(mlx_t *window, int map[])
 	int			y;
 	int			mHeight;
 	int			mWidth;
-	int			index;
 
 	x = 0;
 	y = 0;
@@ -64,14 +62,14 @@ mlx_image_t	*init_image_minimap(mlx_t *window, int map[])
 		y = 0;
 		while (y < HEIGHT)
 		{
-			index = (int)(y / (HEIGHT / mHeight)) * mWidth + (int)(x / (WIDTH
-						/ mWidth));
-			if (index >= 0 && index < mHeight * mWidth)
+			if (x % (WIDTH / mWidth) == 0 || y % (HEIGHT / mHeight) <= 1)
+				mlx_put_pixel(minimap, x, y, 0x003333FF); // if grid
+			else
 			{
-				if (map[index] == 1)
-					mlx_put_pixel(minimap, x, y, 0xFF0000FF); // Wall
+				if (map[(int)(y / (HEIGHT / mHeight)) * mWidth + (int)(x / (WIDTH / mWidth))] == 1)
+					mlx_put_pixel(minimap, x, y, 0xFF0000FF); // if wall
 				else
-					mlx_put_pixel(minimap, x, y, 0xFFFFAAFF); // Empty
+					mlx_put_pixel(minimap, x, y, 0xFFFFAAFF); // if empty
 			}
 			y++;
 		}
