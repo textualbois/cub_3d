@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:23 by isemin            #+#    #+#             */
-/*   Updated: 2025/01/26 17:12:36 by isemin           ###   ########.fr       */
+/*   Updated: 2025/01/26 17:47:51 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	init_images(t_World_Controller *world, int map[])
 {
-	world->minimap = init_minimap(world->window, map);
+	world->minimap = init_image_minimap(world->window, map);
 	if (!world->minimap)
 		return (1);
 	world->miniCharacter = init_image_mini_character(world->window,
@@ -38,8 +38,6 @@ mlx_image_t	*init_image_mini_character(mlx_t *window, t_character *player,
 	{
 		ft_color_mini_character_direction(miniCharacter, 0xFF0000FF,
 			player->angle);
-		mlx_image_to_window(window, miniCharacter, player->pos.x,
-			player->pos.y);
 	}
 	return (miniCharacter);
 }
