@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:53 by isemin            #+#    #+#             */
-/*   Updated: 2025/01/26 18:03:52 by isemin           ###   ########.fr       */
+/*   Updated: 2025/01/26 18:06:19 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_World_Controller *init_world(int map[])
 		free(world);
 		return (NULL);
 	}
-	world->player = init_mini_character((t_IntPair){5, 5}, (t_IntPair){HEIGHT / 2, WIDTH / 2});
+	world->player = init_mini_character((t_IntPair){5, 5}, (t_IntPair){world->size.y / 2, world->size.y / 2});
 	if (!world->player)
 	{
 		free(world);
