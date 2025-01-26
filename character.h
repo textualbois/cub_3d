@@ -1,13 +1,15 @@
 #ifndef CHARACTER_H
 # define CHARACTER_H
 
-#include "cub3d.h"
+#include "MLX42/MLX42.h"
+#include "types_numeric.h"
+#include "world.h"
 
-typedef struct s_Character{
+typedef struct s_character{
 	t_IntPair size;
 	t_IntPtrPair pos;
 	float angle;
-	mlx_image_t *image;
+	// mlx_image_t *image;
 }	t_character;
 
 // init
