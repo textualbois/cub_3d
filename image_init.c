@@ -8,7 +8,7 @@ int	init_images(t_World_Controller *world, int map[])
 	world->miniCharacter = init_image_mini_character(world->window, world->player, (t_IntPair){5, 5});
 	if (!world->miniCharacter)
 	{
-		mlx_destroy_image(world->window, world->minimap); // is this how you handle it?
+		mlx_delete_image(world->window, world->minimap); // is this how you handle it?
 		return (1);
 	}
 	return (0);

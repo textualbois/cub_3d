@@ -3,7 +3,7 @@ NAME = cub3d
 SRCS_NAME = cub3d.c loops_hooks.c init_world.c minimap_init.c \
 			character_init.c movement.c \
 			draw_mini_character.c window_init.c \
-			#fps.c  \
+			image_init.c #fps.c  \
 
 SRCS_PATH = ./
 SRCS = $(addprefix $(SRCS_PATH), $(SRCS_NAME))
