@@ -3,7 +3,7 @@
 
 #include "MLX42/MLX42.h"
 #include "types_numeric.h"
-#include "world.h"
+// #include "world.h"
 
 typedef struct s_character{
 	t_IntPair size;
@@ -13,7 +13,7 @@ typedef struct s_character{
 }	t_character;
 
 // init
-t_character* init_mini_character(mlx_t *window, t_IntPair size, t_IntPair pos);
+t_character* init_mini_character(t_IntPair size, t_IntPair pos);
 
 // free
 
