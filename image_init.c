@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:23 by isemin            #+#    #+#             */
-/*   Updated: 2025/01/26 17:47:51 by isemin           ###   ########.fr       */
+/*   Updated: 2025/01/26 18:34:51 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	init_images(t_World_Controller *world, int map[])
 	if (!world->minimap)
 		return (1);
 	world->miniCharacter = init_image_mini_character(world->window,
-			world->player, (t_IntPair){5, 5});
+			world->player, (t_IntPair){9, 9});
 	if (!world->miniCharacter)
 	{
 		mlx_delete_image(world->window, world->minimap);
