@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fps.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/26 17:11:41 by isemin            #+#    #+#             */
+/*   Updated: 2025/01/26 17:12:41 by isemin           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fps.h"
 
 // Initializes the frame counter
 t_FrameCounter	*init_frame_counter()
 {
 	t_FrameCounter	*frameCounter;
-	
+
 	frameCounter = malloc(sizeof(t_FrameCounter));
 	if (frameCounter == NULL) {
 		fprintf(stderr, "Failed to allocate memory for the frame counter\n");
@@ -44,7 +56,7 @@ void update_frame_counter(t_FrameCounter *frameCounter)
 int	get_frame_count(t_FrameCounter *frameCounter)
 {
 	int	totalFrames;
-	
+
 	totalFrames = 0;
 	for (int i = 0; i < INTERVALS; i++)
 	{
