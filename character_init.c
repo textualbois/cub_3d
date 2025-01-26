@@ -5,9 +5,9 @@ t_character* init_mini_character(mlx_t *window, t_IntPair size, t_IntPair pos)
 	t_character *player;
 
 	player = (t_character *)malloc(sizeof(t_character));
-	if (!player)
-		puts(mlx_strerror(mlx_errno));
-	else
+	// if (!player)
+	// 	 ;//error msg ?? (mlx_strerror(mlx_errno));
+	if (player)
 	{
 		player->size = size;
 		player->angle = 90;
