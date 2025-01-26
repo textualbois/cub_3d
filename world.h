@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:12:18 by isemin            #+#    #+#             */
-/*   Updated: 2025/01/26 17:12:21 by isemin           ###   ########.fr       */
+/*   Updated: 2025/01/26 18:00:32 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 
 typedef struct s_World_Controller{
 	mlx_t			*window;
+	t_IntPair		size;
 	t_character		*player;
 	mlx_image_t		*minimap;
 	mlx_image_t		*miniCharacter;

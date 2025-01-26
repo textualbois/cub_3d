@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:53 by isemin            #+#    #+#             */
-/*   Updated: 2025/01/26 17:12:31 by isemin           ###   ########.fr       */
+/*   Updated: 2025/01/26 18:03:52 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ t_World_Controller *init_world(int map[])
 	world = (t_World_Controller *)malloc(sizeof(t_World_Controller));
 	if (!world)
 		return (NULL);
+	world->size = (t_IntPair){8 * 10, 8 * 10}; // change to map.size() * 10, map[0].size() * 10
 	world->window = initialize_window();
 	if (!world->window)
 	{
