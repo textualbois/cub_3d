@@ -1,77 +1,66 @@
-NAME = cub3d
+NAME     = cub3d
 
-SRCS_NAME = cub3d.c loops_hooks.c init_world.c minimap_init.c \
-			character_init.c movement.c \
-			draw_mini_character.c window_init.c \
-			image_init.c #fps.c  \
+SRCS     = cub3d.c loops_hooks.c init_world.c minimap_init.c \
+           character_init.c movement.c draw_mini_character.c \
+           window_init.c image_init.c
 
-SRCS_PATH = ./
-SRCS = $(addprefix $(SRCS_PATH), $(SRCS_NAME))
+OBJ_DIR  = obj
+OBJS     = $(addprefix $(OBJ_DIR)/,$(SRCS:.c=.o))
 
-# Пути и параметры MLX42
-MLX_PATH = ./MLX42/
-MLX_BUILD_PATH = $(MLX_PATH)build/
-MLX_INCLUDE = -I $(MLX_PATH)include
-MLX_LIB = -L$(MLX_BUILD_PATH) -lmlx42
+MLX_PATH = MLX42
+MLX_BUILD_PATH = $(MLX_PATH)/build
+MLX_INCLUDE  = -I $(MLX_PATH)/include
+MLX42_LIBFILE = $(MLX_BUILD_PATH)/libmlx42.a
 
-# GLFW для MLX42
-GLFW_LIB = -L"/usr/local/Cellar/glfw/3.3.9/lib/" -lglfw
-GLFW_REPO = https://github.com/glfw/glfw.git
-
-# Параметры библиотеки Libft
-LIBFT_PATH = ./libft/
+LIBFT_PATH = libft
+LIBFT_LIB  = $(LIBFT_PATH)/libft.a
 LIBFT_INCLUDE = -I $(LIBFT_PATH)
-LIBFT_LIB = $(LIBFT_PATH)libft.a
 
-LIBS = $(MLX_LIB) $(GLFW_LIB) -L$(LIBFT_PATH) -lft -lm
-FRAMEWORKS = -framework OpenGL -framework IOKit -framework AppKit
-DEPENDENCIES = $(LIBS) $(FRAMEWORKS)
+# Можно поправить путь к GLFW, если нужно
+GLFW_LIB  = -L"/usr/local/Cellar/glfw/3.3.9/lib/" -lglfw
 
-OBJ_DIR = ./obj/
-OBJS = $(addprefix $(OBJ_DIR), $(SRCS_NAME:.c=.o))
+CC      = cc
+CFLAGS  = -Wall -Wextra -Werror
 
-CC = cc
-CFLAGS = -Wall -Wextra -Werror
+FRAMEWORKS   = -framework OpenGL -framework IOKit -framework AppKit
+DEPENDENCIES = -L$(MLX_BUILD_PATH) -lmlx42 $(GLFW_LIB) \
+               -L$(LIBFT_PATH) -lft -lm $(FRAMEWORKS)
 
-all: $(LIBFT_LIB) mlx42 $(NAME)
-	@echo "all DONE"
+.PHONY: all clean fclean re
 
-$(LIBFT_LIB):
-	@make -C $(LIBFT_PATH)
-	@echo "LIBFT DONE"
+all: $(NAME)
 
-mlx42:
-	@if [ ! -d $(MLX_PATH) ]; then \
-		echo "Cloning MLX42..."; \
-		git clone https://github.com/codam-coding-college/MLX42.git $(MLX_PATH); \
-	fi
-	@cmake $(MLX_PATH) -B $(MLX_BUILD_PATH) && cmake --build $(MLX_BUILD_PATH) -j4
-	@echo "MLX42 DONE"
+$(NAME): $(MLX42_LIBFILE) $(LIBFT_LIB) $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) $(DEPENDENCIES) -o $@
+	@echo "==> $(NAME) compiled!"
 
-$(NAME): $(OBJ_DIR) $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(DEPENDENCIES) -o $(NAME)
-	@echo "$(NAME) DONE"
-
-$(OBJ_DIR)%.o: %.c
-	@$(CC) $(CFLAGS) $(MLX_INCLUDE) -c $< -o $@
+$(OBJ_DIR)/%.o: %.c | $(OBJ_DIR)
+	$(CC) $(CFLAGS) $(MLX_INCLUDE) $(LIBFT_INCLUDE) -c $< -o $@
 	@echo "Compiled $<"
 
 $(OBJ_DIR):
-	@mkdir -p $(OBJ_DIR)
-	@echo "OBJ_DIR CREATED"
+	mkdir -p $(OBJ_DIR)
+
+$(MLX42_LIBFILE):
+	@if [ ! -d "$(MLX_PATH)" ]; then \
+		echo "==> Cloning MLX42..."; \
+		git clone https://github.com/codam-coding-college/MLX42.git $(MLX_PATH); \
+	fi
+	cmake $(MLX_PATH) -B $(MLX_BUILD_PATH)
+	cmake --build $(MLX_BUILD_PATH) -j4
+	@echo "==> MLX42 done!"
+
+$(LIBFT_LIB):
+	@$(MAKE) -C $(LIBFT_PATH)
+	@echo "==> libft done!"
 
 clean:
 	rm -rf $(OBJ_DIR)
-	@make clean -C $(LIBFT_PATH)
-	@echo "CLEAN DONE"
+	@$(MAKE) -C $(LIBFT_PATH) clean
 
 fclean: clean
 	rm -f $(NAME)
 	rm -rf $(MLX_PATH)
-	@make fclean -C $(LIBFT_PATH)
-	@echo "Fclean DONE: MLX42 and $(NAME) removed"
+	@$(MAKE) -C $(LIBFT_PATH) fclean
 
 re: fclean all
-	@echo "REBUILD DONE"
-
-.PHONY: all clean fclean re mlx42

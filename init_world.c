@@ -20,7 +20,7 @@ t_World_Controller *init_world(int map[])
 		return (NULL);
 	}
 
-	if(!init_images(world, map))
+	if (init_images(world, map) != 0)
 	{
 		free(world->player);
 		free(world);
