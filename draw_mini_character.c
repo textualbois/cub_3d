@@ -6,11 +6,11 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:37 by isemin            #+#    #+#             */
-/*   Updated: 2025/01/26 19:53:04 by isemin           ###   ########.fr       */
+/*   Updated: 2025/01/26 20:25:22 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "character.h"
+#include "draw.h"
 
 void ft_color_mini_character(mlx_image_t *player, int color)
 {
@@ -47,9 +47,9 @@ void ft_color_mini_character_direction(mlx_image_t *character, int color, t_char
 	}
 
 	// Color the direction of the character
-	end.x = player->pos.x + player->size.x / 2 * cos(player->angle);
-	end.y = player->pos.y + player->size.y / 2 * sin(player->angle);
-	ft_color_line(character, color, player->pos, end);
+	end.x = centre.x + (player->size.x) * cos(player->angle);
+	end.y = centre.y - (player->size.y) * sin(player->angle);
+	ft_color_line(character, color, centre, end);
 }
 
 void	ft_color_line(mlx_image_t *img, int color, t_DoublePair start, t_DoublePair end)
@@ -65,8 +65,8 @@ void	ft_color_line(mlx_image_t *img, int color, t_DoublePair start, t_DoublePair
 	sign.y = start.y < end.y ? 1 : -1;
 	error.x = delta.x - delta.y;
 	iter = start;
-	//while (fabs(iter.x - end.x) > 0.5 || fabs(iter.y - end.y) > 0.5)
-	while (iter.x <= end.x * sign.x || iter.y <= end.y * sign.y)
+	while (fabs(iter.x - end.x) > 0.5 || fabs(iter.y - end.y) > 0.5)
+	//while (iter.x <= end.x * sign.x || iter.y <= end.y * sign.y)
 	{
 		mlx_put_pixel(img, (int)iter.x, (int)iter.y, color);
 		error.y = error.x * 2;
