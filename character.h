@@ -7,8 +7,9 @@
 
 typedef struct s_character{
 	t_IntPair size;
-	t_IntPtrPair pos;
+	t_DoublePair pos;
 	float angle;
+
 	// mlx_image_t *image;
 }	t_character;
 

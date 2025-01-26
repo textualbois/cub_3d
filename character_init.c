@@ -9,8 +9,8 @@ t_character* init_mini_character(t_IntPair size, t_IntPair pos)
 	{
 		player->size = size;
 		player->angle = 90;
-		player->pos.x = &pos.x;
-		player->pos.y = &pos.y;
+		player->pos.x = (double)pos.x;
+		player->pos.y = (double)pos.y;
 	}
 	return (player);
 }
