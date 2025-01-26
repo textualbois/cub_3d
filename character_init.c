@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:27 by isemin            #+#    #+#             */
-/*   Updated: 2025/01/26 17:12:46 by isemin           ###   ########.fr       */
+/*   Updated: 2025/01/26 18:55:24 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_character* init_mini_character(t_IntPair size, t_IntPair pos)
 	if (player)
 	{
 		player->size = size;
-		player->angle = 90;
+		player->angle = PI / 2;
 		player->pos.x = (double)pos.x;
 		player->pos.y = (double)pos.y;
 	}
