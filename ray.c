@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 06:35:51 by isemin            #+#    #+#             */
-/*   Updated: 2025/01/29 10:23:26 by isemin           ###   ########.fr       */
+/*   Updated: 2025/01/29 10:26:41 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_DoublePair	ray_find_vertical_hit(t_World_Controller *world, double rayDir, int
 	}
 	hit.y = world->player->pos.y + (hit.x - world->player->pos.x) * tan(rayDir);
 	while (!is_wall(world, hit)) { // can add depth check <= LOD
-		increment_vertical(&hit, direction);
+		increment_vertical(&hit, direction, rayDir);
 		(*depth)++;
 	}
 
@@ -52,17 +52,21 @@ t_DoublePair	ray_find_vertical_hit(t_World_Controller *world, double rayDir, int
 t_DoublePair	ray_find_horizontal_hit(t_World_Controller *world, double rayDir, int *depth)
 {
 	t_DoublePair	hit;
-	t_DoublePair	next;
+	int				direction;
 
 	// up direction
-	if (rayDir > 0 && rayDir < PI) {
-		hit.y = floor(world->player->pos.y) + TILE_SIZE;
-		hit.x = world->player->pos.x + (hit.y - world->player->pos.y) / tan(rayDir);
+	if (rayDir < PI) {
+		hit.y = floor_map(world->player->pos.y);
+		direction = -1;
 	} else {
-		hit.y = floor(world->player->pos.y);
-		hit.x = world->player->pos.x + (hit.y - world->player->pos.y) / tan(rayDir);
+		hit.y = ceil_map(world->player->pos.y);
+		direction = 1;
 	}
-
+	hit.x = world->player->pos.x + (hit.y - world->player->pos.y) / tan(rayDir);
+	while (!is_wall(world, hit)) { // can add depth check <= LOD
+		increment_horizontal(&hit, direction, rayDir);
+		(*depth)++;
+	}
 
 	return (hit);
 }
