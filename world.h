@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:12:18 by isemin            #+#    #+#             */
-/*   Updated: 2025/01/29 08:36:04 by isemin           ###   ########.fr       */
+/*   Updated: 2025/01/29 14:01:30 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include "fps.h"
 #include "window.h"
 #include "mini_map.h"
+#include "draw.h"
 
 typedef struct s_World_Controller{
 	mlx_t			*window;

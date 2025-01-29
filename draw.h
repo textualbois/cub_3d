@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:48:32 by isemin            #+#    #+#             */
-/*   Updated: 2025/01/26 19:56:46 by isemin           ###   ########.fr       */
+/*   Updated: 2025/01/29 13:59:42 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 
 void	ft_color_mini_character(mlx_image_t *player, int color);
 void	ft_color_mini_character_direction(mlx_image_t *character, int color, t_character *player);
+void	color_mini_map(mlx_image_t *minimap, int color, int map[]);
 void	ft_color_line(mlx_image_t *img, int color, t_DoublePair start, t_DoublePair end);
 void	draw_world(t_World_Controller *world);
 
