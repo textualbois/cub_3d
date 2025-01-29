@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:12:10 by isemin            #+#    #+#             */
-/*   Updated: 2025/01/29 07:12:14 by isemin           ###   ########.fr       */
+/*   Updated: 2025/01/29 08:19:45 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 #define HEIGHT 800
 #define PI 3.14159265
 #define FOV 60
-#define dof 20
+#define LOD 20
 
 typedef struct s_IntPair{
 	int32_t x;
