@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:23 by isemin            #+#    #+#             */
-/*   Updated: 2025/01/26 20:17:03 by isemin           ###   ########.fr       */
+/*   Updated: 2025/01/29 08:15:17 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ mlx_image_t	*init_image_minimap(mlx_t *window, int map[])
 
 	x = 0;
 	y = 0;
-	mHeight = 8;
-	mWidth = 8;
+	mHeight = 8; // todo
+	mWidth = 8; // todo
 	// uint32_t color = 0;
 	minimap = mlx_new_image(window, WIDTH, HEIGHT);
 	if (!minimap)
