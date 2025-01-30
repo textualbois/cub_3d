@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 15:26:10 by admin             #+#    #+#             */
-/*   Updated: 2025/01/30 22:54:51 by admin            ###   ########.fr       */
+/*   Updated: 2025/01/30 23:39:52 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,21 +26,8 @@ int	is_valid_map_char(char c)
 	}
 	return (0);
 }
-//math
-double	get_angle_from_char_math(char dir)
-{
-	if (dir == 'N')
-		return (M_PI_2);
-	if (dir == 'S')
-		return (3 * M_PI_2);
-	if (dir == 'E')
-		return (0);
-	if (dir == 'W')
-		return (M_PI);
-	return (0);
-}
 
-// mlx42 
+// mlx42
 double	get_angle_from_char(char dir)
 {
 	if (dir == 'N')
@@ -67,6 +54,7 @@ void	parse_map(char **lines, t_config *config)
 	int		j;
 	char	c;
 	int		max_width;
+	int		col;
 
 	max_width = 0;
 	i = 0;
@@ -79,26 +67,28 @@ void	parse_map(char **lines, t_config *config)
 				+ 1));
 	if (!config->map.grid)
 		return ;
-	i = 0;
-	while (i < config->map.height)
+	j = 0;
+	while (j < config->map.height)
 	{
-		config->map.grid[i] = ft_strdup(lines[i]);
-		if (!config->map.grid[i])
+		config->map.grid[j] = ft_strdup(lines[i + j]);
+		if (!config->map.grid[j])
 			return ;
-		j = 0;
-		while (config->map.grid[i][j])
 		{
-			c = config->map.grid[i][j];
-			if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
+			col = 0;
+			while (config->map.grid[j][col])
 			{
-				set_player_position(config, j, i, c);
-				config->map.grid[i][j] = '0';
+				c = config->map.grid[j][col];
+				if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
+				{
+					set_player_position(config, col, j, c);
+					config->map.grid[j][col] = '0';
+				}
+				col++;
 			}
-			j++;
+			if (col > max_width)
+				max_width = col;
 		}
-		if (j > max_width)
-			max_width = j;
-		i++;
+		j++;
 	}
 	config->map.grid[config->map.height] = NULL;
 	config->map.width = max_width;
@@ -109,10 +99,12 @@ int	parse_color(char *line, int *color)
 	char	**rgb;
 	int		i;
 
+	while (*line == ' ')
+		line++;
 	rgb = ft_split(line, ',');
-	i = 0;
 	if (!rgb)
 		return (0);
+	i = 0;
 	while (i < 3 && rgb[i])
 	{
 		color[i] = ft_atoi(rgb[i]);
@@ -123,7 +115,7 @@ int	parse_color(char *line, int *color)
 	return (i == 3);
 }
 
-void	parse_line(char *line, t_config *config)
+int	parse_line(char *line, t_config *config)
 {
 	while (*line == ' ')
 		line++;
@@ -139,86 +131,87 @@ void	parse_line(char *line, t_config *config)
 		parse_color(line + 2, config->floor_color);
 	else if (ft_strncmp(line, "C ", 2) == 0)
 		parse_color(line + 2, config->ceiling_color);
+	else
+		return (0);
+	return (1);
 }
 
-void	parse_cub_file(const char *filename, t_config *config)
+int	open_cub(const char *filename)
 {
-	int		fd;
-	char	buffer[BUFFER_SIZE + 1];
-	char	*file_content;
-	int		bytes_read;
-	char	*temp;
-	char	**lines;
-	int		i;
-	int		j;
+	int	fd;
 
 	fd = open(filename, O_RDONLY);
-	file_content = NULL;
 	if (fd < 0)
 	{
 		perror("Error opening file");
 		exit(1);
 	}
+	return (fd);
+}
+
+char	*read_file_content(int fd)
+{
+	char	buffer[BUFFER_SIZE + 1];
+	char	*file_content;
+	int		bytes_read;
+	char	*temp;
+
 	file_content = ft_strdup("");
-	while ((bytes_read = read(fd, buffer, BUFFER_SIZE)) > 0)
+	if (!file_content)
+		return (NULL);
+	bytes_read = read(fd, buffer, BUFFER_SIZE);
+	while (bytes_read > 0)
 	{
 		buffer[bytes_read] = '\0';
 		temp = ft_strjoin(file_content, buffer);
 		free(file_content);
 		file_content = temp;
+		bytes_read = read(fd, buffer, BUFFER_SIZE);
 	}
+	if (bytes_read < 0)
+		perror("Error reading file");
 	close(fd);
-	lines = ft_split(file_content, '\n');
-	free(file_content);
-	if (!lines)
-		return ;
-	i = 0;
-	while (lines[i])
+	return (file_content);
+}
+
+void	parse_textures_colors(char **lines, t_config *config, int *index)
+{
+	while (lines[*index])
 	{
-		if (ft_strncmp(lines[i], "NO ", 3) == 0)
-			config->no_texture = ft_strdup(lines[i] + 3);
-		else if (ft_strncmp(lines[i], "SO ", 3) == 0)
-			config->so_texture = ft_strdup(lines[i] + 3);
-		else if (ft_strncmp(lines[i], "WE ", 3) == 0)
-			config->we_texture = ft_strdup(lines[i] + 3);
-		else if (ft_strncmp(lines[i], "EA ", 3) == 0)
-			config->ea_texture = ft_strdup(lines[i] + 3);
-		else if (ft_strncmp(lines[i], "F ", 2) == 0)
-			parse_color(lines[i] + 2, config->floor_color);
-		else if (ft_strncmp(lines[i], "C ", 2) == 0)
-			parse_color(lines[i] + 2, config->ceiling_color);
-		else
-			break ;
-		free(lines[i]);
-		i++;
+		if (!parse_line(lines[*index], config))
+			return ;
+		free(lines[*index]);
+		(*index)++;
 	}
-	parse_map(&lines[i], config);
-	j = i;
-	while (lines[j])
+}
+
+void	free_lines_from(char **lines, int start)
+{
+	while (lines[start])
 	{
-		free(lines[j]);
-		j++;
+		free(lines[start]);
+		start++;
 	}
 	free(lines);
 }
 
-void	read_cub_file(const char *filename)
+void	parse_cub_file(const char *filename, t_config *config)
 {
+	int		i;
 	int		fd;
-	char	buffer[BUFFER_SIZE + 1];
-	int		bytes_read;
+	char	*file_content;
+	char	**lines;
 
-	fd = open(filename, O_RDONLY);
-	if (fd < 0)
-	{
-		perror("Error opening file");
-		exit(1);
-	}
-	while ((bytes_read = read(fd, buffer, BUFFER_SIZE)) > 0)
-		write(1, buffer, bytes_read);
-	if (bytes_read < 0)
-		perror("Error reading file");
-	close(fd);
+	i = 0;
+	fd = open_cub(filename);
+	file_content = read_file_content(fd);
+	lines = ft_split(file_content, '\n');
+	free(file_content);
+	if (!lines)
+		return ;
+	parse_textures_colors(lines, config, &i);
+	parse_map(&lines[i], config);
+	free_lines_from(lines, i);
 }
 
 void	print_map(t_map *map)

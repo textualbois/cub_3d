@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 14:09:33 by admin             #+#    #+#             */
-/*   Updated: 2025/01/30 22:35:00 by admin            ###   ########.fr       */
+/*   Updated: 2025/01/30 23:30:08 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ typedef struct s_config
 
 # define BUFFER_SIZE 4096
 
-void				read_cub_file(const char *filename);
+void				parse_cub_file(const char *filename, t_config *config);
 int					parse_color(char *line, int *color);
 
 #endif
