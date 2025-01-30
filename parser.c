@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 15:26:10 by admin             #+#    #+#             */
-/*   Updated: 2025/01/30 23:39:52 by admin            ###   ########.fr       */
+/*   Updated: 2025/01/31 00:12:48 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int	is_valid_map_char(char c)
 	return (0);
 }
 
-// mlx42
 double	get_angle_from_char(char dir)
 {
 	if (dir == 'N')
@@ -48,18 +47,40 @@ void	set_player_position(t_config *config, int x, int y, char dir)
 	config->player.angle = get_angle_from_char(dir);
 }
 
-void	parse_map(char **lines, t_config *config)
+static int	skip_empty_lines(char **lines)
 {
-	int		i;
-	int		j;
-	char	c;
-	int		max_width;
-	int		col;
+	int	i;
 
-	max_width = 0;
 	i = 0;
 	while (lines[i] && ft_strlen(lines[i]) == 0)
 		i++;
+	return (i);
+}
+
+static void	process_map_row(t_config *config, int row, char *line)
+{
+	int	col;
+
+	col = 0;
+	while (line[col])
+	{
+		if (ft_strchr("NSEW", line[col]))
+		{
+			set_player_position(config, col, row, line[col]);
+			line[col] = '0';
+		}
+		col++;
+	}
+	if (col > config->map.width)
+		config->map.width = col;
+}
+
+void	parse_map(char **lines, t_config *config)
+{
+	int	i;
+	int	j;
+
+	i = skip_empty_lines(lines);
 	config->map.height = 0;
 	while (lines[i + config->map.height])
 		config->map.height++;
@@ -73,25 +94,10 @@ void	parse_map(char **lines, t_config *config)
 		config->map.grid[j] = ft_strdup(lines[i + j]);
 		if (!config->map.grid[j])
 			return ;
-		{
-			col = 0;
-			while (config->map.grid[j][col])
-			{
-				c = config->map.grid[j][col];
-				if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
-				{
-					set_player_position(config, col, j, c);
-					config->map.grid[j][col] = '0';
-				}
-				col++;
-			}
-			if (col > max_width)
-				max_width = col;
-		}
+		process_map_row(config, j, config->map.grid[j]);
 		j++;
 	}
 	config->map.grid[config->map.height] = NULL;
-	config->map.width = max_width;
 }
 
 int	parse_color(char *line, int *color)
