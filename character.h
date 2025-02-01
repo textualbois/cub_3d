@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:30 by isemin            #+#    #+#             */
-/*   Updated: 2025/01/26 18:44:11 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/01 21:15:25 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,7 @@
 typedef struct s_character{
 	t_IntPair size;
 	t_DoublePair pos;
-	float angle;
-
-	// mlx_image_t *image;
+	double angle;
 }	t_character;
 
 // init
