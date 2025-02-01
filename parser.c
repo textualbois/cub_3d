@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 15:26:10 by admin             #+#    #+#             */
-/*   Updated: 2025/02/01 15:35:57 by admin            ###   ########.fr       */
+/*   Updated: 2025/02/01 16:12:23 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,54 @@ int	has_cub_extension(const char *filename)
 
 int	is_valid_cell(t_map *map, int i, int j)
 {
-	if (i <= 0 || i >= map->height - 1 || j <= 0 || j >= map->width - 1)
+	char	up;
+	char	down;
+	char	left;
+	char	right;
+
+	up = ' ';
+	down = ' ';
+	left = ' ';
+	right = ' ';
+
+	if (i > 0)
+		up = map->grid[i - 1][j];
+	if (i < map->height - 1)
+		down = map->grid[i + 1][j];
+	if (j > 0)
+		left = map->grid[i][j - 1];
+	if (j < map->width - 1)
+		right = map->grid[i][j + 1];
+
+	if (i == 0 || i == map->height - 1 || j == 0 || j == map->width - 1)
 		return (0);
-	if (map->grid[i - 1][j] == ' ' || map->grid[i + 1][j] == ' '
-		|| map->grid[i][j - 1] == ' ' || map->grid[i][j + 1] == ' ')
+	if (up == ' ' || down == ' ' || left == ' ' || right == ' ')
+		return (0);
+	return (1);
+}
+
+int	is_sur_by_wals(t_map *map, int i, int j)
+{
+	char	up;
+	char	down;
+	char	left;
+	char	right;
+
+	up = '1';
+	down = '1';
+	left = '1';
+	right = '1';
+	if (i > 0)
+		up = map->grid[i - 1][j];
+	if (i < map->height - 1)
+		down = map->grid[i + 1][j];
+	if (j > 0)
+		left = map->grid[i][j - 1];
+	if (j < map->width - 1)
+		right = map->grid[i][j + 1];
+	if ((up != '1' && up != ' ') || (down != '1' && down != ' '))
+		return (0);
+	if ((left != '1' && left != ' ') || (right != '1' && right != ' '))
 		return (0);
 	return (1);
 }
@@ -47,18 +91,8 @@ int	has_invalid_spaces(t_map *map)
 		j = 0;
 		while (j < map->width)
 		{
-			if (map->grid[i][j] == ' ')
-			{
-				if ((i > 0 && map->grid[i - 1][j] != '1'
-						&& map->grid[i - 1][j] != ' ') ||
-					(i < map->height - 1 && map->grid[i + 1][j] != '1'
-						&& map->grid[i + 1][j] != ' ') ||
-					(j > 0 && map->grid[i][j - 1] != '1'
-						&& map->grid[i][j - 1] != ' ') ||
-					(j < map->width - 1 && map->grid[i][j + 1] != '1'
-						&& map->grid[i][j + 1] != ' '))
-					return (1);
-			}
+			if (map->grid[i][j] == ' ' && !is_sur_by_wals(map, i, j))
+				return (1);
 			j++;
 		}
 		i++;
@@ -128,17 +162,17 @@ int	is_map_valid(t_map *map)
 {
 	if (!is_map_enclosed(map))
 	{
-		fprintf(stderr, "Error\nMap is not enclosed by walls.\n");
+		printf("Error\nMap is not enclosed by walls.\n");
 		return (0);
 	}
 	if (has_invalid_spaces(map))
 	{
-		fprintf(stderr, "Error\nMap contains invalid spaces.\n");
+		printf("Error\nMap contains invalid spaces.\n");
 		return (0);
 	}
 	if (count_players(map) != 1)
 	{
-		fprintf(stderr, "Error\nMap must contain exactly one player.\n");
+		printf("Error\nMap must contain exactly one player.\n");
 		return (0);
 	}
 	return (1);
@@ -192,29 +226,39 @@ static void	process_map_row(t_config *config, int row, char *line)
 		config->map.width = col;
 }
 
-void	parse_map(char **lines, t_config *config)
+int	allocate_map_grid(t_config *config, char **lines, int i)
 {
-	int	i;
 	int	j;
 
-	i = skip_empty_lines(lines);
 	config->map.height = 0;
 	while (lines[i + config->map.height])
 		config->map.height++;
-	config->map.grid = (char **)malloc(sizeof(char *) * (config->map.height
-				+ 1));
+	config->map.grid = (char **)malloc(sizeof(char *) * (config->map.height + 1));
 	if (!config->map.grid)
-		return ;
+		return (0);
 	j = 0;
 	while (j < config->map.height)
 	{
 		config->map.grid[j] = ft_strdup(lines[i + j]);
 		if (!config->map.grid[j])
-			return ;
+			return (0);
 		process_map_row(config, j, config->map.grid[j]);
 		j++;
 	}
 	config->map.grid[config->map.height] = NULL;
+	return (1);
+}
+
+void	parse_map(char **lines, t_config *config)
+{
+	int	i;
+
+	i = skip_empty_lines(lines);
+	if (!allocate_map_grid(config, lines, i))
+	{
+		free_lines_from(config->map.grid, 0);
+		exit(1);
+	}
 	if (!is_map_valid(&config->map))
 	{
 		free_lines_from(config->map.grid, 0);
