@@ -6,13 +6,13 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:53 by isemin            #+#    #+#             */
-/*   Updated: 2025/01/29 08:48:03 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/01 17:48:20 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "world.h"
 
-t_World_Controller *init_world(int map[])
+t_World_Controller *init_world(int map[8][8])
 {
 	t_World_Controller *world;
 
@@ -32,9 +32,12 @@ t_World_Controller *init_world(int map[])
 		free(world);
 		return (NULL);
 	}
-	world->map = map;
+	for (int i = 0; i < 8; i++)
+	{
+		ft_memcpy(world->map[i], map[i], 8 * sizeof(int));
+	}
 
-	if (init_images(world, map) != 0)
+	if (init_images(world) != 0)//, map) != 0)
 	{
 		free(world->player);
 		free(world);

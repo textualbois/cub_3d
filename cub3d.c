@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:20 by isemin            #+#    #+#             */
-/*   Updated: 2025/01/29 07:17:21 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/01 17:52:19 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,6 @@ int main(int argc, char **argv)
 	(void) argv;
 	t_World_Controller *world;
 
-	// int map[]=           //the map array. Edit to change level but keep the outer walls
-	// {
-	//  1,1,1,1,1,1,1,1,
-	//  1,0,1,0,0,0,0,1,
-	//  1,0,1,0,0,0,0,1,
-	//  1,0,1,0,0,0,0,1,
-	//  1,0,0,0,0,0,0,1,
-	//  1,0,0,0,0,1,0,1,
-	//  1,0,0,0,0,0,0,1,
-	//  1,1,1,1,1,1,1,1,
-	// };
 	int map[8][8]=
 	{
 		{1,1,1,1,1,1,1,1},
@@ -44,7 +33,7 @@ int main(int argc, char **argv)
 	ft_putstr_fd("Hello, World!\n", 1);
 	world = init_world(map);
 	ft_putstr_fd("Hello, Images!\n", 1);
-	init_images(world, map);
+	init_images(world);//, map);
 	draw_world(world);
 	ft_putstr_fd("Hello, Loops and Hooks!\n", 1);
 	init_loops_n_hooks(world);
