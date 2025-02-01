@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:59 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/01 21:08:11 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/01 21:31:48 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "MLX42/MLX42.h"
 #include "types_numeric.h"
 #include "character.h"
+#include "libft/libft.h"
 
 typedef struct	s_mini_map{
 
