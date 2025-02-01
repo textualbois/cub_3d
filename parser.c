@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 15:26:10 by admin             #+#    #+#             */
-/*   Updated: 2025/02/01 14:35:08 by admin            ###   ########.fr       */
+/*   Updated: 2025/02/01 15:35:57 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,59 @@ int	is_valid_cell(t_map *map, int i, int j)
 		|| map->grid[i][j - 1] == ' ' || map->grid[i][j + 1] == ' ')
 		return (0);
 	return (1);
+}
+
+int	has_invalid_spaces(t_map *map)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < map->height)
+	{
+		j = 0;
+		while (j < map->width)
+		{
+			if (map->grid[i][j] == ' ')
+			{
+				if ((i > 0 && map->grid[i - 1][j] != '1'
+						&& map->grid[i - 1][j] != ' ') ||
+					(i < map->height - 1 && map->grid[i + 1][j] != '1'
+						&& map->grid[i + 1][j] != ' ') ||
+					(j > 0 && map->grid[i][j - 1] != '1'
+						&& map->grid[i][j - 1] != ' ') ||
+					(j < map->width - 1 && map->grid[i][j + 1] != '1'
+						&& map->grid[i][j + 1] != ' '))
+					return (1);
+			}
+			j++;
+		}
+		i++;
+	}
+	return (0);
+}
+
+int	count_players(t_map *map)
+{
+	int	i;
+	int	j;
+	int	count;
+
+	i = 0;
+	j = 0;
+	count = 0;
+	while (i < map->height)
+	{
+		j = 0;
+		while (j < map->width)
+		{
+			if (ft_strchr("NSEW", map->grid[i][j]))
+				count++;
+			j++;
+		}
+		i++;
+	}
+	return (count);
 }
 
 int	is_map_enclosed(t_map *map)
@@ -69,6 +122,26 @@ int	is_valid_map_char(char c)
 		i++;
 	}
 	return (0);
+}
+
+int	is_map_valid(t_map *map)
+{
+	if (!is_map_enclosed(map))
+	{
+		fprintf(stderr, "Error\nMap is not enclosed by walls.\n");
+		return (0);
+	}
+	if (has_invalid_spaces(map))
+	{
+		fprintf(stderr, "Error\nMap contains invalid spaces.\n");
+		return (0);
+	}
+	if (count_players(map) != 1)
+	{
+		fprintf(stderr, "Error\nMap must contain exactly one player.\n");
+		return (0);
+	}
+	return (1);
 }
 
 double	get_angle_from_char(char dir)
@@ -142,6 +215,11 @@ void	parse_map(char **lines, t_config *config)
 		j++;
 	}
 	config->map.grid[config->map.height] = NULL;
+	if (!is_map_valid(&config->map))
+	{
+		free_lines_from(config->map.grid, 0);
+		exit(1);
+	}
 }
 
 int	parse_color(char *line, int *color)
