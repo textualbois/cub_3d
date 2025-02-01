@@ -6,15 +6,28 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:12:01 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/01 17:20:09 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/01 20:48:37 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_map.h"
 
-// mlx_image_t *init_minimap(mlx_t *window, int map[])
-// {
+t_mini_map	*init_minimap(int map[8][8])
+{
+	t_mini_map	*minimap;
 
-// }
+	minimap = (t_mini_map *)malloc(sizeof(t_mini_map));
+	if (!minimap)
+		return (NULL);
+	for (int i = 0; i < 8; i++)
+	{
+		ft_memcpy(minimap->map[i], map[i], 8 * sizeof(int));
+	}
+	minimap->size = (t_DoublePair){8 * TILE_SIZE, 8 * TILE_SIZE};
+	minimap->view_h = (t_DoublePair){0, 8 * TILE_SIZE};
+	minimap->view_v = (t_DoublePair){0, 8 * TILE_SIZE};
+	minimap->visible_size = (t_DoublePair){VISIBLE_TILES * TILE_SIZE, VISIBLE_TILES * TILE_SIZE};
+	return (minimap);
+}
 
 //redundant ??
