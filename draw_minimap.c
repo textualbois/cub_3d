@@ -6,13 +6,13 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 13:53:08 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/01 18:00:59 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/01 21:34:08 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "draw.h"
 
-void	color_mini_map(mlx_image_t *minimap, int map[8][8])
+void	color_mini_map(mlx_image_t *map_img, t_mini_map *map)
 {
 	int x;
 	int y;
@@ -29,13 +29,13 @@ void	color_mini_map(mlx_image_t *minimap, int map[8][8])
 		while (y < HEIGHT)
 		{
 			if (x % (WIDTH / mWidth) == 0 || y % (HEIGHT / mHeight) <= 1)
-				mlx_put_pixel(minimap, x, y, 0x003333FF); // if grid
+				mlx_put_pixel(map_img, x, y, 0x003333FF); // if grid
 			else
 			{
-				if (map[(int)(y / (HEIGHT / mHeight))][(int)(x / (WIDTH / mWidth))] == 1)
-					mlx_put_pixel(minimap, x, y, 0xFF0000FF); // if wall
+				if (map->map[(int)(y / (HEIGHT / mHeight))][(int)(x / (WIDTH / mWidth))] == 1)
+					mlx_put_pixel(map_img, x, y, 0xFF0000FF); // if wall
 				else
-					mlx_put_pixel(minimap, x, y, 0xFFFFAAFF); // if empty
+					mlx_put_pixel(map_img, x, y, 0xFFFFAAFF); // if empty
 			}
 			y++;
 		}

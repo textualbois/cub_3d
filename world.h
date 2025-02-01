@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:12:18 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/01 21:10:06 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/01 21:36:49 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ typedef struct s_World_Controller{
 	t_character		*player;
 	t_mini_map		*map;
 	//int				map[8][8]; // change to t_map?
-	mlx_image_t		*minimap;
+	mlx_image_t		*map_img;
 	mlx_image_t		*miniCharacter;
 	//t_FrameCounter	*frameCounter;
 }	t_World_Controller;
