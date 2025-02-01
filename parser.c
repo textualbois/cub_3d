@@ -6,11 +6,55 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 15:26:10 by admin             #+#    #+#             */
-/*   Updated: 2025/01/31 00:12:48 by admin            ###   ########.fr       */
+/*   Updated: 2025/02/01 14:35:08 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
+
+int	has_cub_extension(const char *filename)
+{
+	int	len;
+
+	len = ft_strlen(filename);
+	if (len < 4)
+		return (0);
+	if (ft_strncmp(filename + len - 4, ".cub", 4) != 0)
+		return (0);
+	if (len > 4 && filename[len - 5] == '.')
+		return (0);
+	return (1);
+}
+
+int	is_valid_cell(t_map *map, int i, int j)
+{
+	if (i <= 0 || i >= map->height - 1 || j <= 0 || j >= map->width - 1)
+		return (0);
+	if (map->grid[i - 1][j] == ' ' || map->grid[i + 1][j] == ' '
+		|| map->grid[i][j - 1] == ' ' || map->grid[i][j + 1] == ' ')
+		return (0);
+	return (1);
+}
+
+int	is_map_enclosed(t_map *map)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < map->height)
+	{
+		j = 0;
+		while (j < map->width)
+		{
+			if (map->grid[i][j] == '0' && !is_valid_cell(map, i, j))
+				return (0);
+			j++;
+		}
+		i++;
+	}
+	return (1);
+}
 
 int	is_valid_map_char(char c)
 {
@@ -237,7 +281,7 @@ int	main(int argc, char **argv)
 {
 	t_config	config;
 
-	if (argc != 2)
+	if (argc != 2 || !has_cub_extension(argv[1]))
 	{
 		printf("Usage: %s <file.cub>\n", argv[0]);
 		return (1);
