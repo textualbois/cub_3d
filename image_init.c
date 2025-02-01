@@ -6,15 +6,15 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:23 by isemin            #+#    #+#             */
-/*   Updated: 2025/01/29 14:01:07 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/01 17:47:42 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "world.h"
 
-int	init_images(t_World_Controller *world, int map[])
+int	init_images(t_World_Controller *world)//, int map[8][8])
 {
-	world->minimap = init_image_minimap(world->window, map);
+	world->minimap = init_image_minimap(world->window);//, map);
 	if (!world->minimap)
 		return (1);
 	world->miniCharacter = init_image_mini_character(world->window,
@@ -41,13 +41,13 @@ mlx_image_t	*init_image_mini_character(mlx_t *window, t_character *player,
 	return (miniCharacter);
 }
 
-mlx_image_t	*init_image_minimap(mlx_t *window, int map[])
+mlx_image_t	*init_image_minimap(mlx_t *window)//, int map[8][8])
 {
 	mlx_image_t	*minimap;
 
 	minimap = mlx_new_image(window, WIDTH, HEIGHT);
 	if (!minimap)
 		return (NULL);
-	color_mini
+	//color_mini
 	return (minimap);
 }

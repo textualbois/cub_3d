@@ -6,15 +6,15 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:12:01 by isemin            #+#    #+#             */
-/*   Updated: 2025/01/26 20:27:44 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/01 17:20:09 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_map.h"
 
-mlx_image_t *init_minimap(mlx_t *window, int map[])
-{
+// mlx_image_t *init_minimap(mlx_t *window, int map[])
+// {
 
-}
+// }
 
 //redundant ??

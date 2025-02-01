@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 06:35:51 by isemin            #+#    #+#             */
-/*   Updated: 2025/01/29 10:26:41 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/01 17:07:50 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_DoublePair	ray_find_vertical_hit(t_World_Controller *world, double rayDir, int
 	if (rayDir < PI / 2 || rayDir > 3 * PI / 2) {
 		hit.x = ceil_map(world->player->pos.x);
 		direction = 1;
-	} else {
+	} else { // left direction
 		hit.x = floor_map(world->player->pos.x);
 		direction = -1;
 	}
@@ -58,7 +58,7 @@ t_DoublePair	ray_find_horizontal_hit(t_World_Controller *world, double rayDir, i
 	if (rayDir < PI) {
 		hit.y = floor_map(world->player->pos.y);
 		direction = -1;
-	} else {
+	} else { // down direction
 		hit.y = ceil_map(world->player->pos.y);
 		direction = 1;
 	}

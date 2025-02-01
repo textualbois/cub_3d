@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:12:04 by isemin            #+#    #+#             */
-/*   Updated: 2025/01/26 17:12:24 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/01 18:07:06 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ void	ft_movement_input(void *param)
 
 	world = (t_World_Controller *)param;
 	if (mlx_is_key_down(world->window, MLX_KEY_Q))
-		set_h_rotation(world, 1);
+		set_h_rotation(world, 0.1);
 	if (mlx_is_key_down(world->window, MLX_KEY_E))
-		set_h_rotation(world, -1);
+		set_h_rotation(world, -0.1);
 	if (mlx_is_key_down(world->window, MLX_KEY_W))
 		set_movement(world, (t_DoublePair){-5 * cos(world->player->angle), -5 * sin(world->player->angle)});
 	if (mlx_is_key_down(world->window, MLX_KEY_S))
@@ -31,7 +31,7 @@ void	ft_movement_input(void *param)
 		set_movement(world, (t_DoublePair){5 * cos(world->player->angle - PI / 2), 5 * sin(world->player->angle - PI / 2)});
 }
 
-void	set_h_rotation(t_World_Controller *world, int angle_delta)
+void	set_h_rotation(t_World_Controller *world, double angle_delta)
 {
 	world->player->angle += angle_delta;  // Decrease angle by 1 degree in radians
 	if (world->player->angle < 0)
@@ -42,6 +42,7 @@ void	set_h_rotation(t_World_Controller *world, int angle_delta)
 
 void	set_movement(t_World_Controller *world, t_DoublePair delta_x_y)
 {
+	write(1, "set_movement\n", 13);
 	world->player->pos.x += delta_x_y.x;
 	world->player->pos.y += delta_x_y.y;
 }
