@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:12:04 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/01 18:07:06 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/01 19:21:12 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,20 @@ void	ft_movement_input(void *param)
 
 void	set_h_rotation(t_World_Controller *world, double angle_delta)
 {
+	write(1, "set_h_rotation\n", 15);
 	world->player->angle += angle_delta;  // Decrease angle by 1 degree in radians
+		write(1, "set_h_rotation2\n", 16);
 	if (world->player->angle < 0)
+	{
+		write(1, "set_h_rotation3\n", 16);
 		world->player->angle += 2 * PI;  // Wrap around if the angle goes below 0
+	}
 	else if (world->player->angle >= 2 * PI)
+	{
+		write(1, "set_h_rotation4\n", 16);
 		world->player->angle -= 2 * PI;  // Wrap around if the angle exceeds 2π
+	}
+	write(1, "set_rotation_last\n", 16);
 }
 
 void	set_movement(t_World_Controller *world, t_DoublePair delta_x_y)
