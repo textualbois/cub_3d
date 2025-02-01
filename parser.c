@@ -3,14 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 15:26:10 by admin             #+#    #+#             */
-/*   Updated: 2025/02/01 16:12:23 by admin            ###   ########.fr       */
+/*   Updated: 2025/02/01 18:37:57 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
+
+
+void	free_lines_from(char **lines, int start)
+{
+	while (lines[start])
+	{
+		free(lines[start]);
+		start++;
+	}
+	free(lines);
+}
 
 int	has_cub_extension(const char *filename)
 {
@@ -112,10 +123,13 @@ int	count_players(t_map *map)
 	while (i < map->height)
 	{
 		j = 0;
-		while (j < map->width)
+		while (j < ft_strlen(map->grid[i]))
 		{
-			if (ft_strchr("NSEW", map->grid[i][j]))
+			
+			if (ft_strchr("NSEW", map->grid[i][j])) {
+				map->grid[i][j] = '0';
 				count++;
+			}
 			j++;
 		}
 		i++;
@@ -204,7 +218,9 @@ static int	skip_empty_lines(char **lines)
 
 	i = 0;
 	while (lines[i] && ft_strlen(lines[i]) == 0)
+	{
 		i++;
+	}
 	return (i);
 }
 
@@ -215,11 +231,10 @@ static void	process_map_row(t_config *config, int row, char *line)
 	col = 0;
 	while (line[col])
 	{
+		while (line[col] == ' ')
+			col++;
 		if (ft_strchr("NSEW", line[col]))
-		{
 			set_player_position(config, col, row, line[col]);
-			line[col] = '0';
-		}
 		col++;
 	}
 	if (col > config->map.width)
@@ -287,13 +302,23 @@ int	parse_color(char *line, int *color)
 	return (i == 3);
 }
 
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	while (*s1 && (*s1 == *s2))
+	{
+		s1++;
+		s2++;
+	}
+	return ((unsigned char)*s1 - (unsigned char)*s2);
+}
+
 int	parse_line(char *line, t_config *config)
 {
 	while (*line == ' ')
 		line++;
-	if (ft_strncmp(line, "NO ", 3) == 0)
+	if (ft_strcmp(line, "NO ") == 0)
 		config->no_texture = ft_strdup(line + 3);
-	else if (ft_strncmp(line, "SO ", 3) == 0)
+	else if (ft_strcmp(line, "SO ") == 0)
 		config->so_texture = ft_strdup(line + 3);
 	else if (ft_strncmp(line, "WE ", 3) == 0)
 		config->we_texture = ft_strdup(line + 3);
@@ -355,16 +380,6 @@ void	parse_textures_colors(char **lines, t_config *config, int *index)
 		free(lines[*index]);
 		(*index)++;
 	}
-}
-
-void	free_lines_from(char **lines, int start)
-{
-	while (lines[start])
-	{
-		free(lines[start]);
-		start++;
-	}
-	free(lines);
 }
 
 void	parse_cub_file(const char *filename, t_config *config)
