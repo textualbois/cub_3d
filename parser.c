@@ -5,13 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/30 15:26:10 by admin             #+#    #+#             */
-/*   Updated: 2025/02/01 18:37:57 by vmamoten         ###   ########.fr       */
+/*   Created: 2025/01/30 15:26:10 by vmamoten          #+#    #+#             */
+/*   Updated: 2025/02/02 12:32:36 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
-
 
 void	free_lines_from(char **lines, int start)
 {
@@ -48,7 +47,6 @@ int	is_valid_cell(t_map *map, int i, int j)
 	down = ' ';
 	left = ' ';
 	right = ' ';
-
 	if (i > 0)
 		up = map->grid[i - 1][j];
 	if (i < map->height - 1)
@@ -57,7 +55,6 @@ int	is_valid_cell(t_map *map, int i, int j)
 		left = map->grid[i][j - 1];
 	if (j < map->width - 1)
 		right = map->grid[i][j + 1];
-
 	if (i == 0 || i == map->height - 1 || j == 0 || j == map->width - 1)
 		return (0);
 	if (up == ' ' || down == ' ' || left == ' ' || right == ' ')
@@ -111,6 +108,29 @@ int	has_invalid_spaces(t_map *map)
 	return (0);
 }
 
+char	*pad_line(char *line, int width)
+{
+	char	*new_line;
+	int		len;
+	int		i;
+
+	len = ft_strlen(line);
+	new_line = malloc(width + 1);
+	if (!new_line)
+		return (NULL);
+	i = 0;
+	while (i < width)
+	{
+		if (i < len)
+			new_line[i] = line[i];
+		else
+			new_line[i] = ' ';
+		i++;
+	}
+	new_line[width] = '\0';
+	return (new_line);
+}
+
 int	count_players(t_map *map)
 {
 	int	i;
@@ -125,8 +145,8 @@ int	count_players(t_map *map)
 		j = 0;
 		while (j < ft_strlen(map->grid[i]))
 		{
-			
-			if (ft_strchr("NSEW", map->grid[i][j])) {
+			if (ft_strchr("NSEW", map->grid[i][j]))
+			{
 				map->grid[i][j] = '0';
 				count++;
 			}
@@ -212,43 +232,41 @@ void	set_player_position(t_config *config, int x, int y, char dir)
 	config->player.angle = get_angle_from_char(dir);
 }
 
-static int	skip_empty_lines(char **lines)
+int	skip_empty_lines(char **lines)
 {
 	int	i;
 
 	i = 0;
 	while (lines[i] && ft_strlen(lines[i]) == 0)
-	{
 		i++;
-	}
 	return (i);
 }
 
-static void	process_map_row(t_config *config, int row, char *line)
+void	process_map_row(t_config *config, int row, char *line)
 {
-	int	col;
+	int	i;
 
-	col = 0;
-	while (line[col])
+	i = 0;
+	while (line[i])
 	{
-		while (line[col] == ' ')
-			col++;
-		if (ft_strchr("NSEW", line[col]))
-			set_player_position(config, col, row, line[col]);
-		col++;
+		if (ft_strchr("NSEW", line[i]))
+			set_player_position(config, i, row, line[i]);
+		i++;
 	}
-	if (col > config->map.width)
-		config->map.width = col;
+	if (i > config->map.width)
+		config->map.width = i;
 }
 
 int	allocate_map_grid(t_config *config, char **lines, int i)
 {
-	int	j;
+	int		j;
+	char	*padded;
 
 	config->map.height = 0;
 	while (lines[i + config->map.height])
 		config->map.height++;
-	config->map.grid = (char **)malloc(sizeof(char *) * (config->map.height + 1));
+	config->map.grid = (char **)malloc(sizeof(char *) * (config->map.height
+				+ 1));
 	if (!config->map.grid)
 		return (0);
 	j = 0;
@@ -258,6 +276,16 @@ int	allocate_map_grid(t_config *config, char **lines, int i)
 		if (!config->map.grid[j])
 			return (0);
 		process_map_row(config, j, config->map.grid[j]);
+		j++;
+	}
+	j = 0;
+	while (j < config->map.height)
+	{
+		padded = pad_line(config->map.grid[j], config->map.width);
+		if (!padded)
+			return (0);
+		free(config->map.grid[j]);
+		config->map.grid[j] = padded;
 		j++;
 	}
 	config->map.grid[config->map.height] = NULL;
@@ -302,34 +330,76 @@ int	parse_color(char *line, int *color)
 	return (i == 3);
 }
 
-int	ft_strcmp(const char *s1, const char *s2)
+int	ft_isspace(char c)
 {
-	while (*s1 && (*s1 == *s2))
-	{
-		s1++;
-		s2++;
-	}
-	return ((unsigned char)*s1 - (unsigned char)*s2);
+	if (c == ' ' || c == '\t' || c == '\n')
+		return (1);
+	if (c == '\v' || c == '\f' || c == '\r')
+		return (1);
+	return (0);
 }
 
 int	parse_line(char *line, t_config *config)
 {
-	while (*line == ' ')
-		line++;
-	if (ft_strcmp(line, "NO ") == 0)
-		config->no_texture = ft_strdup(line + 3);
-	else if (ft_strcmp(line, "SO ") == 0)
-		config->so_texture = ft_strdup(line + 3);
-	else if (ft_strncmp(line, "WE ", 3) == 0)
-		config->we_texture = ft_strdup(line + 3);
-	else if (ft_strncmp(line, "EA ", 3) == 0)
-		config->ea_texture = ft_strdup(line + 3);
-	else if (ft_strncmp(line, "F ", 2) == 0)
-		parse_color(line + 2, config->floor_color);
-	else if (ft_strncmp(line, "C ", 2) == 0)
-		parse_color(line + 2, config->ceiling_color);
-	else
+	char	*trimmed;
+	char	*value;
+
+	trimmed = ft_strtrim(line, " \t\n\r");
+	if (!trimmed)
 		return (0);
+	if (ft_strlen(trimmed) == 0)
+	{
+		free(trimmed);
+		return (1);
+	}
+	if (ft_strncmp(trimmed, "NO", 2) == 0 && ft_isspace(trimmed[2]))
+	{
+		value = ft_strtrim(trimmed + 2, " \t");
+		config->no_texture = value;
+	}
+	else if (ft_strncmp(trimmed, "SO", 2) == 0 && ft_isspace(trimmed[2]))
+	{
+		value = ft_strtrim(trimmed + 2, " \t");
+		config->so_texture = value;
+	}
+	else if (ft_strncmp(trimmed, "WE", 2) == 0 && ft_isspace(trimmed[2]))
+	{
+		value = ft_strtrim(trimmed + 2, " \t");
+		config->we_texture = value;
+	}
+	else if (ft_strncmp(trimmed, "EA", 2) == 0 && ft_isspace(trimmed[2]))
+	{
+		value = ft_strtrim(trimmed + 2, " \t");
+		config->ea_texture = value;
+	}
+	else if (ft_strncmp(trimmed, "F", 1) == 0 && ft_isspace(trimmed[1]))
+	{
+		value = ft_strtrim(trimmed + 1, " \t");
+		if (!parse_color(value, config->floor_color))
+		{
+			free(value);
+			free(trimmed);
+			return (0);
+		}
+		free(value);
+	}
+	else if (ft_strncmp(trimmed, "C", 1) == 0 && ft_isspace(trimmed[1]))
+	{
+		value = ft_strtrim(trimmed + 1, " \t");
+		if (!parse_color(value, config->ceiling_color))
+		{
+			free(value);
+			free(trimmed);
+			return (0);
+		}
+		free(value);
+	}
+	else
+	{
+		free(trimmed);
+		return (0);
+	}
+	free(trimmed);
 	return (1);
 }
 
