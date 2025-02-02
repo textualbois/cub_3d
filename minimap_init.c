@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap_init.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
+/*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:12:01 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/02 09:27:53 by admin            ###   ########.fr       */
+/*   Updated: 2025/02/02 19:32:33 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ t_mini_map	*init_minimap(int map[8][8])
 	}
 	minimap->size = (t_DoublePair){8 * TILE_SIZE, 8 * TILE_SIZE};
 	minimap->visible_size = (t_DoublePair){VISIBLE_TILES * TILE_SIZE, VISIBLE_TILES * TILE_SIZE};
+	minimap->size_int = (t_IntPair){8, 8}; //todo
+	minimap->ppu = PPU;
 	return (minimap);
 }
 

@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:56 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/01 21:36:16 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/02 18:43:22 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	init_loops_n_hooks(t_World_Controller *world)
 {
 	mlx_loop_hook(world->window, ft_exit_button, world);
 	mlx_loop_hook(world->window, ft_movement_input, world);
-	// mlx_loop_hook(world->window, redraw, world);
+	mlx_loop_hook(world->window, redraw, world);
 	mlx_loop(world->window);
 	mlx_terminate(world->window);
 	// draw_world(world);
