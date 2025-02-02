@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:12:18 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/02 19:32:14 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/02 23:11:24 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,13 @@ mlx_image_t			*init_image_mini_character(mlx_t *window, t_character *player, t_I
 mlx_image_t			*init_image_minimap(mlx_t *window);//, int map[8][8]);
 
 void				draw_world(t_World_Controller *world);
+
+void centre_character_img(t_World_Controller *world, t_mini_map *map, t_DoublePair pos);
+void centre_character_img_v_low(t_World_Controller *world, t_mini_map *map, t_DoublePair pos);
+void centre_character_img_v_top(t_World_Controller *world, t_mini_map *map, t_DoublePair pos);
+void centre_character_img_v_middle(t_World_Controller *world);
+// void centre_character_img_h_left(t_World_Controller *world, t_mini_map *map, t_DoublePair pos);
+// void centre_character_img_h_right(t_World_Controller *world, t_mini_map *map, t_DoublePair pos);
+// void centre_character_img_h_middle(t_World_Controller *world, t_mini_map *map, t_DoublePair pos);
+
 #endif

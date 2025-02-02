@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:49:48 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/02 21:30:25 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/02 23:07:15 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	redraw(void *param)
 	centre_mini_map(world->map, world->player); // if player moves we first try to move the map view
 	color_mini_map(world->map_img, world->map);
 	// player is drawn relative to his image, so we need to move the image
-	// adjust_mini_character_position(world->miniCharacter, world->map_img, world->player); // then we move the player image box, if hes close to a border
+	centre_character_img(world, world->map, world->player->pos); // then we move the player image box, if hes close to a border
 	ft_color_mini_character(world->miniCharacter, 0xFF00FFFF);
 	// color_rays
 	//ft_color_mini_character_direction(world->miniCharacter, 0xFF0000FF, world->player); // then we draw the player
