@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:53 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/01 20:54:13 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/02 20:27:43 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,9 @@ t_World_Controller *init_world(int map[8][8])
 
 	if (init_images(world) != 0)//, map) != 0)
 	{
+		printf("init images failedn\n");
 		free(world->player);
+		free(world->map);
 		free(world);
 		return (NULL);
 	}

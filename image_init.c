@@ -6,21 +6,30 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:23 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/01 21:34:46 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/02 20:34:47 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "world.h"
+#include "stdio.h"
 
 int	init_images(t_World_Controller *world)//, int map[8][8])
 {
-	world->map_img = init_image_minimap(world->window);//, map);
+	t_IntPair	mini_player_img_size;
+
+	mini_player_img_size.x = (int)world->map->visible_size.x / VISIBLE_TILES / 10 * world->map->ppu;
+	mini_player_img_size.y = (int)world->map->visible_size.y / VISIBLE_TILES / 10 * world->map->ppu;
+	printf("mini_player_img_size.x: %d\n", mini_player_img_size.x);
+	printf("mini_player_img_size.y: %d\n", mini_player_img_size.y);
+	fflush(stdout);
+	world->map_img = init_image_minimap(world->window);// return map variable for rescaling possibly
 	if (!world->map_img)
 		return (1);
 	world->miniCharacter = init_image_mini_character(world->window,
-			world->player, (t_IntPair){9, 9});
+			world->player, mini_player_img_size);
 	if (!world->miniCharacter)
 	{
+
 		mlx_delete_image(world->window, world->map_img);
 			// is this how you handle it?
 		return (1);
@@ -34,10 +43,23 @@ mlx_image_t	*init_image_mini_character(mlx_t *window, t_character *player,
 	mlx_image_t	*miniCharacter;
 
 	miniCharacter = mlx_new_image(window, size.x, size.y);
-	if (miniCharacter)
+	if (!miniCharacter)
 	{
-		ft_color_mini_character_direction(miniCharacter, 0xFF0000FF, player);
+		printf("failed to create miniCharacter\n");
+		fflush(stdout);
+		return (NULL);
 	}
+	if (!player)
+	{
+		return (miniCharacter);
+	}
+	// if (miniCharacter)
+	// {
+		// void ft_color_mini_character(mlx_image_t *player, 0xFF0000FF);
+		// ft_color_mini_character_direction(miniCharacter, 0xFF0000FF, player);
+	// }
+	printf("miniCharacter: %p\n", miniCharacter);
+	fflush(stdout);
 	return (miniCharacter);
 }
 
