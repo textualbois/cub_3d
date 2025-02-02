@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:20 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/01 17:52:19 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/02 20:23:45 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ int main(int argc, char **argv)
 	ft_putstr_fd("Hello, World!\n", 1);
 	world = init_world(map);
 	ft_putstr_fd("Hello, Images!\n", 1);
-	init_images(world);//, map);
+	// init_images(world);//, map);
+	ft_putstr_fd("Hello, Draw!\n", 1);
 	draw_world(world);
 	ft_putstr_fd("Hello, Loops and Hooks!\n", 1);
 	init_loops_n_hooks(world);
