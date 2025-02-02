@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:12:04 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/01 19:21:12 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/02 19:50:06 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	ft_movement_input(void *param)
 		set_movement(world, (t_DoublePair){5 * cos(world->player->angle + PI / 2), 5 * sin(world->player->angle + PI / 2)});
 	if (mlx_is_key_down(world->window, MLX_KEY_D))
 		set_movement(world, (t_DoublePair){5 * cos(world->player->angle - PI / 2), 5 * sin(world->player->angle - PI / 2)});
+	// adjust for walls()
 }
 
 void	set_h_rotation(t_World_Controller *world, double angle_delta)
