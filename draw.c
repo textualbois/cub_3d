@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:49:48 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/02 18:43:30 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/02 21:30:25 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	draw_world(t_World_Controller *world)
 
 	miniCharImgPos.x = (world->player->pos.x / world->size.x) * world->map_img->width - (world->miniCharacter->width / 2);
 	miniCharImgPos.y = (world->player->pos.y / world->size.y) * world->map_img->height - (world->miniCharacter->height / 2);
+	printf("char image positions x: %d, y: %d\n", miniCharImgPos.x, miniCharImgPos.y);
+	fflush(stdout);
 	mlx_image_to_window(world->window, world->map_img, 0, 0);
 	// color_mini_map(world->map_img, world->map);
 	mlx_image_to_window(world->window, world->miniCharacter, miniCharImgPos.x, miniCharImgPos.y);
@@ -37,14 +39,13 @@ void	redraw(void *param)
 	color_mini_map(world->map_img, world->map);
 	// player is drawn relative to his image, so we need to move the image
 	// adjust_mini_character_position(world->miniCharacter, world->map_img, world->player); // then we move the player image box, if hes close to a border
-	ft_color_mini_character_direction(world->miniCharacter, 0xFF0000FF, world->player); // then we draw the player
+	ft_color_mini_character(world->miniCharacter, 0xFF00FFFF);
+	// color_rays
+	//ft_color_mini_character_direction(world->miniCharacter, 0xFF0000FF, world->player); // then we draw the player
 	// color_sky
 	// color_floor
 	// color_wall
 	// color_door
-	// color_minimap
-	// color_mini_character
 	// color_mini_character_direction
-	// color_rays
 	write(1, "redraw_end\n", 11);
 }

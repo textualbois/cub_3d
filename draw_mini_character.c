@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:37 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/01 20:04:24 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/02 20:13:19 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@
 
 void ft_color_mini_character(mlx_image_t *player, int color)
 {
-	int x = 0 + 2;
-	int y = 0 + 2;
+	uint32_t	x = 0;// + 2;
+	uint32_t		y = 0;// + 2;
 
-	while (x < 5 + 2)
+	while (x < player->width)//5 + 2)
 	{
-		y = 0 + 2;
-		while (y < 5 + 2)
+		y = 0;// + 2;
+		while (y < player->height)//5 + 2)
 		{
 			mlx_put_pixel(player, x, y, color);
 			y++;
