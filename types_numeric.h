@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:12:10 by isemin            #+#    #+#             */
-/*   Updated: 2025/01/29 08:47:56 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/01 20:42:56 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@
 // default window size
 #define WIDTH 800
 #define HEIGHT 800
-#define PI 3.14159265
+#define VISIBLE_TILES 8 // later maybe make it 16
+#define PI 3.1415926
 #define FOV 60
 #define LOD 20
 #define TILE_SIZE 10

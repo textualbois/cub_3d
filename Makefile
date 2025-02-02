@@ -2,7 +2,8 @@ NAME     = cub3d
 
 SRCS     = cub3d.c loops_hooks.c init_world.c minimap_init.c \
            character_init.c movement.c draw_mini_character.c \
-           window_init.c image_init.c draw.c draw_minimap.c
+           window_init.c image_init.c draw.c draw_minimap.c extra_math.c \
+		   minimap_view_box.c
 
 OBJ_DIR  = obj
 OBJS     = $(addprefix $(OBJ_DIR)/,$(SRCS:.c=.o))

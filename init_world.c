@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:53 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/01 17:48:20 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/01 20:54:13 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,18 @@ t_World_Controller *init_world(int map[8][8])
 		free(world);
 		return (NULL);
 	}
-	world->player = init_mini_character((t_IntPair){5, 5}, (t_IntPair){world->size.x / 2, world->size.y / 2});
+	world->player = init_mini_character((t_IntPair){5, 5}, (t_IntPair){world->size.x / 2, world->size.y / 2}); // actual poisiton will depend on input
 	if (!world->player)
 	{
 		free(world);
 		return (NULL);
 	}
-	for (int i = 0; i < 8; i++)
-	{
-		ft_memcpy(world->map[i], map[i], 8 * sizeof(int));
-	}
+	world->map = init_minimap(map);
+
+	// for (int i = 0; i < 8; i++)
+	// {
+	// 	ft_memcpy(world->map[i], map[i], 8 * sizeof(int));
+	// }
 
 	if (init_images(world) != 0)//, map) != 0)
 	{

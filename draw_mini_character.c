@@ -6,21 +6,23 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:37 by isemin            #+#    #+#             */
-/*   Updated: 2025/01/26 20:25:22 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/01 20:04:24 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "draw.h"
+#include "stdio.h"
+#include "extra_math.h"
 
 void ft_color_mini_character(mlx_image_t *player, int color)
 {
-	int x = 0;
-	int y = 0;
+	int x = 0 + 2;
+	int y = 0 + 2;
 
-	while (x < 5)
+	while (x < 5 + 2)
 	{
-		y = 0;
-		while (y < 5)
+		y = 0 + 2;
+		while (y < 5 + 2)
 		{
 			mlx_put_pixel(player, x, y, color);
 			y++;
@@ -36,8 +38,8 @@ void ft_color_mini_character_direction(mlx_image_t *character, int color, t_char
 	t_IntPair		iter;
 	t_DoublePair	end;
 
-	centre.x = character->width / 2;
-	centre.y = character->height / 2;
+	centre.x = (double)character->width / 2;
+	centre.y = (double)character->height / 2;
 	offset = 2; // (character->width - player->size.x) / 2;
 	// Color the main body of the character
 	for (iter.x = offset; iter.x < offset + player->size.x; iter.x++) {
@@ -45,11 +47,13 @@ void ft_color_mini_character_direction(mlx_image_t *character, int color, t_char
 			mlx_put_pixel(character, iter.x, iter.y, color);
 		}
 	}
+	write(1, "colored_mini_character\n", 23);
 
 	// Color the direction of the character
 	end.x = centre.x + (player->size.x) * cos(player->angle);
 	end.y = centre.y - (player->size.y) * sin(player->angle);
 	ft_color_line(character, color, centre, end);
+	write(1, "ft_color_mini_character_direction_end\n", 38);
 }
 
 void	ft_color_line(mlx_image_t *img, int color, t_DoublePair start, t_DoublePair end)
@@ -65,9 +69,13 @@ void	ft_color_line(mlx_image_t *img, int color, t_DoublePair start, t_DoublePair
 	sign.y = start.y < end.y ? 1 : -1;
 	error.x = delta.x - delta.y;
 	iter = start;
-	while (fabs(iter.x - end.x) > 0.5 || fabs(iter.y - end.y) > 0.5)
-	//while (iter.x <= end.x * sign.x || iter.y <= end.y * sign.y)
+	printf("size of line = %f\n", distance(start, end));
+	printf("size of iamge = %d\n", img->width);
+
+// }	while (fabs(iter.x - end.x) > 0.5 || fabs(iter.y - end.y) > 0.5)
+	while ((int)iter.x != (int)end.x && (int)iter.y != (int)end.y)
 	{
+		printf("coloring points %f %f\n", iter.x, iter.y);
 		mlx_put_pixel(img, (int)iter.x, (int)iter.y, color);
 		error.y = error.x * 2;
 		if (error.y > -delta.y)
@@ -81,5 +89,5 @@ void	ft_color_line(mlx_image_t *img, int color, t_DoublePair start, t_DoublePair
 			iter.y += sign.y;
 		}
 	}
-	//mlx_put_pixel(img, (int)end.x, (int)end.y, color);
+	mlx_put_pixel(img, (int)end.x, (int)end.y, color);
 }
