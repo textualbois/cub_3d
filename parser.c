@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 15:26:10 by vmamoten          #+#    #+#             */
-/*   Updated: 2025/02/03 19:09:26 by admin            ###   ########.fr       */
+/*   Updated: 2025/02/03 19:39:49 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -325,53 +325,79 @@ int	is_valid_color_value(char *str)
 	return (1);
 }
 
-int	parse_color(char *line, int *color)
+char	**split_color_values(char *line)
 {
 	char	**rgb;
-	char	*trimmed_token;
-	int		i;
-	int		value;
 	int		count;
 
 	while (*line == ' ')
 		line++;
 	rgb = ft_split(line, ',');
 	if (!rgb)
-		return (0);
+		return (NULL);
 	count = 0;
 	while (rgb[count])
 		count++;
 	if (count != 3)
 	{
 		free_lines_from(rgb, 0);
-		return (0);
+		return (NULL);
 	}
+	return (rgb);
+}
+
+int	convert_color_value(char *str)
+{
+	int	value;
+	char *trimmed_token;
+
+	trimmed_token = ft_strtrim(str, " \t");
+	if (!trimmed_token)
+		return (-1);
+
+	if (!is_valid_color_value(trimmed_token))
+	{
+		free(trimmed_token);
+		return (-1);
+	}
+	value = ft_atoi(trimmed_token);
+	free(trimmed_token);
+	if (value < 0 || value > 255)
+		return (-1);
+	return (value);
+}
+
+int	validate_and_convert_color(char **rgb, int *color)
+{
+	int	i;
+	int	value;
+
 	i = 0;
 	while (i < 3)
 	{
-		trimmed_token = ft_strtrim(rgb[i], " \t");
-		if (!trimmed_token)
+		value = convert_color_value(rgb[i]);
+		if (value == -1)
 		{
-			free_lines_from(rgb, 0);
-			return (0);
-		}
-		if (!is_valid_color_value(trimmed_token))
-		{
-			free(trimmed_token);
-			free_lines_from(rgb, 0);
-			return (0);
-		}
-		value = ft_atoi(trimmed_token);
-		if (value < 0 || value > 255)
-		{
-			free(trimmed_token);
 			free_lines_from(rgb, 0);
 			return (0);
 		}
 		color[i] = value;
-		free(trimmed_token);
 		i++;
 	}
+	return (1);
+}
+
+int	parse_color(char *line, int *color)
+{
+	char	**rgb;
+
+	rgb = split_color_values(line);
+	if (!rgb)
+		return (0);
+
+	if (!validate_and_convert_color(rgb, color))
+		return (0);
+
 	free_lines_from(rgb, 0);
 	return (1);
 }
@@ -487,44 +513,60 @@ char	*read_file_content(int fd)
 	return (file_content);
 }
 
+int	process_texture_or_color(char *line, char **lines, t_config *config, int *index)
+{
+	if (ft_strncmp(line, "NO", 2) == 0 || ft_strncmp(line, "SO", 2) == 0
+		|| ft_strncmp(line, "WE", 2) == 0 || ft_strncmp(line, "EA", 2) == 0
+		|| ft_strncmp(line, "F", 1) == 0 || ft_strncmp(line, "C", 1) == 0)
+	{
+		free(line);
+		if (!parse_line(lines[*index], config))
+		{
+			free_lines_from(lines, *index);
+			printf("Error\nInvalid texture or color specification\n");
+			exit(1);
+		}
+		free(lines[*index]);
+		(*index)++;
+		return (1);
+	}
+	return (0);
+}
+
+char	*trim_and_validate_line(char *line, char **lines, int *index)
+{
+	char	*trimmed;
+
+	trimmed = ft_strtrim(line, " \t\n\r");
+	if (!trimmed)
+	{
+		free_lines_from(lines, *index);
+		printf("Error\nMemory allocation error\n");
+		exit(1);
+	}
+	if (ft_strlen(trimmed) == 0)
+	{
+		free(trimmed);
+		free(lines[*index]);
+		(*index)++;
+		return (NULL);
+	}
+	return (trimmed);
+}
+
 void	parse_textures_colors(char **lines, t_config *config, int *index)
 {
 	char	*temp;
 
 	while (lines[*index])
 	{
-		temp = ft_strtrim(lines[*index], " \t\n\r");
+		temp = trim_and_validate_line(lines[*index], lines, index);
 		if (!temp)
-		{
-			free_lines_from(lines, *index);
-			printf("Error\nMemory allocation error\n");
-			exit(1);
-		}
-		if (ft_strlen(temp) == 0)
+			continue;
+		if (!process_texture_or_color(temp, lines, config, index))
 		{
 			free(temp);
-			free(lines[*index]);
-			(*index)++;
-			continue ;
-		}
-		if (ft_strncmp(temp, "NO", 2) == 0 || ft_strncmp(temp, "SO", 2) == 0
-			|| ft_strncmp(temp, "WE", 2) == 0 || ft_strncmp(temp, "EA", 2) == 0
-			|| ft_strncmp(temp, "F", 1) == 0 || ft_strncmp(temp, "C", 1) == 0)
-		{
-			free(temp);
-			if (!parse_line(lines[*index], config))
-			{
-				free_lines_from(lines, *index);
-				printf("Error\nInvalid texture or color specification\n");
-				exit(1);
-			}
-			free(lines[*index]);
-			(*index)++;
-		}
-		else
-		{
-			free(temp);
-			break ;
+			break;
 		}
 	}
 }
