@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 15:26:10 by vmamoten          #+#    #+#             */
-/*   Updated: 2025/02/03 19:39:49 by admin            ###   ########.fr       */
+/*   Updated: 2025/02/03 20:29:36 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,21 +175,6 @@ int	is_map_enclosed(t_map *map)
 		i++;
 	}
 	return (1);
-}
-
-int	is_valid_map_char(char c)
-{
-	const char	valid_chars[] = "01NSEW ";
-	int			i;
-
-	i = 0;
-	while (valid_chars[i])
-	{
-		if (c == valid_chars[i])
-			return (1);
-		i++;
-	}
-	return (0);
 }
 
 int	is_map_valid(t_map *map)
