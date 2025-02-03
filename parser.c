@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
+/*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 15:26:10 by vmamoten          #+#    #+#             */
-/*   Updated: 2025/02/02 15:37:24 by vmamoten         ###   ########.fr       */
+/*   Updated: 2025/02/03 18:49:17 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -295,8 +295,17 @@ int	allocate_map_grid(t_config *config, char **lines, int i)
 void	parse_map(char **lines, t_config *config)
 {
 	int	i;
+	// int	tmp;
 
 	i = skip_empty_lines(lines);
+	// printf("Проверка картографических строк перед `allocate_map_grid`:\n");
+	// tmp = i;
+	// while (lines[tmp])
+	// {
+	// 	printf("lines[%d]: \"%s\"\n", tmp, lines[tmp]);
+	// 	tmp++;
+	// }
+	// printf("Конец печати карты.\n");
 	if (!allocate_map_grid(config, lines, i))
 	{
 		free_lines_from(config->map.grid, 0);
@@ -529,6 +538,47 @@ void	parse_textures_colors(char **lines, t_config *config, int *index)
 	}
 }
 
+char	**split_lines_manual(const char *file_content)
+{
+	char	**lines;
+	int		count;
+	char	*temp;
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	count = 1;
+	while (file_content[j])
+	{
+		if (file_content[j] == '\n')
+			count++;
+		j++;
+	}
+	lines = malloc(sizeof(char *) * (count + 1));
+	if (!lines)
+		return (NULL);
+	while (*file_content)
+	{
+		temp = ft_strchr(file_content, '\n');
+		if (temp)
+		{
+			lines[i] = ft_substr(file_content, 0, temp - file_content);
+			file_content = temp + 1;
+		}
+		else
+		{
+			lines[i] = ft_strdup(file_content);
+			if (!lines[i])
+				break ;
+			file_content += ft_strlen(file_content);
+		}
+		i++;
+	}
+	lines[i] = NULL;
+	return (lines);
+}
+
 void	parse_cub_file(const char *filename, t_config *config)
 {
 	int		i;
@@ -536,13 +586,20 @@ void	parse_cub_file(const char *filename, t_config *config)
 	char	*file_content;
 	char	**lines;
 
+	// int	tmp;
 	i = 0;
 	fd = open_cub(filename);
 	file_content = read_file_content(fd);
-	lines = ft_split(file_content, '\n');
+	lines = split_lines_manual(file_content);
 	free(file_content);
 	if (!lines)
 		return ;
+	// tmp = i;
+	// while (lines[tmp])
+	// {
+	// 	printf("lines[%d]: \"%s\"\n", tmp, lines[tmp]);
+	// 	tmp++;
+	// }
 	parse_textures_colors(lines, config, &i);
 	parse_map(&lines[i], config);
 	free_lines_from(lines, i);
