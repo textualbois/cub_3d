@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 14:09:33 by admin             #+#    #+#             */
-/*   Updated: 2025/01/30 23:30:08 by admin            ###   ########.fr       */
+/*   Updated: 2025/02/04 23:49:40 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,11 @@ typedef struct s_config
 }					t_config;
 
 # define BUFFER_SIZE 4096
+
+// parser_free_utils.c
+void				free_config(t_config *config);
+
+void				free_lines_from(char **lines, int start);
 
 void				parse_cub_file(const char *filename, t_config *config);
 int					parse_color(char *line, int *color);

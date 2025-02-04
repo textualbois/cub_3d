@@ -6,11 +6,22 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 15:26:10 by vmamoten          #+#    #+#             */
-/*   Updated: 2025/02/04 19:24:10 by admin            ###   ########.fr       */
+/*   Updated: 2025/02/04 23:50:23 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
+
+void	error_exit(const char *msg, char **lines, int idx, t_config *config)
+{
+	if (msg)
+		printf("Error\n%s\n", msg);
+	if (lines)
+		free_lines_from(lines, idx);
+	if (config)
+		free_config(config);
+	exit(1);
+}
 
 void	print_map(t_map *map)
 {
@@ -23,16 +34,6 @@ void	print_map(t_map *map)
 		printf("%s\n", map->grid[i]);
 		i++;
 	}
-}
-
-void	free_lines_from(char **lines, int start)
-{
-	while (lines[start])
-	{
-		free(lines[start]);
-		start++;
-	}
-	free(lines);
 }
 
 int	has_cub_extension(const char *filename)
@@ -180,19 +181,13 @@ int	count_players(t_map *map, t_config *config)
 
 	count = 0;
 	i = 0;
-	// printf("height = %d\n",map->height);
-	// printf("width = %d\n",map->width);
-	// print_map(map);
 	while (i < map->height)
 	{
 		j = 0;
-		// printf("count in count_players %d\n",map->height);
 		while (j < ft_strlen(map->grid[i]))
 		{
-			// printf("count in count_players %zu\n",ft_strlen(map->grid[i]));
 			if (ft_strchr("NSEW", map->grid[i][j]))
 			{
-				// printf("count in count_players %d\n",count);
 				count++;
 				if (count == 1)
 				{
@@ -204,7 +199,6 @@ int	count_players(t_map *map, t_config *config)
 		}
 		i++;
 	}
-	// printf("count in count_players %d\n",count);
 	return (count);
 }
 
@@ -307,23 +301,12 @@ int	skip_empty_lines(char **lines)
 	return (i);
 }
 
-void	process_map_row(t_config *config, int row, char *line)
-{
-	int	i;
-
-	i = 0;
-	while (line[i])
-		i++;
-	if (i > config->map.width)
-		config->map.width = i;
-}
-
 int	allocate_map_grid(t_config *config, char **lines, int i)
 {
 	int		j;
-	char	*padded;
-	int		max_width;
 	int		line_length;
+	int		max_width;
+	char	*padded;
 
 	config->map.height = 0;
 	while (lines[i + config->map.height])
@@ -345,18 +328,16 @@ int	allocate_map_grid(t_config *config, char **lines, int i)
 	j = 0;
 	while (j < config->map.height)
 	{
-		config->map.grid[j] = pad_line(lines[i + j], config->map.width);
-		if (!config->map.grid[j])
+		padded = pad_line(lines[i + j], config->map.width);
+		if (!padded)
+		{
+			free_lines_from(config->map.grid, 0);
 			return (0);
+		}
+		config->map.grid[j] = padded;
 		j++;
 	}
 	config->map.grid[config->map.height] = NULL;
-	j = 0;
-	while (j < config->map.height)
-	{
-		process_map_row(config, j, config->map.grid[j]);
-		j++;
-	}
 	return (1);
 }
 
