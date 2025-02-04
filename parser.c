@@ -6,11 +6,24 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 15:26:10 by vmamoten          #+#    #+#             */
-/*   Updated: 2025/02/03 20:29:36 by admin            ###   ########.fr       */
+/*   Updated: 2025/02/04 19:24:10 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
+
+void	print_map(t_map *map)
+{
+	int	i;
+
+	i = 0;
+	printf("Map (%d x %d):\n", map->width, map->height);
+	while (i < map->height)
+	{
+		printf("%s\n", map->grid[i]);
+		i++;
+	}
+}
 
 void	free_lines_from(char **lines, int start)
 {
@@ -88,6 +101,14 @@ int	is_sur_by_wals(t_map *map, int i, int j)
 	return (1);
 }
 
+int	is_valid_map_char(char c)
+{
+	if (c == ' ' || c == '1' || c == '0' || c == 'N' || c == 'E' || c == 'W'
+		|| c == 'S')
+		return (1);
+	return (0);
+}
+
 int	has_invalid_spaces(t_map *map)
 {
 	int	i;
@@ -131,29 +152,59 @@ char	*pad_line(char *line, int width)
 	return (new_line);
 }
 
-int	count_players(t_map *map)
+double	get_angle_from_char(char dir)
+{
+	if (dir == 'N')
+		return (3 * M_PI_2);
+	if (dir == 'S')
+		return (M_PI_2);
+	if (dir == 'E')
+		return (0);
+	if (dir == 'W')
+		return (M_PI);
+	return (0);
+}
+
+void	set_player_position(t_config *config, int x, int y, char dir)
+{
+	config->player.pos.x = (double)x + 0.5;
+	config->player.pos.y = (double)y + 0.5;
+	config->player.angle = get_angle_from_char(dir);
+}
+
+int	count_players(t_map *map, t_config *config)
 {
 	int	i;
 	int	j;
 	int	count;
 
-	i = 0;
-	j = 0;
 	count = 0;
+	i = 0;
+	// printf("height = %d\n",map->height);
+	// printf("width = %d\n",map->width);
+	// print_map(map);
 	while (i < map->height)
 	{
 		j = 0;
+		// printf("count in count_players %d\n",map->height);
 		while (j < ft_strlen(map->grid[i]))
 		{
+			// printf("count in count_players %zu\n",ft_strlen(map->grid[i]));
 			if (ft_strchr("NSEW", map->grid[i][j]))
 			{
-				map->grid[i][j] = '0';
+				// printf("count in count_players %d\n",count);
 				count++;
+				if (count == 1)
+				{
+					set_player_position(config, j, i, map->grid[i][j]);
+					map->grid[i][j] = '0';
+				}
 			}
 			j++;
 		}
 		i++;
 	}
+	// printf("count in count_players %d\n",count);
 	return (count);
 }
 
@@ -177,8 +228,52 @@ int	is_map_enclosed(t_map *map)
 	return (1);
 }
 
-int	is_map_valid(t_map *map)
+int	is_player_surrounded(t_config *config)
 {
+	int		row;
+	int		col;
+	char	neighbors[4];
+	int		i;
+
+	row = (int)config->player.pos.y;
+	col = (int)config->player.pos.x;
+	if (row <= 0 || row >= config->map.height - 1 || col <= 0
+		|| col >= config->map.width - 1)
+		return (0);
+	neighbors[0] = config->map.grid[row - 1][col];
+	neighbors[1] = config->map.grid[row + 1][col];
+	neighbors[2] = config->map.grid[row][col - 1];
+	neighbors[3] = config->map.grid[row][col + 1];
+	i = 0;
+	while (i < 4)
+	{
+		if (neighbors[i] != '0' && neighbors[i] != '1')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+int	is_map_valid(t_map *map, t_config *config)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < map->height)
+	{
+		j = 0;
+		while (j < map->width)
+		{
+			if (!is_valid_map_char(map->grid[i][j]))
+			{
+				printf("Error\nMap contains invalid characters.\n");
+				return (0);
+			}
+			j++;
+		}
+		i++;
+	}
 	if (!is_map_enclosed(map))
 	{
 		printf("Error\nMap is not enclosed by walls.\n");
@@ -189,32 +284,17 @@ int	is_map_valid(t_map *map)
 		printf("Error\nMap contains invalid spaces.\n");
 		return (0);
 	}
-	if (count_players(map) != 1)
+	if (count_players(map, config) != 1)
 	{
 		printf("Error\nMap must contain exactly one player.\n");
 		return (0);
 	}
-	return (1);
-}
-
-double	get_angle_from_char(char dir)
-{
-	if (dir == 'N')
-		return (3 * M_PI_2);
-	if (dir == 'S')
-		return (M_PI_2);
-	if (dir == 'E')
+	if (!is_player_surrounded(config))
+	{
+		printf("Error\nPlayer cannot be on the edge of the map.\n");
 		return (0);
-	if (dir == 'W')
-		return (M_PI);
-	return (0);
-}
-
-void	set_player_position(t_config *config, int x, int y, char dir)
-{
-	config->player.pos.x = (double)x + 0.5;
-	config->player.pos.y = (double)y + 0.5;
-	config->player.angle = get_angle_from_char(dir);
+	}
+	return (1);
 }
 
 int	skip_empty_lines(char **lines)
@@ -233,11 +313,7 @@ void	process_map_row(t_config *config, int row, char *line)
 
 	i = 0;
 	while (line[i])
-	{
-		if (ft_strchr("NSEW", line[i]))
-			set_player_position(config, i, row, line[i]);
 		i++;
-	}
 	if (i > config->map.width)
 		config->map.width = i;
 }
@@ -246,6 +322,8 @@ int	allocate_map_grid(t_config *config, char **lines, int i)
 {
 	int		j;
 	char	*padded;
+	int		max_width;
+	int		line_length;
 
 	config->map.height = 0;
 	while (lines[i + config->map.height])
@@ -254,26 +332,31 @@ int	allocate_map_grid(t_config *config, char **lines, int i)
 				+ 1));
 	if (!config->map.grid)
 		return (0);
+	max_width = 0;
 	j = 0;
 	while (j < config->map.height)
 	{
-		config->map.grid[j] = ft_strdup(lines[i + j]);
-		if (!config->map.grid[j])
-			return (0);
-		process_map_row(config, j, config->map.grid[j]);
+		line_length = ft_strlen(lines[i + j]);
+		if (line_length > max_width)
+			max_width = line_length;
 		j++;
 	}
+	config->map.width = max_width;
 	j = 0;
 	while (j < config->map.height)
 	{
-		padded = pad_line(config->map.grid[j], config->map.width);
-		if (!padded)
+		config->map.grid[j] = pad_line(lines[i + j], config->map.width);
+		if (!config->map.grid[j])
 			return (0);
-		free(config->map.grid[j]);
-		config->map.grid[j] = padded;
 		j++;
 	}
 	config->map.grid[config->map.height] = NULL;
+	j = 0;
+	while (j < config->map.height)
+	{
+		process_map_row(config, j, config->map.grid[j]);
+		j++;
+	}
 	return (1);
 }
 
@@ -287,7 +370,7 @@ void	parse_map(char **lines, t_config *config)
 		free_lines_from(config->map.grid, 0);
 		exit(1);
 	}
-	if (!is_map_valid(&config->map))
+	if (!is_map_valid(&config->map, config))
 	{
 		free_lines_from(config->map.grid, 0);
 		exit(1);
@@ -333,13 +416,12 @@ char	**split_color_values(char *line)
 
 int	convert_color_value(char *str)
 {
-	int	value;
-	char *trimmed_token;
+	int		value;
+	char	*trimmed_token;
 
 	trimmed_token = ft_strtrim(str, " \t");
 	if (!trimmed_token)
 		return (-1);
-
 	if (!is_valid_color_value(trimmed_token))
 	{
 		free(trimmed_token);
@@ -379,10 +461,8 @@ int	parse_color(char *line, int *color)
 	rgb = split_color_values(line);
 	if (!rgb)
 		return (0);
-
 	if (!validate_and_convert_color(rgb, color))
 		return (0);
-
 	free_lines_from(rgb, 0);
 	return (1);
 }
@@ -498,7 +578,8 @@ char	*read_file_content(int fd)
 	return (file_content);
 }
 
-int	process_texture_or_color(char *line, char **lines, t_config *config, int *index)
+int	process_texture_or_color(char *line, char **lines, t_config *config,
+		int *index)
 {
 	if (ft_strncmp(line, "NO", 2) == 0 || ft_strncmp(line, "SO", 2) == 0
 		|| ft_strncmp(line, "WE", 2) == 0 || ft_strncmp(line, "EA", 2) == 0
@@ -547,11 +628,11 @@ void	parse_textures_colors(char **lines, t_config *config, int *index)
 	{
 		temp = trim_and_validate_line(lines[*index], lines, index);
 		if (!temp)
-			continue;
+			continue ;
 		if (!process_texture_or_color(temp, lines, config, index))
 		{
 			free(temp);
-			break;
+			break ;
 		}
 	}
 }
@@ -630,19 +711,6 @@ void	parse_cub_file(const char *filename, t_config *config)
 	parse_textures_colors(lines, config, &i);
 	parse_map(&lines[i], config);
 	free_lines_from(lines, i);
-}
-
-void	print_map(t_map *map)
-{
-	int	i;
-
-	i = 0;
-	printf("Map (%d x %d):\n", map->width, map->height);
-	while (i < map->height)
-	{
-		printf("%s\n", map->grid[i]);
-		i++;
-	}
 }
 
 int	main(int argc, char **argv)
