@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:23 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/02 20:34:47 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/06 00:26:57 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	init_images(t_World_Controller *world)//, int map[8][8])
 	printf("mini_player_img_size.x: %d\n", mini_player_img_size.x);
 	printf("mini_player_img_size.y: %d\n", mini_player_img_size.y);
 	fflush(stdout);
-	world->map_img = init_image_minimap(world->window);// return map variable for rescaling possibly
+	world->map_img = init_image_minimap(world->window, world->map);// return map variable for rescaling possibly
 	if (!world->map_img)
 		return (1);
 	world->miniCharacter = init_image_mini_character(world->window,
@@ -63,13 +63,16 @@ mlx_image_t	*init_image_mini_character(mlx_t *window, t_character *player,
 	return (miniCharacter);
 }
 
-mlx_image_t	*init_image_minimap(mlx_t *window)//, int map[8][8])
+mlx_image_t	*init_image_minimap(mlx_t *window, t_mini_map *map)//, int map[8][8])
 {
-	mlx_image_t	*minimap;
+	mlx_image_t	*map_img;
+	int			ppu;
 
-	minimap = mlx_new_image(window, WIDTH, HEIGHT);
-	if (!minimap)
+	ppu = map->ppu;
+	map_img = mlx_new_image(window, map->visible_size.x * ppu, map->visible_size.y * ppu);
+	//map_img = mlx_new_image(window, WIDTH, HEIGHT);
+	if (!map_img)
 		return (NULL);
 	//color_mini
-	return (minimap);
+	return (map_img);
 }

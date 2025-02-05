@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:12:01 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/02 19:32:33 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/05 23:54:54 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ t_mini_map	*init_minimap(int map[8][8])
 	{
 		ft_memcpy(minimap->map[i], map[i], 8 * sizeof(int));
 	}
-	minimap->size = (t_DoublePair){8 * TILE_SIZE, 8 * TILE_SIZE};
-	minimap->visible_size = (t_DoublePair){VISIBLE_TILES * TILE_SIZE, VISIBLE_TILES * TILE_SIZE};
 	minimap->size_int = (t_IntPair){8, 8}; //todo
+	minimap->size = (t_IntPair){minimap->size_int.x * TILE_SIZE, minimap->size_int.y * TILE_SIZE};
+	minimap->visible_size = (t_IntPair){VISIBLE_TILES * TILE_SIZE, VISIBLE_TILES * TILE_SIZE};
 	minimap->ppu = PPU;
 	return (minimap);
 }
