@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 15:26:10 by vmamoten          #+#    #+#             */
-/*   Updated: 2025/02/04 23:50:23 by admin            ###   ########.fr       */
+/*   Updated: 2025/02/05 02:23:20 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -457,10 +457,53 @@ int	ft_isspace(char c)
 	return (0);
 }
 
+int	parse_texture(char *trimmed, char **texture)
+{
+	char	*value;
+
+	value = ft_strtrim(trimmed + 2, " \t");
+	if (!value)
+		return (0);
+	free(*texture);
+	*texture = value;
+	return (1);
+}
+
+int	parse_floor_color(char *trimmed, t_config *config)
+{
+	char	*value;
+
+	value = ft_strtrim(trimmed + 1, " \t");
+	if (!value)
+		return (0);
+	if (!parse_color(value, config->floor_color))
+	{
+		free(value);
+		return (0);
+	}
+	free(value);
+	return (1);
+}
+
+int	parse_ceiling_color(char *trimmed, t_config *config)
+{
+	char	*value;
+
+	value = ft_strtrim(trimmed + 1, " \t");
+	if (!value)
+		return (0);
+	if (!parse_color(value, config->ceiling_color))
+	{
+		free(value);
+		return (0);
+	}
+	free(value);
+	return (1);
+}
+
 int	parse_line(char *line, t_config *config)
 {
 	char	*trimmed;
-	char	*value;
 
 	trimmed = ft_strtrim(line, " \t\n\r");
 	if (!trimmed)
@@ -471,52 +514,17 @@ int	parse_line(char *line, t_config *config)
 		return (1);
 	}
 	if (ft_strncmp(trimmed, "NO", 2) == 0 && ft_isspace(trimmed[2]))
-	{
-		value = ft_strtrim(trimmed + 2, " \t");
-		config->no_texture = value;
-	}
+		parse_texture(trimmed, &config->no_texture);
 	else if (ft_strncmp(trimmed, "SO", 2) == 0 && ft_isspace(trimmed[2]))
-	{
-		value = ft_strtrim(trimmed + 2, " \t");
-		config->so_texture = value;
-	}
+		parse_texture(trimmed, &config->so_texture);
 	else if (ft_strncmp(trimmed, "WE", 2) == 0 && ft_isspace(trimmed[2]))
-	{
-		value = ft_strtrim(trimmed + 2, " \t");
-		config->we_texture = value;
-	}
+		parse_texture(trimmed, &config->we_texture);
 	else if (ft_strncmp(trimmed, "EA", 2) == 0 && ft_isspace(trimmed[2]))
-	{
-		value = ft_strtrim(trimmed + 2, " \t");
-		config->ea_texture = value;
-	}
+		parse_texture(trimmed, &config->ea_texture);
 	else if (ft_strncmp(trimmed, "F", 1) == 0 && ft_isspace(trimmed[1]))
-	{
-		value = ft_strtrim(trimmed + 1, " \t");
-		if (!parse_color(value, config->floor_color))
-		{
-			free(value);
-			free(trimmed);
-			return (0);
-		}
-		free(value);
-	}
+		parse_floor_color(trimmed, config);
 	else if (ft_strncmp(trimmed, "C", 1) == 0 && ft_isspace(trimmed[1]))
-	{
-		value = ft_strtrim(trimmed + 1, " \t");
-		if (!parse_color(value, config->ceiling_color))
-		{
-			free(value);
-			free(trimmed);
-			return (0);
-		}
-		free(value);
-	}
-	else
-	{
-		free(trimmed);
-		return (0);
-	}
+		parse_ceiling_color(trimmed, config);
 	free(trimmed);
 	return (1);
 }
@@ -653,6 +661,23 @@ char	*extract_line(const char **file_content)
 	return (line);
 }
 
+void	free_split_lines(char ***lines)
+{
+	int	i;
+
+	if (!lines || !(*lines))
+		return ;
+	i = 0;
+	while ((*lines)[i])
+	{
+		free((*lines)[i]);
+		(*lines)[i] = NULL;
+		i++;
+	}
+	free(*lines);
+	*lines = NULL;
+}
+
 char	**split_lines_manual(const char *file_content)
 {
 	char	**lines;
@@ -668,7 +693,10 @@ char	**split_lines_manual(const char *file_content)
 	{
 		lines[i] = extract_line(&file_content);
 		if (!lines[i])
-			break ;
+		{
+			free_split_lines(lines);
+			return (NULL);
+		}
 		i++;
 	}
 	lines[i] = NULL;
@@ -718,5 +746,6 @@ int	main(int argc, char **argv)
 	print_map(&config.map);
 	printf("Player position: (%.2f, %.2f), angle: %.2f radians\n",
 		config.player.pos.x, config.player.pos.y, config.player.angle);
+	free_config(&config);
 	return (0);
 }

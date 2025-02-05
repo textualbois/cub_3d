@@ -6,14 +6,14 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 14:09:33 by admin             #+#    #+#             */
-/*   Updated: 2025/02/04 23:49:40 by admin            ###   ########.fr       */
+/*   Updated: 2025/02/05 00:45:36 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
 
-# include "./libft/libft.h"
+# include "../libft/libft.h"
 # include <fcntl.h>
 # include <math.h>
 # include <stdio.h>
