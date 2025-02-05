@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 21:30:06 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/02 23:14:17 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/05 23:24:27 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,66 +14,60 @@
 
 void	centre_character_img(t_World_Controller *world, t_mini_map *map, t_DoublePair pos)
 {
-	if (map->view_port.y <= 0)
-		centre_character_img_v_low(world, map, pos);
-	else if (map->view_port.y >= map->size.y - map->visible_size.y)
-		centre_character_img_v_top(world, map, pos);
+	if (map->view_port.y <= 0 || map->view_port.y >= map->size.y - map->visible_size.y)
+		uncentre_character_img_v(world, map, pos);
 	else
-		centre_character_img_v_middle(world);
-	// if (map->view_port.x <= 0)
-	// 	centre_character_img_h_left(world, map, pos);
-	// else if (map->view_port.x >= map->size.x - map->visible_size.x)
-	// 	centre_character_img_h_right(world, map, pos);
-	// else
-	// 	centre_character_img_h_middle(world, map, pos);
+		centre_character_img_v(world);
+	if (map->view_port.x <= 0 || map->view_port.x >= map->size.x - map->visible_size.x)
+		uncentre_character_img_h(world, map, pos);
+	else
+		centre_character_img_h(world);
+
 
 }
 
-void	centre_character_img_v_low(t_World_Controller *world, t_mini_map *map, t_DoublePair pos)
+void uncentre_character_img_v(t_World_Controller *world, t_mini_map *map, t_DoublePair pos)
 {
 	int	pixel_offset;
-	printf("low vertical centering\n");
-	printf("pos.y: %f\n", pos.y);
 
 	if (pos.y < map->visible_size.y / 2)
 	{
 		pixel_offset = (int)(pos.y / map->visible_size.y * world->map_img->height);
-		// world->miniCharacter->instances[0].y = world->map_img->height + pixel_offset; // need to factor in world->miniCharacter->height / 2
-		world->miniCharacter->instances[0].y = world->map_img->instances[0].y + world->map_img->height - pixel_offset; // need to factor in world->miniCharacter->height / 2
+		world->miniCharacter->instances[0].y = world->map_img->instances[0].y + pixel_offset - world->miniCharacter->height / 2; // need to factor in world->miniCharacter->height / 2
 	}
-}
-
-void	centre_character_img_v_top(t_World_Controller *world, t_mini_map *map, t_DoublePair pos)
-{
-	int	pixel_offset;
-	printf("top vertical centering\n");
-	printf("pos.y: %f\n", pos.y);
-
-	if (pos.y > map->size.y - map->visible_size.y / 2)
+	else if (pos.y > map->size.y - map->visible_size.y / 2)
 	{
 		pixel_offset = (int)((pos.y - map->view_port.y) / map->visible_size.y * world->map_img->height);
-		world->miniCharacter->instances[0].y = world->map_img->instances[0].y + world->map_img->height - pixel_offset;
+		world->miniCharacter->instances[0].y = world->map_img->instances[0].y + pixel_offset - world->miniCharacter->height / 2;
 	}
 }
 
-void	centre_character_img_v_middle(t_World_Controller *world)
+void	centre_character_img_v(t_World_Controller *world)
 {
 	printf("middle vertical centering\n");
 	printf("pos.y: %f\n", world->player->pos.y);
 	world->miniCharacter->instances[0].y = world->map_img->instances[0].y + world->map_img->height / 2;
 }
 
-// void	centre_character_img_h_left(t_World_Controller *world, t_mini_map *map, t_DoublePair pos)
-// {
+void uncentre_character_img_h(t_World_Controller *world, t_mini_map *map, t_DoublePair pos)
+{
+	int	pixel_offset;
 
-// }
+	if (pos.x < map->visible_size.x / 2)
+	{
+		pixel_offset = (int)(pos.x / map->visible_size.x * world->map_img->width);
+		world->miniCharacter->instances[0].x = world->map_img->instances[0].x + pixel_offset - world->miniCharacter->width / 2; // need to factor in world->miniCharacter->width / 2
+	}
+	else if (pos.x > map->size.x - map->visible_size.x / 2)
+	{
+		pixel_offset = (int)((pos.x - map->view_port.x) / map->visible_size.x * world->map_img->width);
+		world->miniCharacter->instances[0].x = world->map_img->instances[0].x + pixel_offset - world->miniCharacter->width / 2;
+	}
+}
 
-// void	centre_character_img_h_right(t_World_Controller *world, t_mini_map *map, t_DoublePair pos)
-// {
-
-// }
-
-// void	centre_character_img_h_middle(t_World_Controller *world, t_mini_map *map, t_DoublePair pos)
-// {
-// 	world->miniCharacter->instances[0].x = world->map_img->instances[0].x + world->map_img->width / 2;
-// }
+void centre_character_img_h(t_World_Controller *world)
+{
+	printf("middle horizontal centering\n");
+	printf("pos.x: %f\n", world->player->pos.x);
+	world->miniCharacter->instances[0].x = world->map_img->instances[0].x + world->map_img->width / 2;
+}
