@@ -6,22 +6,11 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 15:26:10 by vmamoten          #+#    #+#             */
-/*   Updated: 2025/02/05 02:23:20 by admin            ###   ########.fr       */
+/*   Updated: 2025/02/06 21:09:29 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
-
-void	error_exit(const char *msg, char **lines, int idx, t_config *config)
-{
-	if (msg)
-		printf("Error\n%s\n", msg);
-	if (lines)
-		free_lines_from(lines, idx);
-	if (config)
-		free_config(config);
-	exit(1);
-}
 
 void	print_map(t_map *map)
 {
@@ -261,7 +250,7 @@ int	is_map_valid(t_map *map, t_config *config)
 		{
 			if (!is_valid_map_char(map->grid[i][j]))
 			{
-				printf("Error\nMap contains invalid characters.\n");
+				printf("Error: Map contains invalid characters.\n");
 				return (0);
 			}
 			j++;
@@ -270,22 +259,22 @@ int	is_map_valid(t_map *map, t_config *config)
 	}
 	if (!is_map_enclosed(map))
 	{
-		printf("Error\nMap is not enclosed by walls.\n");
+		printf("Error: Map is not enclosed by walls.\n");
 		return (0);
 	}
 	if (has_invalid_spaces(map))
 	{
-		printf("Error\nMap contains invalid spaces.\n");
+		printf("Error: Map contains invalid spaces.\n");
 		return (0);
 	}
 	if (count_players(map, config) != 1)
 	{
-		printf("Error\nMap must contain exactly one player.\n");
+		printf("Error: Map must contain exactly one player.\n");
 		return (0);
 	}
 	if (!is_player_surrounded(config))
 	{
-		printf("Error\nPlayer cannot be on the edge of the map.\n");
+		printf("Error: Player cannot be on the edge of the map.\n");
 		return (0);
 	}
 	return (1);
@@ -301,7 +290,7 @@ int	skip_empty_lines(char **lines)
 	return (i);
 }
 
-int	allocate_map_grid(t_config *config, char **lines, int i)
+int	allocate_map_grid(t_config *config, char **lines)
 {
 	int		j;
 	int		line_length;
@@ -309,7 +298,7 @@ int	allocate_map_grid(t_config *config, char **lines, int i)
 	char	*padded;
 
 	config->map.height = 0;
-	while (lines[i + config->map.height])
+	while (lines[config->map.height])
 		config->map.height++;
 	config->map.grid = (char **)malloc(sizeof(char *) * (config->map.height
 				+ 1));
@@ -319,7 +308,7 @@ int	allocate_map_grid(t_config *config, char **lines, int i)
 	j = 0;
 	while (j < config->map.height)
 	{
-		line_length = ft_strlen(lines[i + j]);
+		line_length = ft_strlen(lines[j]);
 		if (line_length > max_width)
 			max_width = line_length;
 		j++;
@@ -328,34 +317,35 @@ int	allocate_map_grid(t_config *config, char **lines, int i)
 	j = 0;
 	while (j < config->map.height)
 	{
-		padded = pad_line(lines[i + j], config->map.width);
+		padded = pad_line(lines[j], config->map.width);
 		if (!padded)
 		{
-			free_lines_from(config->map.grid, 0);
+			free_lines(config->map.grid);
 			return (0);
 		}
 		config->map.grid[j] = padded;
 		j++;
 	}
-	config->map.grid[config->map.height] = NULL;
+	config->map.grid[j] = NULL;
 	return (1);
 }
 
-void	parse_map(char **lines, t_config *config)
+char	**parse_map(char **lines, t_config *config)
 {
-	int	i;
+	int		skip;
+	char	**map_lines;
 
-	i = skip_empty_lines(lines);
-	if (!allocate_map_grid(config, lines, i))
+	skip = skip_empty_lines(lines);
+	map_lines = lines + skip;
+	if (!allocate_map_grid(config, map_lines))
 	{
-		free_lines_from(config->map.grid, 0);
-		exit(1);
+		return (NULL);
 	}
 	if (!is_map_valid(&config->map, config))
 	{
-		free_lines_from(config->map.grid, 0);
-		exit(1);
+		return (NULL);
 	}
+	return (lines);
 }
 
 int	is_valid_color_value(char *str)
@@ -389,7 +379,7 @@ char	**split_color_values(char *line)
 		count++;
 	if (count != 3)
 	{
-		free_lines_from(rgb, 0);
+		free_lines(rgb);
 		return (NULL);
 	}
 	return (rgb);
@@ -426,7 +416,7 @@ int	validate_and_convert_color(char **rgb, int *color)
 		value = convert_color_value(rgb[i]);
 		if (value == -1)
 		{
-			free_lines_from(rgb, 0);
+			free_lines(rgb);
 			return (0);
 		}
 		color[i] = value;
@@ -444,7 +434,7 @@ int	parse_color(char *line, int *color)
 		return (0);
 	if (!validate_and_convert_color(rgb, color))
 		return (0);
-	free_lines_from(rgb, 0);
+	free_lines(rgb);
 	return (1);
 }
 
@@ -464,7 +454,8 @@ int	parse_texture(char *trimmed, char **texture)
 	value = ft_strtrim(trimmed + 2, " \t");
 	if (!value)
 		return (0);
-	free(*texture);
+	if (*texture)
+		free(*texture);
 	*texture = value;
 	return (1);
 }
@@ -494,7 +485,8 @@ int	parse_ceiling_color(char *trimmed, t_config *config)
 		return (0);
 	if (!parse_color(value, config->ceiling_color))
 	{
-		free(value);
+		free(value); 
+		free_config(config);
 		return (0);
 	}
 	free(value);
@@ -504,7 +496,9 @@ int	parse_ceiling_color(char *trimmed, t_config *config)
 int	parse_line(char *line, t_config *config)
 {
 	char	*trimmed;
+	int		ret;
 
+	ret = 1;
 	trimmed = ft_strtrim(line, " \t\n\r");
 	if (!trimmed)
 		return (0);
@@ -514,19 +508,19 @@ int	parse_line(char *line, t_config *config)
 		return (1);
 	}
 	if (ft_strncmp(trimmed, "NO", 2) == 0 && ft_isspace(trimmed[2]))
-		parse_texture(trimmed, &config->no_texture);
+		ret = parse_texture(trimmed, &config->no_texture);
 	else if (ft_strncmp(trimmed, "SO", 2) == 0 && ft_isspace(trimmed[2]))
-		parse_texture(trimmed, &config->so_texture);
+		ret = parse_texture(trimmed, &config->so_texture);
 	else if (ft_strncmp(trimmed, "WE", 2) == 0 && ft_isspace(trimmed[2]))
-		parse_texture(trimmed, &config->we_texture);
+		ret = parse_texture(trimmed, &config->we_texture);
 	else if (ft_strncmp(trimmed, "EA", 2) == 0 && ft_isspace(trimmed[2]))
-		parse_texture(trimmed, &config->ea_texture);
+		ret = parse_texture(trimmed, &config->ea_texture);
 	else if (ft_strncmp(trimmed, "F", 1) == 0 && ft_isspace(trimmed[1]))
-		parse_floor_color(trimmed, config);
+		ret = parse_floor_color(trimmed, config);
 	else if (ft_strncmp(trimmed, "C", 1) == 0 && ft_isspace(trimmed[1]))
-		parse_ceiling_color(trimmed, config);
+		ret = parse_ceiling_color(trimmed, config);
 	free(trimmed);
-	return (1);
+	return (ret);
 }
 
 int	open_cub(const char *filename)
@@ -567,63 +561,68 @@ char	*read_file_content(int fd)
 	return (file_content);
 }
 
-int	process_texture_or_color(char *line, char **lines, t_config *config,
-		int *index)
-{
-	if (ft_strncmp(line, "NO", 2) == 0 || ft_strncmp(line, "SO", 2) == 0
-		|| ft_strncmp(line, "WE", 2) == 0 || ft_strncmp(line, "EA", 2) == 0
-		|| ft_strncmp(line, "F", 1) == 0 || ft_strncmp(line, "C", 1) == 0)
-	{
-		free(line);
-		if (!parse_line(lines[*index], config))
-		{
-			free_lines_from(lines, *index);
-			printf("Error\nInvalid texture or color specification\n");
-			exit(1);
-		}
-		free(lines[*index]);
-		(*index)++;
-		return (1);
-	}
-	return (0);
-}
-
-char	*trim_and_validate_line(char *line, char **lines, int *index)
+char	*trim_and_validate_line(char *line)
 {
 	char	*trimmed;
 
 	trimmed = ft_strtrim(line, " \t\n\r");
 	if (!trimmed)
-	{
-		free_lines_from(lines, *index);
-		printf("Error\nMemory allocation error\n");
-		exit(1);
-	}
-	if (ft_strlen(trimmed) == 0)
-	{
-		free(trimmed);
-		free(lines[*index]);
-		(*index)++;
 		return (NULL);
-	}
 	return (trimmed);
 }
 
-void	parse_textures_colors(char **lines, t_config *config, int *index)
+char	**parse_textures_colors(char **lines, t_config *config)
 {
-	char	*temp;
+	int		index;
+	int		valid_count;
+	char	*trimmed;
+	char	**new_lines;
+	int		new_index;
+	int		remaining_lines;
 
-	while (lines[*index])
+	index = 0;
+	valid_count = 0;
+	new_index = 0;
+	remaining_lines = 0;
+	while (lines[index] && valid_count < 6)
 	{
-		temp = trim_and_validate_line(lines[*index], lines, index);
-		if (!temp)
-			continue ;
-		if (!process_texture_or_color(temp, lines, config, index))
+		trimmed = trim_and_validate_line(lines[index]);
+		if (ft_strlen(trimmed) == 0)
 		{
-			free(temp);
-			break ;
+			free(trimmed);
+			index++;
+			continue ;
 		}
+		if (!parse_line(trimmed, config))
+		{
+			free(trimmed);
+			return (NULL);
+		}
+		free(trimmed);
+		valid_count++;
+		index++;
 	}
+	if (valid_count < 6)
+		return (NULL);
+	while (lines[index + remaining_lines])
+		remaining_lines++;
+	new_lines = malloc(sizeof(char *) * (remaining_lines + 1));
+	if (!new_lines)
+		return (NULL);
+	while (lines[index])
+	{
+		new_lines[new_index] = ft_strdup(lines[index]);
+		if (!new_lines[new_index])
+		{
+			free_split_lines(&new_lines);
+			return (NULL);
+		}
+		new_index++;
+		index++;
+	}
+	new_lines[new_index] = NULL;
+	free_split_lines(&lines);
+	return (new_lines);
 }
 
 int	count_lines(const char *file_content)
@@ -642,22 +641,26 @@ int	count_lines(const char *file_content)
 	return (count);
 }
 
-char	*extract_line(const char **file_content)
+char	*extract_line(char **file_content)
 {
-	char	*temp;
 	char	*line;
+	char	*start;
+	char	*temp;
 
-	temp = ft_strchr(*file_content, '\n');
+	start = *file_content;
+	temp = ft_strchr(start, '\n');
 	if (temp)
 	{
-		line = ft_substr(*file_content, 0, temp - *file_content);
+		line = ft_substr(start, 0, temp - start);
 		*file_content = temp + 1;
 	}
 	else
 	{
-		line = ft_strdup(*file_content);
-		*file_content += ft_strlen(*file_content);
+		line = ft_strdup(start);
+		*file_content += ft_strlen(start);
 	}
+	if (!line)
+		return (NULL);
 	return (line);
 }
 
@@ -665,9 +668,9 @@ void	free_split_lines(char ***lines)
 {
 	int	i;
 
+	i = 0;
 	if (!lines || !(*lines))
 		return ;
-	i = 0;
 	while ((*lines)[i])
 	{
 		free((*lines)[i]);
@@ -678,23 +681,30 @@ void	free_split_lines(char ***lines)
 	*lines = NULL;
 }
 
-char	**split_lines_manual(const char *file_content)
+char	**split_lines_manual(char *file_content)
 {
 	char	**lines;
 	int		count;
 	int		i;
+	char	*temp_content;
 
+	if (!file_content || *file_content == '\0')
+		return (NULL);
 	count = count_lines(file_content);
 	lines = malloc(sizeof(char *) * (count + 1));
 	if (!lines)
 		return (NULL);
+	temp_content = file_content;
 	i = 0;
-	while (*file_content)
+	while (*temp_content)
 	{
-		lines[i] = extract_line(&file_content);
+		lines[i] = extract_line(&temp_content);
 		if (!lines[i])
 		{
-			free_split_lines(lines);
+			free_split_lines(&lines);
+			free(file_content);
+			file_content = NULL;
+			temp_content = NULL;
 			return (NULL);
 		}
 		i++;
@@ -703,49 +713,75 @@ char	**split_lines_manual(const char *file_content)
 	return (lines);
 }
 
-void	parse_cub_file(const char *filename, t_config *config)
+int	parse_cub_file(const char *filename, t_config *config)
 {
-	int		i;
 	int		fd;
 	char	*file_content;
 	char	**lines;
+	char	**temp_lines;
 
-	i = 0;
 	fd = open_cub(filename);
 	file_content = read_file_content(fd);
+	if (!file_content)
+		return (0);
 	lines = split_lines_manual(file_content);
 	free(file_content);
 	if (!lines)
-		return ;
-	parse_textures_colors(lines, config, &i);
-	parse_map(&lines[i], config);
-	free_lines_from(lines, i);
+		return (0);
+	temp_lines = parse_textures_colors(lines, config);
+	if (!temp_lines)
+	{
+		free_split_lines(&lines);
+		printf("Error: Invalid texture or color specification\n");
+		return (0);
+	}
+	lines = temp_lines;
+	temp_lines = parse_map(lines, config);
+	if (!temp_lines)
+	{
+		free_split_lines(&lines);
+		return (0);
+	}
+	free_split_lines(&lines);
+	return (1);
 }
 
 int	main(int argc, char **argv)
 {
-	t_config	config;
+	t_config	*config;
 
 	if (argc != 2 || !has_cub_extension(argv[1]))
 	{
 		printf("Usage: %s <file.cub>\n", argv[0]);
 		return (1);
 	}
-	ft_bzero(&config, sizeof(t_config));
-	parse_cub_file(argv[1], &config);
+	config = (t_config *)malloc(sizeof(t_config));
+	if (!config)
+	{
+		perror("Memory allocation failed");
+		return (1);
+	}
+	ft_bzero(config, sizeof(t_config));
+	if (!parse_cub_file(argv[1], config))
+	{
+		free_config(config);
+		free(config);
+		return (1);
+	}
 	printf("Textures:\n");
-	printf("  NO: %s\n", config.no_texture);
-	printf("  SO: %s\n", config.so_texture);
-	printf("  WE: %s\n", config.we_texture);
-	printf("  EA: %s\n", config.ea_texture);
+	printf("  NO: %s\n", config->no_texture);
+	printf("  SO: %s\n", config->so_texture);
+	printf("  WE: %s\n", config->we_texture);
+	printf("  EA: %s\n", config->ea_texture);
 	printf("Colors:\n");
-	printf("  Floor: %d,%d,%d\n", config.floor_color[0], config.floor_color[1],
-		config.floor_color[2]);
-	printf("  Ceiling: %d,%d,%d\n", config.ceiling_color[0],
-		config.ceiling_color[1], config.ceiling_color[2]);
-	print_map(&config.map);
+	printf("  Floor: %d,%d,%d\n", config->floor_color[0],
+		config->floor_color[1], config->floor_color[2]);
+	printf("  Ceiling: %d,%d,%d\n", config->ceiling_color[0],
+		config->ceiling_color[1], config->ceiling_color[2]);
+	print_map(&config->map);
 	printf("Player position: (%.2f, %.2f), angle: %.2f radians\n",
-		config.player.pos.x, config.player.pos.y, config.player.angle);
-	free_config(&config);
+		config->player.pos.x, config->player.pos.y, config->player.angle);
+	free_config(config);
+	free(config);
 	return (0);
 }

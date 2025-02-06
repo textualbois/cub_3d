@@ -18,14 +18,23 @@ LIBFT_LIB  = $(LIBFT_PATH)/libft.a
 LIBFT_INCLUDE = -I $(LIBFT_PATH)
 
 # Можно поправить путь к GLFW, если нужно
+
+UNAME_S := $(shell uname -s)
+
+ifeq ($(UNAME_S), Darwin)  # macOS
+    LDFLAGS = -framework OpenGL -framework IOKit -framework AppKit
+else  # Linux (Docker)
+    LDFLAGS = -lGL -lglfw -ldl -lpthread -lX11
+endif
+
 GLFW_LIB  = -L"/usr/local/Cellar/glfw/3.3.9/lib/" -lglfw
 
 CC      = cc
 CFLAGS  = -Wall -Wextra -Werror
 
-FRAMEWORKS   = -framework OpenGL -framework IOKit -framework AppKit
+# FRAMEWORKS   = -framework OpenGL -framework IOKit -framework AppKit
 DEPENDENCIES = -L$(MLX_BUILD_PATH) -lmlx42 $(GLFW_LIB) \
-               -L$(LIBFT_PATH) -lft -lm $(FRAMEWORKS)
+               -L$(LIBFT_PATH) -lft -lm $(LDFLAGS)
 
 .PHONY: all clean fclean re
 

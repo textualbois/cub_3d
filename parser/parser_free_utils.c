@@ -6,19 +6,19 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 23:47:57 by admin             #+#    #+#             */
-/*   Updated: 2025/02/05 00:45:15 by admin            ###   ########.fr       */
+/*   Updated: 2025/02/05 20:35:10 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-void	free_lines_from(char **lines, int start)
+void	free_lines(char **lines)
 {
 	int	i;
 
 	if (!lines)
 		return ;
-	i = start;
+	i = 0;
 	while (lines[i])
 	{
 		free(lines[i]);
@@ -33,8 +33,8 @@ void free_map(t_map *map)
 {
 	if (!map || !map->grid)
 		return;
-
-	free_lines_from(map->grid, 0);
+	if (map->grid)
+		free_lines(map->grid);
 	map->grid = NULL;
 	map->width = 0;
 	map->height = 0;
