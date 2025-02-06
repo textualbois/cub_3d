@@ -6,14 +6,14 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 14:09:33 by admin             #+#    #+#             */
-/*   Updated: 2025/01/30 23:30:08 by admin            ###   ########.fr       */
+/*   Updated: 2025/02/06 20:47:33 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
 
-# include "./libft/libft.h"
+# include "../libft/libft.h"
 # include <fcntl.h>
 # include <math.h>
 # include <stdio.h>
@@ -60,7 +60,10 @@ typedef struct s_config
 
 # define BUFFER_SIZE 4096
 
-void				parse_cub_file(const char *filename, t_config *config);
-int					parse_color(char *line, int *color);
+// parser_free_utils.c
+void				free_config(t_config *config);
+
+void				free_lines(char **lines);
+void				free_split_lines(char ***lines);
 
 #endif
