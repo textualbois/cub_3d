@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 21:30:06 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/06 01:15:56 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/06 01:17:28 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void uncentre_character_img_h(t_World_Controller *world, t_mini_map *map, t_Doub
 {
 	int	pixel_offset;
 
-	printf("pos.x: %f, vis_size %i, pos.x < map->visible_size.x / 2 = %s\n", pos.x, map->visible_size.x, pos.x < map->visible_size.x / 2 ? "true" : "false");
+	printf("pos.x: %f, vis_size %i, pos.x < map->visible_size.x / ƒ2 = %s\n", pos.x, map->visible_size.x, pos.x < map->visible_size.x / 2 ? "true" : "false");
 	if (pos.x < map->visible_size.x / 2)
 	{
 		pixel_offset = (int)(pos.x / map->visible_size.x * world->map_img->width);
