@@ -1,10 +1,6 @@
-color_utils.c
-file_utils.c
-file_utils.c
 map_utils.c
 map_utils2.c
 parser_utils.c
-string_utils.c
 Dockerfile
 
 # macOS system files

@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 15:26:10 by vmamoten          #+#    #+#             */
-/*   Updated: 2025/02/07 15:33:34 by admin            ###   ########.fr       */
+/*   Updated: 2025/02/07 16:11:22 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,29 +117,6 @@ int	has_invalid_spaces(t_map *map)
 		i++;
 	}
 	return (0);
-}
-
-char	*pad_line(char *line, int width)
-{
-	char	*new_line;
-	int		len;
-	int		i;
-
-	len = ft_strlen(line);
-	new_line = malloc(width + 1);
-	if (!new_line)
-		return (NULL);
-	i = 0;
-	while (i < width)
-	{
-		if (i < len)
-			new_line[i] = line[i];
-		else
-			new_line[i] = ' ';
-		i++;
-	}
-	new_line[width] = '\0';
-	return (new_line);
 }
 
 double	get_angle_from_char(char dir)
@@ -286,16 +263,6 @@ int	is_map_valid(t_map *map, t_config *config)
 	return (1);
 }
 
-int	skip_empty_lines(char **lines)
-{
-	int	i;
-
-	i = 0;
-	while (lines[i] && ft_strlen(lines[i]) == 0)
-		i++;
-	return (i);
-}
-
 int	allocate_map_grid(t_config *config, char **lines)
 {
 	int		j;
@@ -344,25 +311,13 @@ char	**parse_map(char **lines, t_config *config)
 	skip = skip_empty_lines(lines);
 	map_lines = lines + skip;
 	if (!allocate_map_grid(config, map_lines))
-	{
 		return (NULL);
-	}
 	if (!is_map_valid(&config->map, config))
-	{
 		return (NULL);
-	}
-	print_map(lines, config->map.width, config->map.height);
+	// print_map(lines, config->map.width, config->map.height);
 	return (lines);
 }
 
-int	ft_isspace(char c)
-{
-	if (c == ' ' || c == '\t' || c == '\n')
-		return (1);
-	if (c == '\v' || c == '\f' || c == '\r')
-		return (1);
-	return (0);
-}
 
 int	parse_texture(char *trimmed, char **texture)
 {
@@ -480,54 +435,6 @@ int	parse_line(char *line, t_config *config)
 }
 
 
-int	open_cub(const char *filename)
-{
-	int	fd;
-
-	fd = open(filename, O_RDONLY);
-	if (fd < 0)
-	{
-		perror("Error opening file");
-		exit(1);
-	}
-	return (fd);
-}
-
-char	*read_file_content(int fd)
-{
-	char	buffer[BUFFER_SIZE + 1];
-	char	*file_content;
-	int		bytes_read;
-	char	*temp;
-
-	file_content = ft_strdup("");
-	if (!file_content)
-		return (NULL);
-	bytes_read = read(fd, buffer, BUFFER_SIZE);
-	while (bytes_read > 0)
-	{
-		buffer[bytes_read] = '\0';
-		temp = ft_strjoin(file_content, buffer);
-		free(file_content);
-		file_content = temp;
-		bytes_read = read(fd, buffer, BUFFER_SIZE);
-	}
-	if (bytes_read < 0)
-		perror("Error reading file");
-	close(fd);
-	return (file_content);
-}
-
-char	*trim_and_validate_line(char *line)
-{
-	char	*trimmed;
-
-	trimmed = ft_strtrim(line, " \t\n\r");
-	if (!trimmed)
-		return (NULL);
-	return (trimmed);
-}
-
 char	**parse_textures_colors(char **lines, t_config *config)
 {
 	int		index;
@@ -580,94 +487,6 @@ char	**parse_textures_colors(char **lines, t_config *config)
 	new_lines[new_index] = NULL;
 	free_split_lines(&lines);
 	return (new_lines);
-}
-
-int	count_lines(const char *file_content)
-{
-	int	count;
-	int	i;
-
-	count = 1;
-	i = 0;
-	while (file_content[i])
-	{
-		if (file_content[i] == '\n')
-			count++;
-		i++;
-	}
-	return (count);
-}
-
-char	*extract_line(char **file_content)
-{
-	char	*line;
-	char	*start;
-	char	*temp;
-
-	start = *file_content;
-	temp = ft_strchr(start, '\n');
-	if (temp)
-	{
-		line = ft_substr(start, 0, temp - start);
-		*file_content = temp + 1;
-	}
-	else
-	{
-		line = ft_strdup(start);
-		*file_content += ft_strlen(start);
-	}
-	if (!line)
-		return (NULL);
-	return (line);
-}
-
-void	free_split_lines(char ***lines)
-{
-	int	i;
-
-	i = 0;
-	if (!lines || !(*lines))
-		return ;
-	while ((*lines)[i])
-	{
-		free((*lines)[i]);
-		(*lines)[i] = NULL;
-		i++;
-	}
-	free(*lines);
-	*lines = NULL;
-}
-
-char	**split_lines_manual(char *file_content)
-{
-	char	**lines;
-	int		count;
-	int		i;
-	char	*temp_content;
-
-	if (!file_content || *file_content == '\0')
-		return (NULL);
-	count = count_lines(file_content);
-	lines = malloc(sizeof(char *) * (count + 1));
-	if (!lines)
-		return (NULL);
-	temp_content = file_content;
-	i = 0;
-	while (*temp_content)
-	{
-		lines[i] = extract_line(&temp_content);
-		if (!lines[i])
-		{
-			free_split_lines(&lines);
-			free(file_content);
-			file_content = NULL;
-			temp_content = NULL;
-			return (NULL);
-		}
-		i++;
-	}
-	lines[i] = NULL;
-	return (lines);
 }
 
 int	parse_cub_file(const char *filename, t_config *config)
