@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 14:09:33 by admin             #+#    #+#             */
-/*   Updated: 2025/02/07 14:04:26 by admin            ###   ########.fr       */
+/*   Updated: 2025/02/07 14:33:42 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,15 @@ typedef struct s_config
 void				free_config(t_config *config);
 
 void				free_lines(char **lines);
+
+// parse_color_utils.c
+
+int					validate_and_convert_color(char **rgb, int *color);
+
+// parse_color.c
+int					parse_ceiling_color(char *trimmed, t_config *config);
+int					parse_floor_color(char *trimmed, t_config *config);
+
 void				free_split_lines(char ***lines);
 
 #endif

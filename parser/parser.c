@@ -6,21 +6,21 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 15:26:10 by vmamoten          #+#    #+#             */
-/*   Updated: 2025/02/07 13:20:27 by admin            ###   ########.fr       */
+/*   Updated: 2025/02/07 15:33:34 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-void	print_map(t_map *map)
+void	print_map(char **map_grid, int map_width, int map_height)
 {
 	int	i;
 
 	i = 0;
-	printf("Map (%d x %d):\n", map->width, map->height);
-	while (i < map->height)
+	printf("Map (%d x %d):\n", map_width, map_height);
+	while (i <map_height)
 	{
-		printf("%s\n", map->grid[i]);
+		printf("%s\n", map_grid[i]);
 		i++;
 	}
 }
@@ -237,6 +237,12 @@ int	is_player_surrounded(t_config *config)
 	return (1);
 }
 
+
+/*
+			************************ optimized ************************
+*/
+
+
 int	is_map_valid(t_map *map, t_config *config)
 {
 	int	i;
@@ -345,97 +351,8 @@ char	**parse_map(char **lines, t_config *config)
 	{
 		return (NULL);
 	}
+	print_map(lines, config->map.width, config->map.height);
 	return (lines);
-}
-
-int	is_valid_color_value(char *str)
-{
-	int	i;
-
-	i = 0;
-	if (!str[i])
-		return (0);
-	while (str[i])
-	{
-		if (!ft_isdigit(str[i]))
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-char	**split_color_values(char *line)
-{
-	char	**rgb;
-	int		count;
-
-	while (*line == ' ')
-		line++;
-	rgb = ft_split(line, ',');
-	if (!rgb)
-		return (NULL);
-	count = 0;
-	while (rgb[count])
-		count++;
-	if (count != 3)
-	{
-		free_lines(rgb);
-		return (NULL);
-	}
-	return (rgb);
-}
-
-int	convert_color_value(char *str)
-{
-	int		value;
-	char	*trimmed_token;
-
-	trimmed_token = ft_strtrim(str, " \t");
-	if (!trimmed_token)
-		return (-1);
-	if (!is_valid_color_value(trimmed_token))
-	{
-		free(trimmed_token);
-		return (-1);
-	}
-	value = ft_atoi(trimmed_token);
-	free(trimmed_token);
-	if (value < 0 || value > 255)
-		return (-1);
-	return (value);
-}
-
-int	validate_and_convert_color(char **rgb, int *color)
-{
-	int	i;
-	int	value;
-
-	i = 0;
-	while (i < 3)
-	{
-		value = convert_color_value(rgb[i]);
-		if (value == -1)
-		{
-			free_lines(rgb);
-			return (0);
-		}
-		color[i] = value;
-		i++;
-	}
-	return (1);
-}
-
-int	parse_color(char *line, int *color)
-{
-	char	**rgb;
-
-	rgb = split_color_values(line);
-	if (!rgb)
-		return (0);
-	if (!validate_and_convert_color(rgb, color))
-		return (0);
-	free_lines(rgb);
-	return (1);
 }
 
 int	ft_isspace(char c)
@@ -457,39 +374,6 @@ int	parse_texture(char *trimmed, char **texture)
 	if (*texture)
 		free(*texture);
 	*texture = value;
-	return (1);
-}
-
-int	parse_floor_color(char *trimmed, t_config *config)
-{
-	char	*value;
-
-	value = ft_strtrim(trimmed + 1, " \t");
-	if (!value)
-		return (0);
-	if (!parse_color(value, config->floor_color))
-	{
-		free(value);
-		return (0);
-	}
-	free(value);
-	return (1);
-}
-
-int	parse_ceiling_color(char *trimmed, t_config *config)
-{
-	char	*value;
-
-	value = ft_strtrim(trimmed + 1, " \t");
-	if (!value)
-		return (0);
-	if (!parse_color(value, config->ceiling_color))
-	{
-		free(value); 
-		free_config(config);
-		return (0);
-	}
-	free(value);
 	return (1);
 }
 
@@ -854,19 +738,19 @@ int	main(int argc, char **argv)
 		free(config);
 		return (1);
 	}
-	printf("Textures:\n");
-	printf("  NO: %s\n", config->no_texture);
-	printf("  SO: %s\n", config->so_texture);
-	printf("  WE: %s\n", config->we_texture);
-	printf("  EA: %s\n", config->ea_texture);
-	printf("Colors:\n");
-	printf("  Floor: %d,%d,%d\n", config->floor_color[0],
-		config->floor_color[1], config->floor_color[2]);
-	printf("  Ceiling: %d,%d,%d\n", config->ceiling_color[0],
-		config->ceiling_color[1], config->ceiling_color[2]);
-	print_map(&config->map);
-	printf("Player position: (%.2f, %.2f), angle: %.2f radians\n",
-		config->player.pos.x, config->player.pos.y, config->player.angle);
+	// printf("Textures:\n");
+	// printf("  NO: %s\n", config->no_texture);
+	// printf("  SO: %s\n", config->so_texture);
+	// printf("  WE: %s\n", config->we_texture);
+	// printf("  EA: %s\n", config->ea_texture);
+	// printf("Colors:\n");
+	// printf("  Floor: %d,%d,%d\n", config->floor_color[0],
+	// 	config->floor_color[1], config->floor_color[2]);
+	// printf("  Ceiling: %d,%d,%d\n", config->ceiling_color[0],
+	// 	config->ceiling_color[1], config->ceiling_color[2]);
+	print_map(config->map.grid, config->map.width, config->map.height);
+	// printf("Player position: (%.2f, %.2f), angle: %.2f radians\n",
+	// 	config->player.pos.x, config->player.pos.y, config->player.angle);
 	free_config(config);
 	free(config);
 	return (0);
