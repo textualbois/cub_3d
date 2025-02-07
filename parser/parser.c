@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 15:26:10 by vmamoten          #+#    #+#             */
-/*   Updated: 2025/02/06 21:09:29 by admin            ###   ########.fr       */
+/*   Updated: 2025/02/07 13:20:27 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -493,6 +493,27 @@ int	parse_ceiling_color(char *trimmed, t_config *config)
 	return (1);
 }
 
+// int	check_all_settings_present(t_config *config)
+// {
+// 	return (config->has_no && config->has_so && config->has_we &&
+// 			config->has_ea && config->has_floor && config->has_ceiling);
+// }
+
+int	check_all_settings_present(t_config *config)
+{
+	if (!config->has_no || !config->has_so || !config->has_we || !config->has_ea)
+	{
+		printf("Error: Missing one or more textures (NO, SO, WE, EA).\n");
+		return (0);
+	}
+	if (!config->has_floor || !config->has_ceiling)
+	{
+		printf("Error: Missing floor or ceiling color.\n");
+		return (0);
+	}
+	return (1);
+}
+
 int	parse_line(char *line, t_config *config)
 {
 	char	*trimmed;
@@ -507,21 +528,73 @@ int	parse_line(char *line, t_config *config)
 		free(trimmed);
 		return (1);
 	}
-	if (ft_strncmp(trimmed, "NO", 2) == 0 && ft_isspace(trimmed[2]))
-		ret = parse_texture(trimmed, &config->no_texture);
-	else if (ft_strncmp(trimmed, "SO", 2) == 0 && ft_isspace(trimmed[2]))
-		ret = parse_texture(trimmed, &config->so_texture);
-	else if (ft_strncmp(trimmed, "WE", 2) == 0 && ft_isspace(trimmed[2]))
-		ret = parse_texture(trimmed, &config->we_texture);
-	else if (ft_strncmp(trimmed, "EA", 2) == 0 && ft_isspace(trimmed[2]))
-		ret = parse_texture(trimmed, &config->ea_texture);
-	else if (ft_strncmp(trimmed, "F", 1) == 0 && ft_isspace(trimmed[1]))
-		ret = parse_floor_color(trimmed, config);
-	else if (ft_strncmp(trimmed, "C", 1) == 0 && ft_isspace(trimmed[1]))
-		ret = parse_ceiling_color(trimmed, config);
+	if (ft_strncmp(trimmed, "NO ", 3) == 0 && ft_isspace(trimmed[2]))
+	{
+		if (config->has_no)
+			ret = 0;
+		else
+		{
+			ret = parse_texture(trimmed, &config->no_texture);
+			config->has_no = ret;
+		}
+	}
+	else if (ft_strncmp(trimmed, "SO ", 3) == 0 && ft_isspace(trimmed[2]))
+	{
+		if (config->has_so)
+			ret = 0;
+		else
+		{
+			ret = parse_texture(trimmed, &config->so_texture);
+			config->has_so = ret;
+		}
+	}
+	else if (ft_strncmp(trimmed, "WE ", 3) == 0 && ft_isspace(trimmed[2]))
+	{
+		if (config->has_we)
+			ret = 0;
+		else
+		{
+			ret = parse_texture(trimmed, &config->we_texture);
+			config->has_we = ret;
+		}
+	}
+	else if (ft_strncmp(trimmed, "EA ", 3) == 0 && ft_isspace(trimmed[2]))
+	{
+		if (config->has_ea)
+			ret = 0;
+		else
+		{
+			ret = parse_texture(trimmed, &config->ea_texture);
+			config->has_ea = ret;
+		}
+	}
+	else if (ft_strncmp(trimmed, "F ", 2) == 0 && ft_isspace(trimmed[1]))
+	{
+		if (config->has_floor)
+			ret = 0;
+		else
+		{
+			ret = parse_floor_color(trimmed, config);
+			config->has_floor = ret;
+		}
+	}
+	else if (ft_strncmp(trimmed, "C ", 2) == 0 && ft_isspace(trimmed[1]))
+	{
+		if (config->has_ceiling)
+			ret = 0;
+		else
+		{
+			ret = parse_ceiling_color(trimmed, config);
+			config->has_ceiling = ret;
+		}
+	}
+	else
+		ret = 0;
+
 	free(trimmed);
 	return (ret);
 }
+
 
 int	open_cub(const char *filename)
 {
@@ -746,6 +819,18 @@ int	parse_cub_file(const char *filename, t_config *config)
 	return (1);
 }
 
+void	init_config_flags(t_config *config)
+{
+	if (!config)
+		return;
+	config->has_no = 0;
+	config->has_so = 0;
+	config->has_we = 0;
+	config->has_ea = 0;
+	config->has_floor = 0;
+	config->has_ceiling = 0;
+}
+
 int	main(int argc, char **argv)
 {
 	t_config	*config;
@@ -762,6 +847,7 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	ft_bzero(config, sizeof(t_config));
+	init_config_flags(config);
 	if (!parse_cub_file(argv[1], config))
 	{
 		free_config(config);

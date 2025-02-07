@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 14:09:33 by admin             #+#    #+#             */
-/*   Updated: 2025/02/06 20:47:33 by admin            ###   ########.fr       */
+/*   Updated: 2025/02/07 14:04:26 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,12 @@ typedef struct s_config
 	char			*ea_texture;
 	int				floor_color[3];
 	int				ceiling_color[3];
+	int				has_no;
+	int				has_so;
+	int				has_we;
+	int				has_ea;
+	int				has_floor;
+	int				has_ceiling;
 	t_map			map;
 	t_character		player;
 }					t_config;
