@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 20:00:16 by admin             #+#    #+#             */
-/*   Updated: 2025/02/07 17:58:12 by admin            ###   ########.fr       */
+/*   Updated: 2025/02/07 18:52:02 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ char	**fill_lines_array(char **lines, char *file_content)
 		}
 		i++;
 	}
+	lines[i] = NULL;
 	return (lines);
 }
 

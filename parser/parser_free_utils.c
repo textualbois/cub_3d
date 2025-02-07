@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 23:47:57 by admin             #+#    #+#             */
-/*   Updated: 2025/02/05 20:35:10 by admin            ###   ########.fr       */
+/*   Updated: 2025/02/07 18:05:30 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ void	free_lines(char **lines)
 	lines = NULL;
 }
 
-void free_map(t_map *map)
+void	free_map(t_map *map)
 {
 	if (!map || !map->grid)
-		return;
+		return ;
 	if (map->grid)
 		free_lines(map->grid);
 	map->grid = NULL;
@@ -49,10 +49,10 @@ void	free_player(t_character *player)
 	player->angle = 0;
 }
 
-void free_textures(t_config *config)
+void	free_textures(t_config *config)
 {
 	if (!config)
-		return;
+		return ;
 	if (config->no_texture)
 	{
 		free(config->no_texture);
@@ -75,11 +75,10 @@ void free_textures(t_config *config)
 	}
 }
 
-void free_config(t_config *config)
+void	free_config(t_config *config)
 {
 	if (!config)
-		return;
-
+		return ;
 	free_textures(config);
 	free_map(&config->map);
 	free_player(&config->player);

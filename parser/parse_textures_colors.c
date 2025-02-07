@@ -6,12 +6,11 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 16:35:18 by admin             #+#    #+#             */
-/*   Updated: 2025/02/07 17:50:49 by admin            ###   ########.fr       */
+/*   Updated: 2025/02/07 18:45:06 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
-#include <stdlib.h>
 
 static int	handle_config_line(char *line, t_config *config)
 {

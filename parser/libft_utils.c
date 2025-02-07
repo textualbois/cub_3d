@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 15:53:22 by admin             #+#    #+#             */
-/*   Updated: 2025/02/07 15:57:05 by admin            ###   ########.fr       */
+/*   Updated: 2025/02/07 18:06:18 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ char	*pad_line(char *line, int width)
 	return (new_line);
 }
 
-
 int	skip_empty_lines(char **lines)
 {
 	int	i;
@@ -54,7 +53,6 @@ int	ft_isspace(char c)
 		return (1);
 	return (0);
 }
-
 
 char	*trim_and_validate_line(char *line)
 {

@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 15:26:10 by vmamoten          #+#    #+#             */
-/*   Updated: 2025/02/07 16:53:49 by admin            ###   ########.fr       */
+/*   Updated: 2025/02/07 18:40:56 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -316,18 +316,6 @@ char	**parse_map(char **lines, t_config *config)
 	return (lines);
 }
 
-int	parse_texture(char *trimmed, char **texture)
-{
-	char	*value;
-
-	value = ft_strtrim(trimmed + 2, " \t");
-	if (!value)
-		return (0);
-	if (*texture)
-		free(*texture);
-	*texture = value;
-	return (1);
-}
 
 // int	check_all_settings_present(t_config *config)
 // {
@@ -349,86 +337,6 @@ int	check_all_settings_present(t_config *config)
 		return (0);
 	}
 	return (1);
-}
-
-int	parse_line(char *line, t_config *config)
-{
-	char	*trimmed;
-	int		ret;
-
-	ret = 1;
-	trimmed = ft_strtrim(line, " \t\n\r");
-	if (!trimmed)
-		return (0);
-	if (ft_strlen(trimmed) == 0)
-	{
-		free(trimmed);
-		return (1);
-	}
-	if (ft_strncmp(trimmed, "NO ", 3) == 0 && ft_isspace(trimmed[2]))
-	{
-		if (config->has_no)
-			ret = 0;
-		else
-		{
-			ret = parse_texture(trimmed, &config->no_texture);
-			config->has_no = ret;
-		}
-	}
-	else if (ft_strncmp(trimmed, "SO ", 3) == 0 && ft_isspace(trimmed[2]))
-	{
-		if (config->has_so)
-			ret = 0;
-		else
-		{
-			ret = parse_texture(trimmed, &config->so_texture);
-			config->has_so = ret;
-		}
-	}
-	else if (ft_strncmp(trimmed, "WE ", 3) == 0 && ft_isspace(trimmed[2]))
-	{
-		if (config->has_we)
-			ret = 0;
-		else
-		{
-			ret = parse_texture(trimmed, &config->we_texture);
-			config->has_we = ret;
-		}
-	}
-	else if (ft_strncmp(trimmed, "EA ", 3) == 0 && ft_isspace(trimmed[2]))
-	{
-		if (config->has_ea)
-			ret = 0;
-		else
-		{
-			ret = parse_texture(trimmed, &config->ea_texture);
-			config->has_ea = ret;
-		}
-	}
-	else if (ft_strncmp(trimmed, "F ", 2) == 0 && ft_isspace(trimmed[1]))
-	{
-		if (config->has_floor)
-			ret = 0;
-		else
-		{
-			ret = parse_floor_color(trimmed, config);
-			config->has_floor = ret;
-		}
-	}
-	else if (ft_strncmp(trimmed, "C ", 2) == 0 && ft_isspace(trimmed[1]))
-	{
-		if (config->has_ceiling)
-			ret = 0;
-		else
-		{
-			ret = parse_ceiling_color(trimmed, config);
-			config->has_ceiling = ret;
-		}
-	}
-	else
-		ret = 0;
-	free(trimmed);
-	return (ret);
 }
 
 int	read_and_split_file(const char *filename, char ***lines)
