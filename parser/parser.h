@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 14:09:33 by admin             #+#    #+#             */
-/*   Updated: 2025/02/07 18:08:45 by admin            ###   ########.fr       */
+/*   Updated: 2025/02/07 20:01:17 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,7 @@ int					parse_floor_color(char *trimmed, t_config *config);
 void				free_split_lines(char ***lines);
 char				**split_lines_manual(char *file_content);
 // file_utils.c
-int					open_cub(const char *filename);
-char				*read_file_content(int fd);
+int					parse_cub_file(const char *filename, t_config *config);
 // libft_utils.c
 char				*pad_line(char *line, int width);
 int					skip_empty_lines(char **lines);
@@ -95,4 +94,17 @@ char				**parse_textures_colors(char **lines, t_config *config);
 
 // parse_line.c
 int					parse_line(char *line, t_config *config);
+// validate_map.c
+int					validate_map_structure(t_map *map, t_config *config);
+// validate_map_utils.c
+int					is_valid_cell(t_map *map, int i, int j);
+
+int					is_sur_by_wals(t_map *map, int i, int j);
+
+int					is_valid_map_char(char c);
+
+void				set_player_position(t_config *config, int x, int y,
+						char dir);
+// parser.c
+char				**parse_map(char **lines, t_config *config);
 #endif
