@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 19:25:36 by admin             #+#    #+#             */
-/*   Updated: 2025/02/07 19:56:34 by admin            ###   ########.fr       */
+/*   Updated: 2025/02/08 00:07:55 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	has_invalid_spaces(t_map *map)
 int	count_players(t_map *map, t_config *config)
 {
 	int	i;
-	int	j;
+	size_t	j;
 	int	count;
 
 	count = 0;

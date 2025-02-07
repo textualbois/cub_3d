@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 20:00:16 by admin             #+#    #+#             */
-/*   Updated: 2025/02/07 18:52:02 by admin            ###   ########.fr       */
+/*   Updated: 2025/02/08 00:06:53 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,6 @@ char	**split_lines_manual(char *file_content)
 {
 	char	**lines;
 	int		count;
-	int		i;
-	char	*temp_content;
 
 	if (!file_content || *file_content == '\0')
 		return (NULL);

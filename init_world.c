@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   init_world.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:53 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/02 20:27:43 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/08 00:35:10 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "world.h"
 
-t_World_Controller *init_world(int map[8][8])
+t_World_Controller *init_world(t_map map)
 {
 	t_World_Controller *world;
 

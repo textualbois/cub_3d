@@ -3,7 +3,12 @@ NAME     = cub3d
 SRCS     = cub3d.c loops_hooks.c init_world.c minimap_init.c \
            character_init.c movement.c draw_mini_character.c \
            window_init.c image_init.c draw.c draw_minimap.c extra_math.c \
-		   minimap_view_box.c player_mini_img_centring.c
+		   minimap_view_box.c player_mini_img_centring.c\
+		   ./parser/file_utils.c ./parser/libft_utils.c ./parser/parse_color.c\
+		   ./parser/parse_color_utils.c ./parser/parse_line.c ./parser/parse_map.c\
+		   ./parser/parse_textures_colors.c ./parser/parser_free_utils.c\
+		   ./parser/string_utils.c ./parser/validate_map_utils.c\
+		   ./parser/validate_map.c\
 
 OBJ_DIR  = obj
 OBJS     = $(addprefix $(OBJ_DIR)/,$(SRCS:.c=.o))
@@ -45,6 +50,7 @@ $(NAME): $(MLX42_LIBFILE) $(LIBFT_LIB) $(OBJS)
 	@echo "==> $(NAME) compiled!"
 
 $(OBJ_DIR)/%.o: %.c | $(OBJ_DIR)
+	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) $(MLX_INCLUDE) $(LIBFT_INCLUDE) -c $< -o $@
 	@echo "Compiled $<"
 
