@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 15:26:10 by vmamoten          #+#    #+#             */
-/*   Updated: 2025/02/07 16:11:22 by admin            ###   ########.fr       */
+/*   Updated: 2025/02/07 16:53:49 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	print_map(char **map_grid, int map_width, int map_height)
 
 	i = 0;
 	printf("Map (%d x %d):\n", map_width, map_height);
-	while (i <map_height)
+	while (i < map_height)
 	{
 		printf("%s\n", map_grid[i]);
 		i++;
@@ -214,11 +214,9 @@ int	is_player_surrounded(t_config *config)
 	return (1);
 }
 
-
 /*
-			************************ optimized ************************
-*/
-
+ ************************ optimized ************************
+ */
 
 int	is_map_valid(t_map *map, t_config *config)
 {
@@ -318,7 +316,6 @@ char	**parse_map(char **lines, t_config *config)
 	return (lines);
 }
 
-
 int	parse_texture(char *trimmed, char **texture)
 {
 	char	*value;
@@ -340,7 +337,8 @@ int	parse_texture(char *trimmed, char **texture)
 
 int	check_all_settings_present(t_config *config)
 {
-	if (!config->has_no || !config->has_so || !config->has_we || !config->has_ea)
+	if (!config->has_no || !config->has_so || !config->has_we
+		|| !config->has_ea)
 	{
 		printf("Error: Missing one or more textures (NO, SO, WE, EA).\n");
 		return (0);
@@ -429,103 +427,64 @@ int	parse_line(char *line, t_config *config)
 	}
 	else
 		ret = 0;
-
 	free(trimmed);
 	return (ret);
 }
 
-
-char	**parse_textures_colors(char **lines, t_config *config)
-{
-	int		index;
-	int		valid_count;
-	char	*trimmed;
-	char	**new_lines;
-	int		new_index;
-	int		remaining_lines;
-
-	index = 0;
-	valid_count = 0;
-	new_index = 0;
-	remaining_lines = 0;
-	while (lines[index] && valid_count < 6)
-	{
-		trimmed = trim_and_validate_line(lines[index]);
-		if (ft_strlen(trimmed) == 0)
-		{
-			free(trimmed);
-			index++;
-			continue ;
-		}
-		if (!parse_line(trimmed, config))
-		{
-			free(trimmed);
-			return (NULL);
-		}
-		free(trimmed);
-		valid_count++;
-		index++;
-	}
-	if (valid_count < 6)
-		return (NULL);
-	while (lines[index + remaining_lines])
-		remaining_lines++;
-	new_lines = malloc(sizeof(char *) * (remaining_lines + 1));
-	if (!new_lines)
-		return (NULL);
-	while (lines[index])
-	{
-		new_lines[new_index] = ft_strdup(lines[index]);
-		if (!new_lines[new_index])
-		{
-			free_split_lines(&new_lines);
-			return (NULL);
-		}
-		new_index++;
-		index++;
-	}
-	new_lines[new_index] = NULL;
-	free_split_lines(&lines);
-	return (new_lines);
-}
-
-int	parse_cub_file(const char *filename, t_config *config)
+int	read_and_split_file(const char *filename, char ***lines)
 {
 	int		fd;
 	char	*file_content;
-	char	**lines;
-	char	**temp_lines;
 
 	fd = open_cub(filename);
 	file_content = read_file_content(fd);
 	if (!file_content)
 		return (0);
-	lines = split_lines_manual(file_content);
+	*lines = split_lines_manual(file_content);
 	free(file_content);
-	if (!lines)
+	if (!(*lines))
 		return (0);
-	temp_lines = parse_textures_colors(lines, config);
+	return (1);
+}
+
+int	parse_textures_colors_and_map(char ***lines, t_config *config)
+{
+	char	**temp_lines;
+
+	temp_lines = parse_textures_colors(*lines, config);
 	if (!temp_lines)
 	{
-		free_split_lines(&lines);
+		free_split_lines(lines);
 		printf("Error: Invalid texture or color specification\n");
 		return (0);
 	}
-	lines = temp_lines;
-	temp_lines = parse_map(lines, config);
+	*lines = temp_lines;
+	temp_lines = parse_map(*lines, config);
 	if (!temp_lines)
 	{
-		free_split_lines(&lines);
+		free_split_lines(lines);
+		printf("Error: Invalid map configuration\n");
 		return (0);
 	}
-	free_split_lines(&lines);
+	free_split_lines(lines);
+	return (1);
+}
+
+int	parse_cub_file(const char *filename, t_config *config)
+{
+	char	**lines;
+
+	if (!read_and_split_file(filename, &lines))
+		return (0);
+	if (!parse_textures_colors_and_map(&lines, config))
+		return (0);
 	return (1);
 }
 
 void	init_config_flags(t_config *config)
 {
 	if (!config)
-		return;
+		return ;
 	config->has_no = 0;
 	config->has_so = 0;
 	config->has_we = 0;
@@ -557,19 +516,19 @@ int	main(int argc, char **argv)
 		free(config);
 		return (1);
 	}
-	// printf("Textures:\n");
-	// printf("  NO: %s\n", config->no_texture);
-	// printf("  SO: %s\n", config->so_texture);
-	// printf("  WE: %s\n", config->we_texture);
-	// printf("  EA: %s\n", config->ea_texture);
-	// printf("Colors:\n");
-	// printf("  Floor: %d,%d,%d\n", config->floor_color[0],
-	// 	config->floor_color[1], config->floor_color[2]);
-	// printf("  Ceiling: %d,%d,%d\n", config->ceiling_color[0],
-	// 	config->ceiling_color[1], config->ceiling_color[2]);
+	printf("Textures:\n");
+	printf("  NO: %s\n", config->no_texture);
+	printf("  SO: %s\n", config->so_texture);
+	printf("  WE: %s\n", config->we_texture);
+	printf("  EA: %s\n", config->ea_texture);
+	printf("Colors:\n");
+	printf("  Floor: %d,%d,%d\n", config->floor_color[0],
+		config->floor_color[1], config->floor_color[2]);
+	printf("  Ceiling: %d,%d,%d\n", config->ceiling_color[0],
+		config->ceiling_color[1], config->ceiling_color[2]);
 	print_map(config->map.grid, config->map.width, config->map.height);
-	// printf("Player position: (%.2f, %.2f), angle: %.2f radians\n",
-	// 	config->player.pos.x, config->player.pos.y, config->player.angle);
+	printf("Player position: (%.2f, %.2f), angle: %.2f radians\n",
+		config->player.pos.x, config->player.pos.y, config->player.angle);
 	free_config(config);
 	free(config);
 	return (0);

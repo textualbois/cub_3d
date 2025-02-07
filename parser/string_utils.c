@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 20:00:16 by admin             #+#    #+#             */
-/*   Updated: 2025/02/07 15:45:40 by admin            ###   ########.fr       */
+/*   Updated: 2025/02/07 17:58:12 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,27 @@ void	free_split_lines(char ***lines)
 	*lines = NULL;
 }
 
+char	**fill_lines_array(char **lines, char *file_content)
+{
+	int		i;
+	char	*temp_content;
+
+	temp_content = file_content;
+	i = 0;
+	while (*temp_content)
+	{
+		lines[i] = extract_line(&temp_content);
+		if (!lines[i])
+		{
+			free_split_lines(&lines);
+			free(file_content);
+			return (NULL);
+		}
+		i++;
+	}
+	return (lines);
+}
+
 char	**split_lines_manual(char *file_content)
 {
 	char	**lines;
@@ -81,21 +102,8 @@ char	**split_lines_manual(char *file_content)
 	lines = malloc(sizeof(char *) * (count + 1));
 	if (!lines)
 		return (NULL);
-	temp_content = file_content;
-	i = 0;
-	while (*temp_content)
-	{
-		lines[i] = extract_line(&temp_content);
-		if (!lines[i])
-		{
-			free_split_lines(&lines);
-			free(file_content);
-			file_content = NULL;
-			temp_content = NULL;
-			return (NULL);
-		}
-		i++;
-	}
-	lines[i] = NULL;
+	lines = fill_lines_array(lines, file_content);
+	if (!lines)
+		return (NULL);
 	return (lines);
 }

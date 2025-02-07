@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 14:09:33 by admin             #+#    #+#             */
-/*   Updated: 2025/02/07 16:03:33 by admin            ###   ########.fr       */
+/*   Updated: 2025/02/07 17:48:59 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,4 +90,9 @@ char				*pad_line(char *line, int width);
 int					skip_empty_lines(char **lines);
 int					ft_isspace(char c);
 char				*trim_and_validate_line(char *line);
+// parse_textures_colors.c
+char				**parse_textures_colors(char **lines, t_config *config);
+
+// parser.c
+int					parse_line(char *line, t_config *config);
 #endif
