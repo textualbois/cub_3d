@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_minimap.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 13:53:08 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/02 20:33:50 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/08 13:06:06 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,29 +23,53 @@
 
 // we also would need to take into account that the current ppu is ten, but when we scale the map down to the corner it would be different
 
-void	color_mini_map(mlx_image_t *map_img, t_mini_map *map) //replace the
+void	color_mini_map(mlx_image_t *map_img, t_mini_map *mini_map)
 {
-	int x;
-	int y;
-	int mHeight;
-	int mWidth;
+	unsigned int	color;
+	char			tile;
 
+	int x, y;
+	int mHeight, mWidth;
+	int cellX, cellY;
+	int tile_width, tile_height;
+	mWidth = mini_map->size_int.x;
+	mHeight = mini_map->size_int.y;
+	tile_width = (mini_map->visible_size.x * mini_map->ppu) / mWidth;
+	tile_height = (mini_map->visible_size.y * mini_map->ppu) / mHeight;
 	x = 0;
-	mHeight = 8; // todo
-	mWidth = 8; // todo
-	while (x < map->visible_size.x * map->ppu)
+	while (x < mini_map->visible_size.x * mini_map->ppu)
 	{
 		y = 0;
-		while (y < map->visible_size.y * map->ppu)
+		while (y < mini_map->visible_size.y * mini_map->ppu)
 		{
-			if ((x + (int)map->view_port.x) % (WIDTH / mWidth) == 0 || (y + (int)map->view_port.y) % (HEIGHT / mHeight) <= 1)
-				mlx_put_pixel(map_img, x, y, 0x003333FF); // if grid
+			/* Отрисовка линий сетки по границам тайлов */
+			if (((x + (int)mini_map->view_port.x) % tile_width == 0) || ((y
+						+ (int)mini_map->view_port.y) % tile_height <= 1))
+			{
+				mlx_put_pixel(map_img, x, y, 0x003333FF); // цвет линий сетки
+			}
 			else
 			{
-				if (map->map[(int)(y / (HEIGHT / mHeight))][(int)(x / (WIDTH / mWidth))] == 1)
-					mlx_put_pixel(map_img, x, y, 0xFF0000FF); // if wall
+				/* Вычисляем, к какой ячейке принадлежит данный пиксель */
+				cellX = x / tile_width;
+				cellY = y / tile_height;
+				/* На всякий случай,
+					если вычисленные индексы равны mWidth/mHeight,
+					принудительно уменьшаем их */
+				if (cellX >= mWidth)
+					cellX = mWidth - 1;
+				if (cellY >= mHeight)
+					cellY = mHeight - 1;
+				tile = mini_map->map[cellY][cellX];
+				if (tile == '1')
+					color = 0xFF0000FF; // стена – красный
+				else if (tile == '0')
+					color = 0xFFFFAAFF; // пол – желтоватый
+				else if (tile == ' ')
+					color = 0x000000FF; // пустота – чёрный
 				else
-					mlx_put_pixel(map_img, x, y, 0xFFFFAAFF); // if empty
+					color = 0xFFFFFFFF; // fallback – белый
+				mlx_put_pixel(map_img, x, y, color);
 			}
 			y++;
 		}

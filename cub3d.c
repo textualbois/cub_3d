@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:20 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/08 01:15:15 by admin            ###   ########.fr       */
+/*   Updated: 2025/02/08 11:59:54 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,8 @@ int main(int argc, char **argv)
 		return (1);
 	}
 	print_map(config->map.grid, config->map.width, config->map.height);
-	
+	printf("Player position: (%.2f, %.2f), angle: %.2f radians\n",
+		config->player.pos.x, config->player.pos.y, config->player.angle);
 	t_World_Controller *world;
 
 	// int map[8][8]=

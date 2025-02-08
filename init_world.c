@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_world.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:53 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/08 01:11:33 by admin            ###   ########.fr       */
+/*   Updated: 2025/02/08 11:56:36 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,20 @@ t_World_Controller *init_world(t_config *config)
 	world = (t_World_Controller *)malloc(sizeof(t_World_Controller));
 	if (!world)
 		return (NULL);
-	world->size = (t_IntPair){8 * TILE_SIZE, 8 * TILE_SIZE}; // change to map.size() * 10, map[0].size() * 10
+	world->size = (t_IntPair){config->map.height * TILE_SIZE, config->map.width * TILE_SIZE}; // change to map.size() * 10, map[0].size() * 10
 	world->window = initialize_window();
 	if (!world->window)
 	{
 		free(world);
 		return (NULL);
 	}
-	world->player = init_mini_character((t_IntPair){5, 5}, (t_IntPair){world->size.x / 2, world->size.y / 2}); // actual poisiton will depend on input
+	world->player = init_mini_character((t_IntPair){5, 5}, (t_IntPair){config->player.pos.x , config->player.pos.y }); // actual poisiton will depend on input
 	if (!world->player)
 	{
 		free(world);
 		return (NULL);
 	}
-	world->map = init_minimap(config);
+	world->mini_map = init_minimap(config);
 
 	// for (int i = 0; i < 8; i++)
 	// {
@@ -43,7 +43,7 @@ t_World_Controller *init_world(t_config *config)
 	{
 		printf("init images failedn\n");
 		free(world->player);
-		free(world->map);
+		free(world->mini_map);
 		free(world);
 		return (NULL);
 	}

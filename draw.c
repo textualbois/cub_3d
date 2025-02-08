@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:49:48 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/06 01:01:44 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/08 12:30:15 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ void	redraw(void *param)
 
 	world = (t_World_Controller *)param;
 	write(1, "redraw\n", 7);
-	centre_mini_map(world->map, world->player); // if player moves we first try to move the map view
-	color_mini_map(world->map_img, world->map);
+	centre_mini_map(world->mini_map, world->player); // if player moves we first try to move the map view
+	color_mini_map(world->map_img, world->mini_map);
 	// player is drawn relative to his image, so we need to move the image
-	centre_character_img(world, world->map, world->player->pos); // then we move the player image box, if hes close to a border
+	centre_character_img(world, world->mini_map, world->player->pos); // then we move the player image box, if hes close to a border
 	ft_color_mini_character(world->miniCharacter, 0xFF00FFFF);
 	// color_rays
 	//ft_color_mini_character_direction(world->miniCharacter, 0xFF0000FF, world->player); // then we draw the player

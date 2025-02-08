@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_mini_character.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:37 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/02 20:13:19 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/08 12:46:06 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	ft_color_line(mlx_image_t *img, int color, t_DoublePair start, t_DoublePair
 	error.x = delta.x - delta.y;
 	iter = start;
 	printf("size of line = %f\n", distance(start, end));
-	printf("size of iamge = %d\n", img->width);
+	printf("size of image = %d\n", img->width);
 
 // }	while (fabs(iter.x - end.x) > 0.5 || fabs(iter.y - end.y) > 0.5)
 	while ((int)iter.x != (int)end.x && (int)iter.y != (int)end.y)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   image_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:23 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/06 00:26:57 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/08 12:25:02 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@ int	init_images(t_World_Controller *world)//, int map[8][8])
 {
 	t_IntPair	mini_player_img_size;
 
-	mini_player_img_size.x = (int)world->map->visible_size.x / VISIBLE_TILES / 10 * world->map->ppu;
-	mini_player_img_size.y = (int)world->map->visible_size.y / VISIBLE_TILES / 10 * world->map->ppu;
+	mini_player_img_size.x = (int)world->mini_map->visible_size.x / VISIBLE_TILES / 10 * world->mini_map->ppu;
+	mini_player_img_size.y = (int)world->mini_map->visible_size.y / VISIBLE_TILES / 10 * world->mini_map->ppu;
 	printf("mini_player_img_size.x: %d\n", mini_player_img_size.x);
 	printf("mini_player_img_size.y: %d\n", mini_player_img_size.y);
 	fflush(stdout);
-	world->map_img = init_image_minimap(world->window, world->map);// return map variable for rescaling possibly
+	world->map_img = init_image_minimap(world->window, world->mini_map);// return map variable for rescaling possibly
 	if (!world->map_img)
 		return (1);
 	world->miniCharacter = init_image_mini_character(world->window,

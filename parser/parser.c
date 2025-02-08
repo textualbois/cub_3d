@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 15:26:10 by vmamoten          #+#    #+#             */
-/*   Updated: 2025/02/08 00:18:13 by admin            ###   ########.fr       */
+/*   Updated: 2025/02/08 11:59:25 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@
 // 	printf("  Ceiling: %d,%d,%d\n", config->ceiling_color[0],
 // 		config->ceiling_color[1], config->ceiling_color[2]);
 // 	print_map(config->map.grid, config->map.width, config->map.height);
-// 	printf("Player position: (%.2f, %.2f), angle: %.2f radians\n",
-// 		config->player.pos.x, config->player.pos.y, config->player.angle);
+	// printf("Player position: (%.2f, %.2f), angle: %.2f radians\n",
+	// 	config->player.pos.x, config->player.pos.y, config->player.angle);
 // 	free_config(config);
 // 	free(config);
 // 	return (0);
