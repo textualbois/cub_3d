@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_mini_img_centring.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
+/*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 21:30:06 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/08 18:04:14 by vmamoten         ###   ########.fr       */
+/*   Updated: 2025/02/08 20:05:42 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void uncentre_character_img_h(t_World_Controller *world, t_mini_map *map, t_Doub
 	}
 	else if (pos.x > map->size.x - map->visible_size.x / 2)
 	{
-		pixel_offset = (int)(pos.x / map->visible_size.x * world->map_img->width);
+		pixel_offset = (int)((pos.x - map->view_port.x) / map->visible_size.x * world->map_img->width);
 		world->miniCharacter->instances[0].x = world->map_img->instances[0].x + pixel_offset - world->miniCharacter->width / 2;
 		printf("2 image position x: %d\n", world->miniCharacter->instances[0].x);
 	}
