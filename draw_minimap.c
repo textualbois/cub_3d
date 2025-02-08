@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_minimap.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
+/*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 13:53:08 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/08 18:03:40 by vmamoten         ###   ########.fr       */
+/*   Updated: 2025/02/08 19:24:30 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,45 +23,41 @@
 
 // we also would need to take into account that the current ppu is ten, but when we scale the map down to the corner it would be different
 
+// instead of drawing the map pixel by pixel, we can draw the tiles as a whole, this would speed up the drawing
+
 void	color_mini_map(mlx_image_t *map_img, t_mini_map *mini_map)
 {
 	unsigned int	color;
 	char			tile;
+	t_IntPair		pix;
+	t_IntPair		cell;
 
-	int x, y;
-	int mHeight, mWidth;
-	int cellX, cellY;
-	int tile_width, tile_height;
-	mWidth = mini_map->size_int.x;
-	mHeight = mini_map->size_int.y;
-	tile_width = (mini_map->visible_size.x * mini_map->ppu) / mWidth; // size of 1 tile
-	tile_height = (mini_map->visible_size.y * mini_map->ppu) / mHeight;
-	x = 0;
-	while (x < mini_map->visible_size.x * mini_map->ppu) // pixels
+	pix.x = 0;
+	while (pix.x < mini_map->visible_size.x * mini_map->ppu) // pixels
 	{
-		y = 0;
-		while (y < mini_map->visible_size.y * mini_map->ppu)
+		pix.y = 0;
+		while (pix.y < mini_map->visible_size.y * mini_map->ppu)
 		{
 			/* Отрисовка линий сетки по границам тайлов */
-			if ((((x / mini_map->ppu) + mini_map->view_port.x) % TILE_SIZE == 0) || ((y / mini_map->ppu
+			if ((((pix.x / mini_map->ppu) + mini_map->view_port.x) % TILE_SIZE == 0) || ((pix.y / mini_map->ppu
 						+ mini_map->view_port.y) % TILE_SIZE == 0))
 			{
-				mlx_put_pixel(map_img, x, y, 0x003333FF); // цвет линий сетки
+				mlx_put_pixel(map_img, pix.x, pix.y, 0x003333FF); // цвет линий сетки
 			}
 			else
 			{
 				/* Вычисляем, к какой ячейке принадлежит данный пиксель */
-				cellX = (x / mini_map->ppu + mini_map->view_port.x) / TILE_SIZE;
-				cellY = (y / mini_map->ppu + mini_map->view_port.y) / TILE_SIZE;
+				cell.x = (pix.x / mini_map->ppu + mini_map->view_port.x) / TILE_SIZE;
+				cell.y = (pix.y / mini_map->ppu + mini_map->view_port.y) / TILE_SIZE;
 				// printf("cellX = %i, cellY = %i\n", cellX, cellY);
 				/* На всякий случай,
 					если вычисленные индексы равны mWidth/mHeight,
-					принудительно уменьшаем их */
-				if (cellX >= mWidth)
-					cellX = mWidth - 1;
-				if (cellY >= mHeight)
-					cellY = mHeight - 1;
-				tile = mini_map->map[cellY][cellX];
+					принудительно уменьшаем их */ /// instead of this check we can substract 1 from cellX and CellY
+				if (cell.x >= mini_map->size_int.x)
+					cell.x = mini_map->size_int.x - 1;
+				if (cell.y >= mini_map->size_int.y)
+					cell.y =  mini_map->size_int.y - 1;
+				tile = mini_map->map[cell.y][cell.x];
 				if (tile == '1')
 					color = 0xFF0000FF; // стена – красный
 				else if (tile == '0')
@@ -70,10 +66,10 @@ void	color_mini_map(mlx_image_t *map_img, t_mini_map *mini_map)
 					color = 0x000000FF; // пустота – чёрный
 				else
 					color = 0xFFFFFFFF; // fallback – белый
-				mlx_put_pixel(map_img, x, y, color);
+				mlx_put_pixel(map_img, pix.x, pix.y, color);
 			}
-			y++;
+			pix.y++;
 		}
-		x++;
+		pix.x++;
 	}
 }
