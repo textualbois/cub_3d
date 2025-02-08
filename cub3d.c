@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:20 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/08 00:35:36 by admin            ###   ########.fr       */
+/*   Updated: 2025/02/08 01:15:15 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int main(int argc, char **argv)
 	// };
 
 	ft_putstr_fd("Hello, World!\n", 1);
-	world = init_world(config->map);
+	world = init_world(config);
 	ft_putstr_fd("Hello, Images!\n", 1);
 	// init_images(world);//, map);
 	ft_putstr_fd("Hello, Draw!\n", 1);

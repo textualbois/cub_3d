@@ -6,13 +6,13 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:53 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/08 00:35:10 by admin            ###   ########.fr       */
+/*   Updated: 2025/02/08 01:11:33 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "world.h"
 
-t_World_Controller *init_world(t_map map)
+t_World_Controller *init_world(t_config *config)
 {
 	t_World_Controller *world;
 
@@ -32,7 +32,7 @@ t_World_Controller *init_world(t_map map)
 		free(world);
 		return (NULL);
 	}
-	world->map = init_minimap(map);
+	world->map = init_minimap(config);
 
 	// for (int i = 0; i < 8; i++)
 	// {

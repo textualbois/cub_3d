@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:12:18 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/08 00:37:42 by admin            ###   ########.fr       */
+/*   Updated: 2025/02/08 01:13:12 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ typedef struct s_World_Controller{
 	//t_FrameCounter	*frameCounter;
 }	t_World_Controller;
 
-t_World_Controller	*init_world(t_map map);
+t_World_Controller	*init_world(t_config *config);
 
 int					init_images(t_World_Controller *world);//, int map[8][8]);
 mlx_image_t			*init_image_mini_character(mlx_t *window, t_character *player, t_IntPair size);
