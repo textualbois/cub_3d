@@ -6,7 +6,7 @@
 /*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 13:53:08 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/08 13:06:06 by vmamoten         ###   ########.fr       */
+/*   Updated: 2025/02/08 18:03:40 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,25 +34,26 @@ void	color_mini_map(mlx_image_t *map_img, t_mini_map *mini_map)
 	int tile_width, tile_height;
 	mWidth = mini_map->size_int.x;
 	mHeight = mini_map->size_int.y;
-	tile_width = (mini_map->visible_size.x * mini_map->ppu) / mWidth;
+	tile_width = (mini_map->visible_size.x * mini_map->ppu) / mWidth; // size of 1 tile
 	tile_height = (mini_map->visible_size.y * mini_map->ppu) / mHeight;
 	x = 0;
-	while (x < mini_map->visible_size.x * mini_map->ppu)
+	while (x < mini_map->visible_size.x * mini_map->ppu) // pixels
 	{
 		y = 0;
 		while (y < mini_map->visible_size.y * mini_map->ppu)
 		{
 			/* Отрисовка линий сетки по границам тайлов */
-			if (((x + (int)mini_map->view_port.x) % tile_width == 0) || ((y
-						+ (int)mini_map->view_port.y) % tile_height <= 1))
+			if ((((x / mini_map->ppu) + mini_map->view_port.x) % TILE_SIZE == 0) || ((y / mini_map->ppu
+						+ mini_map->view_port.y) % TILE_SIZE == 0))
 			{
 				mlx_put_pixel(map_img, x, y, 0x003333FF); // цвет линий сетки
 			}
 			else
 			{
 				/* Вычисляем, к какой ячейке принадлежит данный пиксель */
-				cellX = x / tile_width;
-				cellY = y / tile_height;
+				cellX = (x / mini_map->ppu + mini_map->view_port.x) / TILE_SIZE;
+				cellY = (y / mini_map->ppu + mini_map->view_port.y) / TILE_SIZE;
+				// printf("cellX = %i, cellY = %i\n", cellX, cellY);
 				/* На всякий случай,
 					если вычисленные индексы равны mWidth/mHeight,
 					принудительно уменьшаем их */

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:48:32 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/02 23:05:37 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/08 17:54:47 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "MLX42/MLX42.h"
 # include "world.h"
 # include "colors.h"
+# include "extra_math.h"
 
 void	ft_color_mini_character(mlx_image_t *player, int color);
 void	ft_color_mini_character_direction(mlx_image_t *character, int color, t_character *player);

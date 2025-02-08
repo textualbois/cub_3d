@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_mini_img_centring.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 21:30:06 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/06 01:17:28 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/08 18:04:14 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	centre_character_img(t_World_Controller *world, t_mini_map *map, t_DoublePa
 	else
 		centre_character_img_h(world);
 
-	sleep(1);
+	// sleep(1);
 
 }
 

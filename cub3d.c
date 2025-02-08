@@ -6,7 +6,7 @@
 /*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:20 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/08 11:59:54 by vmamoten         ###   ########.fr       */
+/*   Updated: 2025/02/08 16:46:45 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,19 @@ int main(int argc, char **argv)
 		free(config);
 		return (1);
 	}
-	print_map(config->map.grid, config->map.width, config->map.height);
-	printf("Player position: (%.2f, %.2f), angle: %.2f radians\n",
-		config->player.pos.x, config->player.pos.y, config->player.angle);
+	// printf("Textures:\n");
+	// printf("  NO: %s\n", config->no_texture);
+	// printf("  SO: %s\n", config->so_texture);
+	// printf("  WE: %s\n", config->we_texture);
+	// printf("  EA: %s\n", config->ea_texture);
+	// printf("Colors:\n");
+	// printf("  Floor: %d,%d,%d\n", config->floor_color[0],
+	// 	config->floor_color[1], config->floor_color[2]);
+	// printf("  Ceiling: %d,%d,%d\n", config->ceiling_color[0],
+	// 	config->ceiling_color[1], config->ceiling_color[2]);
+	// print_map(config->map.grid, config->map.width, config->map.height);
+	// printf("Player position: (%.2f, %.2f), angle: %.2f radians\n",
+	// 	config->player.pos.x, config->player.pos.y, config->player.angle);
 	t_World_Controller *world;
 
 	// int map[8][8]=
