@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_minimap.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
+/*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 13:53:08 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/08 18:03:40 by vmamoten         ###   ########.fr       */
+/*   Updated: 2025/02/08 19:05:36 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ void	color_mini_map(mlx_image_t *map_img, t_mini_map *mini_map)
 	int x, y;
 	int mHeight, mWidth;
 	int cellX, cellY;
-	int tile_width, tile_height;
+	// int tile_width, tile_height;
 	mWidth = mini_map->size_int.x;
 	mHeight = mini_map->size_int.y;
-	tile_width = (mini_map->visible_size.x * mini_map->ppu) / mWidth; // size of 1 tile
-	tile_height = (mini_map->visible_size.y * mini_map->ppu) / mHeight;
+	// tile_width = (mini_map->visible_size.x * mini_map->ppu) / mWidth; // size of 1 tile
+	// tile_height = (mini_map->visible_size.y * mini_map->ppu) / mHeight;
 	x = 0;
 	while (x < mini_map->visible_size.x * mini_map->ppu) // pixels
 	{
