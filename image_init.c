@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   image_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
+/*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:23 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/08 18:14:42 by vmamoten         ###   ########.fr       */
+/*   Updated: 2025/02/08 20:11:47 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ int	init_images(t_World_Controller *world)//, int map[8][8])
 {
 	t_IntPair	mini_player_img_size;
 
-	mini_player_img_size.x = (int)world->mini_map->visible_size.x / VISIBLE_TILES / 10 * world->mini_map->ppu; //change ten to ppu ??
-	mini_player_img_size.y = (int)world->mini_map->visible_size.y / VISIBLE_TILES / 10 * world->mini_map->ppu; //
+	mini_player_img_size.x = (int)world->mini_map->visible_size.x / VISIBLE_TILES / 5 * world->mini_map->ppu; //change ten to ppu ??
+	mini_player_img_size.y = (int)world->mini_map->visible_size.y / VISIBLE_TILES / 5 * world->mini_map->ppu; //
 	printf("mini_player_img_size.x: %d\n", mini_player_img_size.x);
 	printf("mini_player_img_size.y: %d\n", mini_player_img_size.y);
 	fflush(stdout);
