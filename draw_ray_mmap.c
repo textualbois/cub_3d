@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 21:39:44 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/09 18:54:06 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/09 23:26:18 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ void	drawray(t_character *player, mlx_image_t *map_img, t_mini_map *mini_map, t_
 	end.y = (hit.y - mini_map->view_port.y) / mini_map->visible_size.y * map_img->height;
 	// if (map_img == NULL)
 		// printf("map_img is NULL\n");
-	draw_line_between_pixels(map_img, start, end, 0xFF000000);
+	if (end.x >= 0 && end.y >= 0)
+		draw_line_between_pixels(map_img, start, end, 0xFF000000);
 	// printf("drew a line\n");
 }
 
