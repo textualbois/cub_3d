@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:12:18 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/08 22:56:18 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/09 23:30:43 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct s_World_Controller{
 	//int				map[8][8]; // change to t_map?
 	mlx_image_t		*map_img;
 	mlx_image_t		*miniCharacter;
+	mlx_image_t		*world3d;
 	//t_FrameCounter	*frameCounter;
 }	t_World_Controller;
 

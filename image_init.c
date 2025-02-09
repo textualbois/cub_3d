@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:23 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/08 20:11:47 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/09 23:33:58 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,14 @@ int	init_images(t_World_Controller *world)//, int map[8][8])
 			world->player, mini_player_img_size);
 	if (!world->miniCharacter)
 	{
-
 		mlx_delete_image(world->window, world->map_img);
-			// is this how you handle it?
+		return (1);
+	}
+	world->world3d = mlx_new_image(world->window, world->window->width, world->window->height);
+	if (!world->world3d)
+	{
+		mlx_delete_image(world->window, world->map_img);
+		mlx_delete_image(world->window, world->miniCharacter);
 		return (1);
 	}
 	return (0);
