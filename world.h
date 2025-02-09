@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   world.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
+/*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:12:18 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/08 11:56:25 by vmamoten         ###   ########.fr       */
+/*   Updated: 2025/02/08 22:56:18 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void uncentre_character_img_v(t_World_Controller *world, t_mini_map *map, t_Doub
 void centre_character_img_v(t_World_Controller *world);
 void uncentre_character_img_h(t_World_Controller *world, t_mini_map *map, t_DoublePair pos);
 void centre_character_img_h(t_World_Controller *world);
+void	raycasting(t_World_Controller *world);
 
 
 #endif
