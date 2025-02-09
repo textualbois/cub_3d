@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movement.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
+/*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:12:04 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/08 01:17:40 by admin            ###   ########.fr       */
+/*   Updated: 2025/02/09 19:01:16 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,25 @@ void	ft_movement_input(void *param)
 
 	world = (t_World_Controller *)param;
 	if (mlx_is_key_down(world->window, MLX_KEY_E))
-		set_h_rotation(world, 0.05);
-	if (mlx_is_key_down(world->window, MLX_KEY_Q))
 		set_h_rotation(world, -0.05);
-	if (mlx_is_key_down(world->window, MLX_KEY_S))
-		set_movement(world, (t_DoublePair){0.1 * cos(world->player->angle), 0.1 * sin(world->player->angle)});
-	if (mlx_is_key_down(world->window, MLX_KEY_W))
-		set_movement(world, (t_DoublePair){-1 * cos(world->player->angle), -1 * sin(world->player->angle)});
-	if (mlx_is_key_down(world->window, MLX_KEY_A))
-		set_movement(world, (t_DoublePair){0.1 * cos(world->player->angle + PI / 2), 0.1 * sin(world->player->angle + PI / 2)});
+	if (mlx_is_key_down(world->window, MLX_KEY_Q))
+		set_h_rotation(world, +0.05);
 	if (mlx_is_key_down(world->window, MLX_KEY_D))
-		set_movement(world, (t_DoublePair){0.1 * cos(world->player->angle - PI / 2), 0.1 * sin(world->player->angle - PI / 2)});
+		set_movement(world, (t_DoublePair){0.5 * sin(world->player->angle), 0.5 * cos(world->player->angle)});
+	if (mlx_is_key_down(world->window, MLX_KEY_A))
+		set_movement(world, (t_DoublePair){-0.5 * sin(world->player->angle), -0.5 * cos(world->player->angle)});
+	if (mlx_is_key_down(world->window, MLX_KEY_W))
+		set_movement(world, (t_DoublePair){0.5 * sin(world->player->angle + PI / 2), 0.5 * cos(world->player->angle + PI / 2)});
+	if (mlx_is_key_down(world->window, MLX_KEY_S))
+		set_movement(world, (t_DoublePair){0.5 * sin(world->player->angle - PI / 2), 0.5 * cos(world->player->angle - PI / 2)});
+	// 		if (mlx_is_key_down(world->window, MLX_KEY_S))
+	// 	set_movement(world, (t_DoublePair){0.5 * sin(world->player->angle), 0.5 * cos(world->player->angle)});
+	// if (mlx_is_key_down(world->window, MLX_KEY_W))
+	// 	set_movement(world, (t_DoublePair){-0.5 * sin(world->player->angle), -0.5 * cos(world->player->angle)});
+	// if (mlx_is_key_down(world->window, MLX_KEY_A))
+	// 	set_movement(world, (t_DoublePair){0.5 * sin(world->player->angle + PI / 2), 0.5 * cos(world->player->angle + PI / 2)});
+	// if (mlx_is_key_down(world->window, MLX_KEY_D))
+	// 	set_movement(world, (t_DoublePair){0.5 * sin(world->player->angle - PI / 2), 0.5 * cos(world->player->angle - PI / 2)});
 	printf("player pos x: %f, y: %f\n", world->player->pos.x, world->player->pos.y);
 	// adjust for walls()
 }
