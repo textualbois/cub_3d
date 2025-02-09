@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:49:48 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/09 20:00:45 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/09 23:01:05 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,29 +67,24 @@ void	raycasting(t_World_Controller *world)
 	double		rayDir;
 	t_DoublePair	hit;
 	int			x;
-	double		fov_radians;
+	double		radians_increment;
 
-	fov_radians = FOV * PI / 180;
-	rayDir = normalise_radians( world->player->angle);// - fov_radians / 2);
+	radians_increment = - (FOV * PI / 180 )/ world->window->width;
+	// fov_radians = FOV * PI / 180;
+	// rayDir = normalise_radians( world->player->angle - fov_radians / 2);
+	rayDir = normalise_radians( world->player->angle - radians_increment * (world->window->width / 2));
 	x = 0;
 	// printf("raycasting loop\n");
 	// fflush(stdout);
-	if (rayDir < 0 || rayDir >= 2 * PI)
-	{
-		printf("RAYS OUTO OF BOUNF \n");
-		printf("raydir: %f\n", rayDir);
-		printf("RAYS OUTO OF BOUNF \n");
-		printf("RAYS OUTO OF BOUNF \n");
-	}
 
-	while (x < 1)//world->window->width)
+	while (x < world->window->width)
 	{
 		hit = ray_find_wall(world->mini_map, world->player, rayDir);
 		// printf("raycasting loop %d out of %d hit x: %f, y: %f\n", x + 1, world->window->width, hit.x, hit.y);
 
 		// fflush(stdout);
 		drawray(world->player, world->map_img, world->mini_map, hit);
-		rayDir = normalise_radians(rayDir + fov_radians / 6); /// world->window->width);
+		rayDir = normalise_radians(rayDir + radians_increment);
 		// printf("next loop\n");
 		x++;
 	}
