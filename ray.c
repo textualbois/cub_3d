@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 06:35:51 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/09 21:32:51 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/09 21:42:07 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,17 +61,17 @@ static int angle_to_degree(double angle)
 
 t_DoublePair	ray_find_wall(t_mini_map *mini_map, t_character *player, double rayDir)
 {
-	t_DoublePair	vertical_hit;
-	// t_DoublePair	horizontal_hit;
+	//t_DoublePair	vertical_hit;
+	t_DoublePair	horizontal_hit;
 	t_IntPair		depth;
 	printf("checking direction %f, which is %i degrees\n", rayDir, angle_to_degree(rayDir));
 	depth.x = 0;
 	depth.y = 0;
-	vertical_hit = ray_find_vertical_hit(mini_map, player, rayDir, &depth.y);
-	// horizontal_hit = ray_find_horizontal_hit(mini_map, player, rayDir, &depth.x);
+	//vertical_hit = ray_find_vertical_hit(mini_map, player, rayDir, &depth.y);
+	horizontal_hit = ray_find_horizontal_hit(mini_map, player, rayDir, &depth.x);
 	// if ((depth.x >= 0 && depth.x < depth.y) || depth.y == -1)
-		// return (horizontal_hit);
-	return (vertical_hit);
+		 return (horizontal_hit);
+	//return (vertical_hit);
 }
 
 static int check_hit_bounds(t_DoublePair *hit, t_mini_map *mini_map)
@@ -126,17 +126,18 @@ t_DoublePair	ray_find_vertical_hit(t_mini_map *mini_map, t_character *player, do
 t_DoublePair	ray_find_horizontal_hit(t_mini_map *mini_map, t_character *player, double rayDir, int *depth)
 {
 	t_DoublePair	hit;
-	// int				direction;
+	int				direction;
 
 	// up direction
 	if (rayDir < PI) {
 		hit.y = floor_map(player->pos.y);
-		// direction = -1;
+		direction = -1;
 	} else { // down direction
 		hit.y = ceil_map(player->pos.y);
-		// direction = 1;
+		direction = 1;
 	}
 	hit.x = player->pos.x - (hit.y - player->pos.y) / tan(rayDir);
+	// return (hit);
 	if (check_hit_bounds(&hit, mini_map) == false)
 	{
 		*depth = -1;
