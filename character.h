@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   character.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
+/*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:30 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/08 17:12:17 by vmamoten         ###   ########.fr       */
+/*   Updated: 2025/02/09 11:16:33 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ typedef struct s_character{
 }	t_character;
 
 // init
-t_character* init_mini_character(t_IntPair size, t_DoublePair pos);
+t_character	*init_mini_character(t_IntPair size, t_character player);
 
 // free
 

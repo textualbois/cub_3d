@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 19:52:42 by admin             #+#    #+#             */
-/*   Updated: 2025/02/07 19:54:07 by admin            ###   ########.fr       */
+/*   Updated: 2025/02/09 11:20:53 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,13 +74,13 @@ int	is_valid_map_char(char c)
 
 double	get_angle_from_char(char dir)
 {
-	if (dir == 'N')
-		return (3 * M_PI_2);
 	if (dir == 'S')
+		return (3 * M_PI_2);
+	if (dir == 'N')
 		return (M_PI_2);
-	if (dir == 'E')
-		return (0);
 	if (dir == 'W')
+		return (0);
+	if (dir == 'E')
 		return (M_PI);
 	return (0);
 }
