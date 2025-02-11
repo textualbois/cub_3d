@@ -87,9 +87,9 @@ t_DoublePair	ray_find_wall(t_mini_map *mini_map, t_character *player, double ray
 	depth.y = 0;
 	vertical_hit = ray_find_vertical_hit(mini_map, player, rayDir, direction);
 	horizontal_hit = ray_find_horizontal_hit(mini_map, player, rayDir, direction);
-	if (vertical_hit.x == 0)
+	if (vertical_hit.x == -1)
 		 return (horizontal_hit);
-	if (horizontal_hit.x == 0)
+	if (horizontal_hit.x == -1)
 		return (vertical_hit);
 	if (distance(player->pos, vertical_hit) < distance(player->pos, horizontal_hit))
 		return (vertical_hit);
