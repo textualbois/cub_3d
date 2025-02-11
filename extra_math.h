@@ -18,5 +18,6 @@
 double	distance(t_DoublePair a, t_DoublePair b);
 double	ceil_map(double x);
 double	floor_map(double x);
+t_DoublePair	add_pair(t_DoublePair a, t_DoublePair b);
 
 #endif

@@ -26,3 +26,12 @@ double	floor_map(double x)
 {
 	return (((int)x / TILE_SIZE) * TILE_SIZE);
 }
+
+t_DoublePair	add_pair(t_DoublePair a, t_DoublePair b)
+{
+	t_DoublePair result;
+
+	result.x = a.x + b.x;
+	result.y = a.y + b.y;
+	return (result);
+}

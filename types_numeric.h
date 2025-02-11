@@ -27,6 +27,7 @@
 #define TILE_SIZE 10
 #define VERTICAL 1
 #define HORIZONTAL 0
+#define NOHIT -1
 
 typedef struct s_IntPair{
 	int32_t x;
