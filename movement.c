@@ -105,9 +105,6 @@ void	set_movement(t_World_Controller *world, t_DoublePair delta_x_y)
 
 t_DoublePair check_other_wall(t_mini_map *mini_map, t_DoublePair pos, t_IntPair direction, int caller)
 {
-	t_DoublePair	hit;
-
-
 	if (is_wall(mini_map, pos, direction, caller) == false) {
 			return (pos);
 	}
@@ -125,5 +122,5 @@ t_DoublePair check_other_wall(t_mini_map *mini_map, t_DoublePair pos, t_IntPair 
 		else // down direction
 			pos.y = ceil_map(pos.y) - 0.1 * TILE_SIZE;
 	}
-	return (hit);
+	return (pos);
 }
