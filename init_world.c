@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_world.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:53 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/09 11:16:58 by admin            ###   ########.fr       */
+/*   Updated: 2025/02/12 18:40:58 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_World_Controller *init_world(t_config *config)
 		free(world);
 		return (NULL);
 	}
-	world->player = init_mini_character((t_IntPair){5, 5}, config->player); // actual poisiton will depend on input
+	world->player = init_mini_character((t_IntPair){config->player.pos.x, config->player.pos.y}, config->player); // actual poisiton will depend on input
 	if (!world->player)
 	{
 		free(world);
