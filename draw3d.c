@@ -6,19 +6,23 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 23:32:15 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/09 23:57:32 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/12 18:29:05 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "draw.h"
 
-static void draw_vertical_line(mlx_image_t *img, int start, int end, int x)
+static void	draw_vertical_line(mlx_image_t *img, int start, int end, int x)
 {
-	int i;
-	int color;
+	int	i;
+	int	color;
 
 	i = 0;
 	color = 0xFFF0004F;
+	if (start + i < 0)
+		start = 0 - i;
+	if (end > img->height)
+		end = img->height;
 	while (start + i < end)
 	{
 		mlx_put_pixel(img, x, start+i, color);
