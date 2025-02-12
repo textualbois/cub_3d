@@ -1,7 +1,7 @@
 NAME     = cub3d
 
 SRCS     = cub3d.c loops_hooks.c init_world.c minimap_init.c \
-           character_init.c movement.c draw_mini_character.c \
+           character_init.c movement.c mov_cursor.c draw_mini_character.c \
            window_init.c image_init.c draw.c draw_minimap.c extra_math.c \
 		   minimap_view_box.c player_mini_img_centring.c \
 		   draw_ray_mmap.c ray.c ray_helpers.c \
