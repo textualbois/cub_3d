@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validate_map_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
+/*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 19:52:42 by admin             #+#    #+#             */
-/*   Updated: 2025/02/09 11:20:53 by admin            ###   ########.fr       */
+/*   Updated: 2025/02/12 21:56:39 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,5 +89,5 @@ void	set_player_position(t_config *config, int x, int y, char dir)
 {
 	config->player.pos.x = (double)x + 0.5;
 	config->player.pos.y = (double)y + 0.5;
-	config->player.angle = get_angle_from_char(dir);
+	config->player.angle.y = get_angle_from_char(dir);
 }

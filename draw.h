@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:48:32 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/09 23:50:31 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/12 21:50:56 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ft_color_line(mlx_image_t *img, int color, t_DoublePair start, t_DoublePair
 void	redraw(void *param);
 void	drawray(t_character *player, mlx_image_t *map_img, t_mini_map *mini_map, t_DoublePair hit);
 void	draw_line_between_pixels(mlx_image_t *img, t_IntPair start, t_IntPair end, int color);
-void	draw3d(mlx_image_t *world3d, double distance, double rayDir, int x);
+void	draw3d(mlx_image_t *world3d, double distance, double rayDir, double pitch, int x);
 
 
 

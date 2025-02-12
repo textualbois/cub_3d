@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   character.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
+/*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:30 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/09 11:16:33 by admin            ###   ########.fr       */
+/*   Updated: 2025/02/12 21:45:13 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 typedef struct s_character{
 	t_IntPair size;
 	t_DoublePair pos;
-	double angle;
+	t_DoublePair angle;
 }	t_character;
 
 // init

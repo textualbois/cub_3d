@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 23:32:15 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/12 21:21:19 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/12 22:02:49 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,15 @@ static void	draw_vertical_line(mlx_image_t *img, int start, int end, int x)
 		mlx_put_pixel(img, x, end - 1, 0xFFFFFFFF);
 }
 
-void	draw3d(mlx_image_t *world3d, double distance, double rad_delta, int x)
+void	draw3d(mlx_image_t *world3d, double distance, double rad_delta, double pitch, int x)
 {
 	// t_IntPair window_size;
 	// (void)rad_delta;
 	distance *= cos(rad_delta);
 	double lineH = TILE_SIZE * world3d->height / distance;
+	double vertical_offset = (world3d->height / 2) * sin(pitch);
+	int top = (world3d->height - lineH) / 2 + vertical_offset;
+	int bottom = (world3d->height + lineH) / 2 + vertical_offset;
 	// int mid = world3d->height / 2;
-	draw_vertical_line(world3d, (world3d->height - lineH) / 2, (world3d->height + lineH) / 2, x);
+	draw_vertical_line(world3d, top, bottom, x);
 }
