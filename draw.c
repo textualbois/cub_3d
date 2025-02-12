@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:49:48 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/12 19:53:13 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/12 20:22:42 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	raycasting(t_World_Controller *world)
 
 		// fflush(stdout);
 		drawray(world->player, world->map_img, world->mini_map, hit);
-		draw3d(world->world3d, distance(hit, world->player->pos), rayDir, x);
+		draw3d(world->world3d, distance(hit, world->player->pos), normalise_radians(world->player->angle - rayDir), x);
 		rayDir = normalise_radians(rayDir + radians_increment);
 		// printf("next loop\n");
 		x++;

@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 23:32:15 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/12 20:06:06 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/12 21:21:19 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,27 +18,39 @@ static void	draw_vertical_line(mlx_image_t *img, int start, int end, int x)
 	int	color;
 
 	i = 0;
-	color = 0xFFF0004F;
-	if (start + i < 0)
-		start = 0 - i;
+	color = 0xFFF000FF;
+	if (start < 0)
+		start = 0 ;
 	if (end > (int)img->height)
+	{
 		end = img->height;
-	while (start + i < end)
+	}
+	while (i < start)
 	{
-		mlx_put_pixel(img, x, start+i, color);
+		mlx_put_pixel(img, x, i, 0xFF7220FF);
 		i++;
 	}
-	while (start + i < (int)img->height)
+	while (i < end)
 	{
-		mlx_put_pixel(img, x, start+i, 0xFF022011);
+		mlx_put_pixel(img, x, i, color);
 		i++;
 	}
+
+	while (i < (int)img->height)
+	{
+		mlx_put_pixel(img, x, i, 0xFF0220FF);
+		i++;
+	}
+		mlx_put_pixel(img, x, start, 0xFFFFFFFF);
+		mlx_put_pixel(img, x, end - 1, 0xFFFFFFFF);
 }
 
-void	draw3d(mlx_image_t *world3d, double distance, double rayDir, int x)
+void	draw3d(mlx_image_t *world3d, double distance, double rad_delta, int x)
 {
 	// t_IntPair window_size;
-	(void)rayDir;
+	// (void)rad_delta;
+	distance *= cos(rad_delta);
 	double lineH = TILE_SIZE * world3d->height / distance;
-	draw_vertical_line(world3d, (world3d->width - lineH) / 2, (world3d->width + lineH) / 2, x);
+	// int mid = world3d->height / 2;
+	draw_vertical_line(world3d, (world3d->height - lineH) / 2, (world3d->height + lineH) / 2, x);
 }
