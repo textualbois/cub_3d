@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:12:01 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/12 19:55:03 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/12 20:05:36 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,6 @@ t_mini_map	*init_minimap(t_config *config)
 	minimap->size = (t_IntPair){minimap->size_int.x * TILE_SIZE, minimap->size_int.y * TILE_SIZE};
 	minimap->visible_size = calculateVisibleSize(VISIBLE_TILES, TILE_SIZE,
 			config->map.width, config->map.height) ;
-	minimap->ppu = PPU ;
+	minimap->ppu = PPU /5 ;
 	return (minimap);
 }

@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 23:32:15 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/12 18:29:05 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/12 20:06:06 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	draw_vertical_line(mlx_image_t *img, int start, int end, int x)
 	color = 0xFFF0004F;
 	if (start + i < 0)
 		start = 0 - i;
-	if (end > img->height)
+	if (end > (int)img->height)
 		end = img->height;
 	while (start + i < end)
 	{
