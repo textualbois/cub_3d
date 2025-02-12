@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:49:48 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/12 20:22:42 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/12 21:34:08 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,12 @@ void	draw_world(t_World_Controller *world)
 	miniCharImgPos.y = (world->player->pos.y / world->size.y) * world->map_img->height - (world->miniCharacter->height / 2);
 	printf("char image positions x: %d, y: %d\n", miniCharImgPos.x, miniCharImgPos.y);
 	fflush(stdout);
+	mlx_image_to_window(world->window, world->world3d, 0, 0);
 	mlx_image_to_window(world->window, world->map_img, world->window->width / 100, world->window->height - world->map_img->height - world->window->height / 100);
 	// color_mini_map(world->map_img, world->map);
 	mlx_image_to_window(world->window, world->miniCharacter, miniCharImgPos.x, miniCharImgPos.y);
 	// ft_color_mini_character_direction(world->miniCharacter, 0xFF0000FF, world->player);
-	mlx_image_to_window(world->window, world->world3d, 0, 0);
+
 
 
 }
