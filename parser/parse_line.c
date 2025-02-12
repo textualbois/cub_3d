@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 18:07:45 by admin             #+#    #+#             */
-/*   Updated: 2025/02/07 18:51:47 by admin            ###   ########.fr       */
+/*   Updated: 2025/02/08 20:26:36 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,18 @@
 int	parse_texture(char *trimmed, char **texture)
 {
 	char	*value;
+	int		fd;
 
 	value = ft_strtrim(trimmed + 2, " \t");
 	if (!value)
 		return (0);
-	if (*texture)
-		free(*texture);
+	fd = open(value, O_RDONLY);
+	if (fd < 0)
+	{
+		free(value);
+		return (0);
+	}
+	close(fd);
 	*texture = value;
 	return (1);
 }
