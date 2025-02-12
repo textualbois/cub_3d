@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 13:53:08 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/12 19:56:18 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/12 23:23:25 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	color_mini_map(mlx_image_t *map_img, t_mini_map *mini_map)
 			if ((((pix.x / mini_map->ppu) + mini_map->view_port.x) % TILE_SIZE == 0) || ((pix.y / mini_map->ppu
 						+ mini_map->view_port.y) % TILE_SIZE == 0))
 			{
-				mlx_put_pixel(map_img, pix.x, pix.y, 0x003333FF); // цвет линий сетки
+				mlx_put_pixel(map_img, pix.x, pix.y, 0x000000FF); // цвет линий сетки
 			}
 			else
 			{
@@ -61,13 +61,13 @@ void	color_mini_map(mlx_image_t *map_img, t_mini_map *mini_map)
 					cell.y =  mini_map->size_int.y - 1;
 				tile = mini_map->map[cell.y][cell.x];
 				if (tile == '1')
-					color = 0xFF0000FF; // стена – красный
+					color = 0x880000FF; // стена – красный
 				else if (tile == '0')
-					color = 0xFFFFAAFF; // пол – желтоватый
+					color = 0x888855FF; // пол – желтоватый
 				else if (tile == ' ')
 					color = 0x000000FF; // пустота – чёрный
 				else
-					color = 0xFFFFFFFF; // fallback – белый
+					color = 0x888888FF; // fallback – белый
 				mlx_put_pixel(map_img, pix.x, pix.y, color);
 			}
 			pix.y++;
