@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 06:35:51 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/09 22:55:24 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/13 16:12:20 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,7 +172,7 @@ bool	is_wall(t_mini_map *mini_map, t_DoublePair hit, t_IntPair direction, int ca
 
 	if (mini_map->map[modifier.y + (int)hit.y / TILE_SIZE][modifier.x + (int)hit.x / TILE_SIZE] == '1')
 	{
-		printf("WALL FOUND !!!\n");
+		// printf("WALL FOUND !!!\n");
 		return (true);
 	}
 	return (false);
