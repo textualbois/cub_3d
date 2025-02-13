@@ -6,7 +6,7 @@
 /*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:20 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/08 16:46:45 by vmamoten         ###   ########.fr       */
+/*   Updated: 2025/02/13 14:09:53 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,18 +89,6 @@ int main(int argc, char **argv)
 	// printf("Player position: (%.2f, %.2f), angle: %.2f radians\n",
 	// 	config->player.pos.x, config->player.pos.y, config->player.angle);
 	t_World_Controller *world;
-
-	// int map[8][8]=
-	// {
-	// 	{1,1,1,1,1,1,1,1},
-	// 	{1,0,1,0,0,0,0,1},
-	// 	{1,0,1,0,0,0,0,1},
-	// 	{1,0,1,0,0,0,0,1},
-	// 	{1,0,0,0,0,0,0,1},
-	// 	{1,0,0,0,0,1,0,1},
-	// 	{1,0,0,0,0,0,0,1},
-	// 	{1,1,1,1,1,1,1,1},
-	// };
 
 	ft_putstr_fd("Hello, World!\n", 1);
 	world = init_world(config);

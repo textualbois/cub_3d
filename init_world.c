@@ -6,7 +6,7 @@
 /*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:53 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/12 18:40:58 by vmamoten         ###   ########.fr       */
+/*   Updated: 2025/02/13 14:29:04 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,15 @@ t_World_Controller *init_world(t_config *config)
 	// {
 	// 	ft_memcpy(world->map[i], map[i], 8 * sizeof(int));
 	// }
+
+	if (init_textures(world, config) != 0)
+    {
+        printf("init textures failed\n");
+        free(world->player);
+        free(world->mini_map);
+        free(world);
+        return (NULL);
+    }
 
 	if (init_images(world) != 0)//, map) != 0)
 	{
