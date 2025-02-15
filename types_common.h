@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 19:49:07 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/15 19:57:10 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/16 00:29:10 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,17 @@ typedef struct	s_mini_map
 
 typedef struct s_renderData {
 	t_DoublePair	hit;
+	int				x;
 	int				wall_type;
 	int				txtr_code;
+	double			t2t_ratio;
 	double			rayDir;
 	t_DoublePair	playerDir;
 	t_DoublePair	playerPos;
 	int				txtr_start;
 	int				txtr_end;
-	mlx_image_t		*texture;
+	t_DoublePair	txtr;
+	mlx_texture_t	*texture;
 	t_IntPair		pixel;
 }	t_renderData;
 
@@ -57,10 +60,10 @@ typedef struct s_World_Controller
 	mlx_image_t		*map_img;
 	mlx_image_t		*miniCharacter;
 	mlx_image_t		*world3d;
-	mlx_image_t		*texture_no;
-	mlx_image_t		*texture_so;
-	mlx_image_t		*texture_we;
-	mlx_image_t		*texture_ea;
+	mlx_texture_t	*texture_no;
+	mlx_texture_t	*texture_so;
+	mlx_texture_t	*texture_we;
+	mlx_texture_t	*texture_ea;
 	// t_FrameCounter	*frameCounter;
 }					t_World_Controller;
 
