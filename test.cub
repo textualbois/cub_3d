@@ -1,10 +1,10 @@
-SO ./textures/south.png
+SO ./textures/south_test.png
 
-EA ./textures/east.png
+EA ./textures/east_test.png
 
-NO  ./textures/north.png
+NO  ./textures/north_test.png
 
-WE ./textures/west.png
+WE ./textures/west_test.png
 
 C      111, 12, 231
 F 1,111,100,
