@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:12:18 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/12 19:54:10 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/15 17:00:45 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,10 @@ typedef struct s_World_Controller{
 	mlx_image_t		*map_img;
 	mlx_image_t		*miniCharacter;
 	mlx_image_t		*world3d;
+	mlx_image_t		*texture_no;
+	mlx_image_t		*texture_so;
+	mlx_image_t		*texture_we;
+	mlx_image_t		*texture_ea;
 	//t_FrameCounter	*frameCounter;
 }	t_World_Controller;
 
@@ -48,6 +52,6 @@ void centre_character_img_v(t_World_Controller *world);
 void uncentre_character_img_h(t_World_Controller *world, t_mini_map *map, t_DoublePair pos);
 void centre_character_img_h(t_World_Controller *world);
 void	raycasting(t_World_Controller *world);
-
+int					init_textures(t_World_Controller *world, t_config *config);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_world.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
+/*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:53 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/12 18:40:58 by vmamoten         ###   ########.fr       */
+/*   Updated: 2025/02/15 17:02:51 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,6 @@ t_World_Controller *init_world(t_config *config)
 	}
 	world->mini_map = init_minimap(config);
 
-	// for (int i = 0; i < 8; i++)
-	// {
-	// 	ft_memcpy(world->map[i], map[i], 8 * sizeof(int));
-	// }
-
 	if (init_images(world) != 0)//, map) != 0)
 	{
 		printf("init images failedn\n");
@@ -48,6 +43,18 @@ t_World_Controller *init_world(t_config *config)
 		return (NULL);
 	}
 
+	if (init_textures(world, config) != 0)
+	{
+		printf("init textures failed\n");
+		free(world->player);
+		free(world->mini_map);
+		free(world->texture_ea);
+		free(world->texture_no);
+		free(world->texture_so);
+		free(world->texture_we);
+		free(world);
+		return (NULL);
+	}
 
 	// world->frameCounter = init_frame_counter();
 	// if (!world->frameCounter)
