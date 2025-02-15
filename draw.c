@@ -6,14 +6,17 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:49:48 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/15 16:40:08 by admin            ###   ########.fr       */
+/*   Updated: 2025/02/15 17:03:33 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "draw.h"
 #include "draw_textures.h"
 
-static double normalise_radians(double angle)
+#define CEILING_COLOR 0x87CEEBFF // светло-голубой
+#define FLOOR_COLOR 0x654321FF   // коричневый
+
+static double	normalise_radians(double angle)
 {
 	while (angle < 0)
 		angle += 2 * PI;
@@ -22,76 +25,117 @@ static double normalise_radians(double angle)
 	return (angle);
 }
 
+void	update_ceiling_and_floor(mlx_image_t *img, uint32_t ceiling_color,
+		uint32_t floor_color, double pitch)
+{
+	int		height;
+	int		width;
+	double	vertical_offset;
+	int		horizon;
+
+	int x, y;
+	height = img->height;
+	width = img->width;
+	vertical_offset = (double)height / (4.0 * MAX_PITCH) * pitch;
+	horizon = (int)(height / 2.0 + vertical_offset);
+	for (y = 0; y < height; y++)
+	{
+		for (x = 0; x < width; x++)
+		{
+			if (y < horizon)
+				mlx_put_pixel(img, x, y, ceiling_color);
+			else
+				mlx_put_pixel(img, x, y, floor_color);
+		}
+	}
+}
+
 void	draw_world(t_World_Controller *world)
 {
 	t_IntPair	miniCharImgPos;
 
-	miniCharImgPos.x = (world->player->pos.x / world->size.x) * world->map_img->width - (world->miniCharacter->width / 2);
-	miniCharImgPos.y = (world->player->pos.y / world->size.y) * world->map_img->height - (world->miniCharacter->height / 2);
-	printf("char image positions x: %d, y: %d\n", miniCharImgPos.x, miniCharImgPos.y);
+	miniCharImgPos.x = (world->player->pos.x / world->size.x)
+		* world->map_img->width - (world->miniCharacter->width / 2);
+	miniCharImgPos.y = (world->player->pos.y / world->size.y)
+		* world->map_img->height - (world->miniCharacter->height / 2);
+	printf("char image positions x: %d, y: %d\n", miniCharImgPos.x,
+		miniCharImgPos.y);
 	fflush(stdout);
 	mlx_image_to_window(world->window, world->world3d, 0, 0);
-	mlx_image_to_window(world->window, world->map_img, world->window->width / 100, world->window->height - world->map_img->height - world->window->height / 100);
-	// color_mini_map(world->map_img, world->map);
-	mlx_image_to_window(world->window, world->miniCharacter, miniCharImgPos.x, miniCharImgPos.y);
-	// ft_color_mini_character_direction(world->miniCharacter, 0xFF0000FF, world->player);
-
-
-
+	mlx_image_to_window(world->window, world->map_img, world->window->width
+		/ 100, world->window->height - world->map_img->height
+		- world->window->height / 100);
+	mlx_image_to_window(world->window, world->miniCharacter, miniCharImgPos.x,
+		miniCharImgPos.y);
 }
-
 
 void	redraw(void *param)
 {
-	t_World_Controller *world;
+	t_World_Controller	*world;
 
 	world = (t_World_Controller *)param;
 	write(1, "redraw\n", 7);
-	centre_mini_map(world->mini_map, world->player); // if player moves we first try to move the map view
+	centre_mini_map(world->mini_map, world->player);
 	color_mini_map(world->map_img, world->mini_map);
-	// player is drawn relative to his image, so we need to move the image
-	centre_character_img(world, world->mini_map, world->player->pos); // then we move the player image box, if hes close to a border
-	// sleep(3);
-	raycasting(world); // then we draw the rays
+	centre_character_img(world, world->mini_map, world->player->pos);
+	update_ceiling_and_floor(world->world3d, CEILING_COLOR, FLOOR_COLOR,
+		world->player->angle.x);
+	raycasting(world);
 	ft_color_mini_character(world->miniCharacter, 0x000000FF);
-	// color_rays
-	//ft_color_mini_character_direction(world->miniCharacter, 0xFF0000FF, world->player); // then we draw the player
-	// color_sky
-	// color_floor
-	// color_wall
-	// color_door
-	// color_mini_character_direction
+	ft_color_mini_character_direction(world->miniCharacter, 0xFF0000FF,
+		world->player);
 	write(1, "redraw_end\n", 11);
+}
+
+static void	compute_ray_parameters(int x, t_World_Controller *world, t_ray *ray)
+{
+	double			fovRadians;
+	double			rayAngle;
+	t_DoublePair	hit;
+
+	fovRadians = FOV * (PI / 180.0);
+	/* Изменённый расчёт: правый край – -FOV/2, левый – +FOV/2 */
+	rayAngle = world->player->angle.y + (fovRadians / 2) - (fovRadians * x)
+		/ world->window->width;
+	rayAngle = normalise_radians(rayAngle);
+	printf("[DEBUG] compute_ray_parameters: x=%d, rayAngle=%f\n", x, rayAngle);
+	ray->rayDirX = cos(rayAngle);
+	ray->rayDirY = sin(rayAngle);
+	printf("[DEBUG] compute_ray_parameters: rayDirX=%f, rayDirY=%f\n",
+		ray->rayDirX, ray->rayDirY);
+	hit = ray_find_wall(world->mini_map, world->player, rayAngle);
+	ray->perpWallDist = distance(world->player->pos, hit);
+	printf("[DEBUG] compute_ray_parameters: perpWallDist=%f, hit=(%f, %f)\n",
+		ray->perpWallDist, hit.x, hit.y);
+	ray->side = (fabs(hit.x - floor(hit.x)) < fabs(hit.y
+				- floor(hit.y))) ? 0 : 1;
+	printf("[DEBUG] compute_ray_parameters: side=%d\n", ray->side);
 }
 
 void	raycasting(t_World_Controller *world)
 {
-	printf("raycasting\n");
-	double		rayDir;
+	double			rayDir;
 	t_DoublePair	hit;
-	int			x;
-	double		radians_increment;
+	int				x;
+	double			radians_increment;
+	t_ray			ray;
+	t_draw3d_params	params;
 
-	radians_increment = - (FOV * PI / 180 )/ world->window->width;
-	// fov_radians = FOV * PI / 180;
-	// rayDir = normalise_radians( world->player->angle - fov_radians / 2);
-	rayDir = normalise_radians( world->player->angle.y - radians_increment * (world->window->width / 2));
+	printf("raycasting\n");
+	radians_increment = (FOV * PI / 180) / world->window->width;
+	rayDir = normalise_radians(world->player->angle.y - (FOV * PI / 180) / 2);
 	x = 0;
-	// printf("raycasting loop\n");
-	// fflush(stdout);
-
 	while (x < world->window->width)
 	{
 		hit = ray_find_wall(world->mini_map, world->player, rayDir);
-		// printf("raycasting loop %d out of %d hit x: %f, y: %f\n", x + 1, world->window->width, hit.x, hit.y);
-
-		// fflush(stdout);
 		drawray(world->player, world->map_img, world->mini_map, hit);
-		draw3d(world->world3d, distance(hit, world->player->pos),
-			normalise_radians(
-				world->player->angle.y - rayDir), world->player->angle.x, x);
+		compute_ray_parameters(x, world, &ray);
+		params.world3d = world->world3d;
+		params.player = world->player;
+		params.x = x;
+		draw3d(&params, ray, world);
+		/* Увеличиваем угол для следующего столбца */
 		rayDir = normalise_radians(rayDir + radians_increment);
-		// printf("next loop\n");
 		x++;
 	}
 }

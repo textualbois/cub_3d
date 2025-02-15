@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 13:28:00 by admin             #+#    #+#             */
-/*   Updated: 2025/02/15 16:39:08 by admin            ###   ########.fr       */
+/*   Updated: 2025/02/15 16:57:01 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@
 # include "world.h"
 # include <math.h>
 
-
-#define MAX_PITCH (50.0 * (PI / 180.0))
+# define MAX_PITCH (50.0 * (PI / 180.0))
 /*
 ** t_line - структура для параметров вертикальной линии,
 	которая будет отрисована.
@@ -65,7 +64,7 @@ typedef struct s_ray
 /*
 ** t_draw3d_params - структура для параметров отрисовки 3D-стены.
 **  world3d - указатель на изображение 3D-сцены,
-**  player 
+**  player
 	- указатель на персонажа (используется для вычисления координаты текстуры),
 **  x       - координата столбца на экране, где рисуется стена.
 */
@@ -80,7 +79,9 @@ typedef struct s_draw3d_params
 ** Прототипы функций, которые будут использовать данные структуры.
 ** Реализация будет добавлена в следующих коммитах.
 */
-void draw_textured_vertical_line(mlx_image_t *img, t_line line, t_tex_line tex_line);
-double compute_texture_x(t_character *player, t_ray ray);
-void	draw3d(mlx_image_t *world3d, double distance, double rayDir, double pitch, int x);
+void			draw_textured_vertical_line(mlx_image_t *img, t_line line,
+					t_tex_line tex_line);
+double			compute_texture_x(t_character *player, t_ray ray);
+void			draw3d(t_draw3d_params *params, t_ray ray,
+					t_World_Controller *world);
 #endif
