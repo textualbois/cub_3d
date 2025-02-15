@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:12:10 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/12 23:39:11 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/15 19:06:31 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,10 @@
 #define HORIZONTAL 0
 #define NOHIT -1
 #define BPP sizeof(int32_t)
+#define NORTH 0
+#define EAST 1
+#define SOUTH 2
+#define WEST 3
 
 typedef struct s_IntPair{
 	int32_t x;

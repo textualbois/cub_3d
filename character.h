@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:30 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/12 21:45:13 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/15 19:52:55 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,9 @@
 # define CHARACTER_H
 
 #include "MLX42/MLX42.h"
-#include "types_numeric.h"
+#include "types_common.h"
 // #include "world.h"
 
-typedef struct s_character{
-	t_IntPair size;
-	t_DoublePair pos;
-	t_DoublePair angle;
-}	t_character;
 
 // init
 t_character	*init_mini_character(t_IntPair size, t_character player);
