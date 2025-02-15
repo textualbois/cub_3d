@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 09:41:00 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/09 19:36:52 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/15 19:33:53 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,12 @@ t_DoublePair	add_pair(t_DoublePair a, t_DoublePair b)
 	result.x = a.x + b.x;
 	result.y = a.y + b.y;
 	return (result);
+}
+double normalise_radians(double angle)
+{
+	while (angle < 0)
+		angle += 2 * PI;
+	while (angle >= 2 * PI)
+		angle -= 2 * PI;
+	return (angle);
 }

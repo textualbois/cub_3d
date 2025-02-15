@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 06:35:51 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/09 22:55:24 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/15 19:38:42 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,25 @@
 // 	return (angle * 180 / PI);
 // }
 
+static void ray_result(t_renderData  *data, t_DoublePair hit, int direction, int vert_hor)
+{
+	data->hit = hit;
+	if (vert_hor == VERTICAL)
+	{
+		if (direction == -1)
+			data->txtr_code = NORTH;
+		else
+			data->txtr_code = SOUTH;
+	}
+	else
+	{
+		if (direction == -1)
+			data->txtr_code = WEST;
+		else
+			data->txtr_code = EAST;
+	}
+}
+
 static t_IntPair directions(double rayDir)
 {
 	t_IntPair	directions;
@@ -74,26 +93,26 @@ static t_IntPair directions(double rayDir)
 	return (directions);
 }
 
-t_DoublePair	ray_find_wall(t_mini_map *mini_map, t_character *player, double rayDir)
+void	ray_find_wall(t_mini_map *mini_map, t_character *player, t_renderData *data)
 {
 	t_DoublePair	vertical_hit;
 	t_DoublePair	horizontal_hit;
-	t_IntPair		depth;
 	t_IntPair		direction;
 
-	direction = directions(rayDir);
+	direction = directions(data->rayDir);
 	// printf("checking direction %f, which is %i degrees\n", rayDir, angle_to_degree(rayDir));
-	depth.x = 0;
-	depth.y = 0;
-	vertical_hit = ray_find_vertical_hit(mini_map, player, rayDir, direction);
-	horizontal_hit = ray_find_horizontal_hit(mini_map, player, rayDir, direction);
+
+	vertical_hit = ray_find_vertical_hit(mini_map, player, data->rayDir, direction);
+	horizontal_hit = ray_find_horizontal_hit(mini_map, player, data->rayDir, direction);
+
 	if (vertical_hit.x == -1)
-		 return (horizontal_hit);
-	if (horizontal_hit.x == -1)
-		return (vertical_hit);
-	if (distance(player->pos, vertical_hit) < distance(player->pos, horizontal_hit))
-		return (vertical_hit);
-	return (horizontal_hit);
+		ray_result(data, horizontal_hit, direction.y, HORIZONTAL);
+	else if (horizontal_hit.x == -1)
+		ray_result(data, vertical_hit, direction.x, VERTICAL);
+	else if (distance(player->pos, vertical_hit) < distance(player->pos, horizontal_hit))
+		ray_result(data, vertical_hit, direction.x, VERTICAL);
+	else
+		ray_result(data, horizontal_hit, direction.y, HORIZONTAL);
 }
 
 static int check_hit_bounds(t_DoublePair *hit, t_mini_map *mini_map)

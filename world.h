@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:12:18 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/15 17:00:45 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/15 19:55:47 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,23 +20,7 @@
 #include "mini_map.h"
 #include "draw.h"
 #include "./parser/parser.h"
-
-typedef struct s_World_Controller{
-	mlx_t			*window;
-	t_IntPair		size;
-	t_character		*player;
-	t_mini_map		*mini_map; // mini_map?
-	// t_map			mapp; // namings..
-	//int				map[8][8]; // change to t_map?
-	mlx_image_t		*map_img;
-	mlx_image_t		*miniCharacter;
-	mlx_image_t		*world3d;
-	mlx_image_t		*texture_no;
-	mlx_image_t		*texture_so;
-	mlx_image_t		*texture_we;
-	mlx_image_t		*texture_ea;
-	//t_FrameCounter	*frameCounter;
-}	t_World_Controller;
+#include "types_common.h"
 
 t_World_Controller	*init_world(t_config *config);
 

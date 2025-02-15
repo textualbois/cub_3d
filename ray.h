@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 06:33:40 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/09 22:40:15 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/15 19:55:20 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ typedef struct s_Collision {
 	t_DoublePair	hit;
 }	t_Collision;
 
-t_DoublePair	ray_find_wall(t_mini_map *mini_map, t_character *player, double rayDir);
+void			ray_find_wall(t_mini_map *mini_map, t_character *player, t_renderData *data);
 t_DoublePair	ray_find_vertical_hit(t_mini_map *mini_map, t_character *player, double rayDir, t_IntPair direction);
 t_DoublePair	ray_find_horizontal_hit(t_mini_map *mini_map, t_character *player, double rayDir, t_IntPair direction);
 void			increment_vertical(t_DoublePair *hit, int direction, double rayDir);

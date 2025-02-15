@@ -6,19 +6,31 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:49:48 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/12 21:52:06 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/15 19:33:56 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "draw.h"
 
-static double normalise_radians(double angle)
+// static double normalise_radians(double angle)
+// {
+// 	while (angle < 0)
+// 		angle += 2 * PI;
+// 	while (angle >= 2 * PI)
+// 		angle -= 2 * PI;
+// 	return (angle);
+// }
+
+static void select_texture(t_renderData *data, t_World_Controller *world)
 {
-	while (angle < 0)
-		angle += 2 * PI;
-	while (angle >= 2 * PI)
-		angle -= 2 * PI;
-	return (angle);
+	if (data->txtr_code == NORTH)
+		data->texture = world->texture_no;
+	else if (data->txtr_code == EAST)
+		data->texture = world->texture_ea;
+	else if (data->txtr_code == SOUTH)
+		data->texture = world->texture_so;
+	else if (data->txtr_code == WEST)
+		data->texture = world->texture_we;
 }
 
 void	draw_world(t_World_Controller *world)
@@ -66,30 +78,32 @@ void	redraw(void *param)
 void	raycasting(t_World_Controller *world)
 {
 	printf("raycasting\n");
-	double		rayDir;
-	t_DoublePair	hit;
-	int			x;
-	double		radians_increment;
+	t_renderData	data;
+	int				x;
+	double			radians_increment;
 
 	radians_increment = - (FOV * PI / 180 )/ world->window->width;
-	// fov_radians = FOV * PI / 180;
-	// rayDir = normalise_radians( world->player->angle - fov_radians / 2);
-	rayDir = normalise_radians( world->player->angle.y - radians_increment * (world->window->width / 2));
+	data.rayDir = normalise_radians(world->player->angle.y - radians_increment * (world->window->width / 2));
 	x = 0;
+	data.playerDir = world->player->angle;
+	data.playerPos = world->player->pos;
 	// printf("raycasting loop\n");
 	// fflush(stdout);
 
 	while (x < world->window->width)
 	{
-		hit = ray_find_wall(world->mini_map, world->player, rayDir);
+
+		ray_find_wall(world->mini_map, world->player, &data);
+		select_texture(&data, world);
 		// printf("raycasting loop %d out of %d hit x: %f, y: %f\n", x + 1, world->window->width, hit.x, hit.y);
 
 		// fflush(stdout);
-		drawray(world->player, world->map_img, world->mini_map, hit);
-		draw3d(world->world3d, distance(hit, world->player->pos),
-			normalise_radians(
-				world->player->angle.y - rayDir), world->player->angle.x, x);
-		rayDir = normalise_radians(rayDir + radians_increment);
+		drawray(world->player, world->map_img, world->mini_map, data.hit);
+		draw3d(world->world3d, &data, x);
+		//  distance(data.hit, data.playerPos),
+		// 	normalise_radians(
+		// 		data.playerDir.y - data.rayDir), data.plyerDir.x, x);
+		data.rayDir = normalise_radians(data.rayDir + radians_increment);
 		// printf("next loop\n");
 		x++;
 	}
