@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
+/*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:48:32 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/13 14:46:34 by vmamoten         ###   ########.fr       */
+/*   Updated: 2025/02/15 16:34:41 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,24 @@
 # define DRAW_H
 
 # include "MLX42/MLX42.h"
-# include "world.h"
 # include "colors.h"
 # include "extra_math.h"
 # include "mini_map.h"
 # include "ray.h"
+# include "world.h"
 
 void	ft_color_mini_character(mlx_image_t *player, int color);
-void	ft_color_mini_character_direction(mlx_image_t *character, int color, t_character *player);
+void	ft_color_mini_character_direction(mlx_image_t *character, int color,
+			t_character *player);
 void	color_mini_map(mlx_image_t *map_img, t_mini_map *map);
-void	ft_color_line(mlx_image_t *img, int color, t_DoublePair start, t_DoublePair end);
+void	ft_color_line(mlx_image_t *img, int color, t_DoublePair start,
+			t_DoublePair end);
 void	redraw(void *param);
-void	drawray(t_character *player, mlx_image_t *map_img, t_mini_map *mini_map, t_DoublePair hit);
-void	draw_line_between_pixels(mlx_image_t *img, t_IntPair start, t_IntPair end, int color);
-void	highlight_line_between_pixels(mlx_image_t *img, t_IntPair start, t_IntPair end);
-void	draw3d(mlx_image_t *world3d, double distance, double rayDir, double pitch, int x);
-
-
-
+void	drawray(t_character *player, mlx_image_t *map_img, t_mini_map *mini_map,
+			t_DoublePair hit);
+void	draw_line_between_pixels(mlx_image_t *img, t_IntPair start,
+			t_IntPair end, int color);
+void	highlight_line_between_pixels(mlx_image_t *img, t_IntPair start,
+			t_IntPair end);
 
 #endif
