@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 23:47:57 by admin             #+#    #+#             */
-/*   Updated: 2025/02/12 21:56:41 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/15 20:08:12 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ void	free_player(t_character *player)
 		return ;
 	player->pos.x = 0;
 	player->pos.y = 0;
-	player->angle.y = 0;
-	player->angle.x = PI / 2;
+	player->angle.x = 0;
+	player->angle.y = PI / 2;
 }
 
 void	free_textures(t_config *config)

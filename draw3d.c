@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 23:32:15 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/15 20:02:25 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/15 20:09:35 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,10 +102,10 @@ void	draw3d(mlx_image_t *world3d, t_renderData *data, int x)
 
 	double dist_adjusted;
 
-	dist_adjusted = distance(data->hit, data->playerPos) * cos(normalise_radians(data->rayDir - data->playerDir.y));
+	dist_adjusted = distance(data->hit, data->playerPos) * cos(normalise_radians(data->rayDir - data->playerDir.x));
 
 	double lineH = TILE_SIZE * world3d->height / dist_adjusted;
-	double vertical_offset = (world3d->height / 2) * sin(data->playerDir.x);
+	double vertical_offset = (world3d->height / 2) * sin(data->playerDir.y);
 	data->txtr_start = (world3d->height - lineH) / 2 + vertical_offset;
 	data->txtr_end = (world3d->height + lineH) / 2 + vertical_offset;
 

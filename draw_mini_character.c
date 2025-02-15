@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:37 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/12 21:50:07 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/15 20:07:47 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ void ft_color_mini_character_direction(mlx_image_t *character, int color, t_char
 	write(1, "colored_mini_character\n", 23);
 
 	// Color the direction of the character
-	end.x = centre.x + (player->size.x) * cos(player->angle.y);
-	end.y = centre.y - (player->size.y) * sin(player->angle.y);
+	end.x = centre.x + (player->size.x) * cos(player->angle.x);
+	end.y = centre.y - (player->size.y) * sin(player->angle.x);
 	ft_color_line(character, color, centre, end);
 	write(1, "ft_color_mini_character_direction_end\n", 38);
 }

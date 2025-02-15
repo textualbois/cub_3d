@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:12:04 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/12 21:54:46 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/15 20:08:12 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,13 @@ void	ft_movement_input(void *param)
 	if (mlx_is_key_down(world->window, MLX_KEY_DOWN))
 		set_v_rotation(world, -0.05);
 	if (mlx_is_key_down(world->window, MLX_KEY_D))
-		set_movement(world, (t_DoublePair){1 * sin(world->player->angle.y), 1 * cos(world->player->angle.y)});
+		set_movement(world, (t_DoublePair){1 * sin(world->player->angle.x), 1 * cos(world->player->angle.x)});
 	if (mlx_is_key_down(world->window, MLX_KEY_A))
-		set_movement(world, (t_DoublePair){-1 * sin(world->player->angle.y), -1 * cos(world->player->angle.y)});
+		set_movement(world, (t_DoublePair){-1 * sin(world->player->angle.x), -1 * cos(world->player->angle.x)});
 	if (mlx_is_key_down(world->window, MLX_KEY_W))
-		set_movement(world, (t_DoublePair){1 * sin(world->player->angle.y + PI / 2), 1 * cos(world->player->angle.y + PI / 2)});
+		set_movement(world, (t_DoublePair){1 * sin(world->player->angle.x + PI / 2), 1 * cos(world->player->angle.x + PI / 2)});
 	if (mlx_is_key_down(world->window, MLX_KEY_S))
-		set_movement(world, (t_DoublePair){1 * sin(world->player->angle.y - PI / 2), 1 * cos(world->player->angle.y - PI / 2)});
+		set_movement(world, (t_DoublePair){1 * sin(world->player->angle.x - PI / 2), 1 * cos(world->player->angle.x - PI / 2)});
 	printf("player pos x: %f, y: %f\n", world->player->pos.x,
 		world->player->pos.y);
 	// Остальные обновления (например, рендер и т.п.)
@@ -97,17 +97,17 @@ void	ft_movement_input(void *param)
 void	set_h_rotation(t_World_Controller *world, double angle_delta)
 {
 	write(1, "set_h_rotation\n", 15);
-	world->player->angle.y += angle_delta;
+	world->player->angle.x += angle_delta;
 	write(1, "set_h_rotation2\n", 16);
-	if (world->player->angle.y < 0)
+	if (world->player->angle.x < 0)
 	{
 		write(1, "set_h_rotation3\n", 16);
-		world->player->angle.y += 2 * PI;
+		world->player->angle.x += 2 * PI;
 	}
-	else if (world->player->angle.y >= 2 * PI)
+	else if (world->player->angle.x >= 2 * PI)
 	{
 		write(1, "set_h_rotation4\n", 16);
-		world->player->angle.y -= 2 * PI;
+		world->player->angle.x -= 2 * PI;
 	}
 	write(1, "set_rotation_last\n", 16);
 }
@@ -118,11 +118,11 @@ void	set_h_rotation(t_World_Controller *world, double angle_delta)
 void	set_v_rotation(t_World_Controller *world, double angle_delta)
 {
 	write(1, "set_v_rotation\n", 15);
-	world->player->angle.x += angle_delta;
-	if (world->player->angle.x < -PI / 2)
-		world->player->angle.x = -PI / 2;
-	if (world->player->angle.x > PI / 2)
-		world->player->angle.x = PI / 2;
+	world->player->angle.y += angle_delta;
+	if (world->player->angle.y < -PI / 2)
+		world->player->angle.y = -PI / 2;
+	if (world->player->angle.y > PI / 2)
+		world->player->angle.y = PI / 2;
 }
 
 /*

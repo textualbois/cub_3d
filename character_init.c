@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:27 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/12 21:59:39 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/15 20:08:12 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ t_character	*init_mini_character(t_IntPair size, t_character player)
 	if (mini_player)
 	{
 		mini_player->size = size;
-		mini_player->angle.y = player.angle.y;
 		mini_player->angle.x = player.angle.x;
+		mini_player->angle.y = player.angle.y;
 		mini_player->pos.x = player.pos.x * TILE_SIZE; // + TILE_SIZE / 2; ??
 		mini_player->pos.y = player.pos.y * TILE_SIZE; // + TILE_SIZE / 2; ??
 	}
