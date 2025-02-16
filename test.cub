@@ -4,7 +4,7 @@ EA ./textures/east_test.png
 
 NO  ./textures/north_test.png
 
-WE ./textures/west_test.png
+WE ./textures/debug_300_300_alphabet.png
 
 C      111, 12, 231
 F 1,111,100,
