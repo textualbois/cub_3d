@@ -6,123 +6,79 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 23:32:15 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/15 20:09:35 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/16 00:55:23 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "draw.h"
 
-// uint32_t	get_pixel_color(mlx_texture_t *texture, uint32_t tex_x,
-// 		uint32_t tex_y)
-// {
-// 	uint8_t		*pixel;
-// 	uint32_t	a;
+static uint32_t	get_pixel_color(mlx_texture_t *texture, uint32_t tex_x,
+		uint32_t tex_y)
+{
+	uint8_t		*pixel;
+	uint32_t	a;
 
-// 	pixel = &texture->pixels[(texture->width * tex_y + tex_x) * 4];
-// 	a = pixel[3];
-// 	if (a == 0)
-// 		return (0x00000000);
-// 	return ((pixel[0] << 24) | (pixel[1] << 16) | (pixel[2] << 8) | pixel[3]);
-// }
+	pixel = &texture->pixels[(texture->width * tex_y + tex_x) * BPP];
+	a = pixel[3];
+	if (a == 0)
+		return (0x00000000);
+	return ((pixel[0] << 24) | (pixel[1] << 16) | (pixel[2] << 8) | pixel[3]);
+}
 
-static void draw_texture_line(mlx_image_t *img, int row_ind, int start, int end, int x, int color) {
-	// if (end > (int)img->height)
-	// 	end = img->height;
-	//double ratio;
+static void draw_texture_line(mlx_image_t *img, int row_ind, t_renderData *data, int x)
+{
+	double			t4w_ratio;
+	t_IntPair		txtr_pix_whole;
+	int				color;
 
-	(void)start;
-	//ratio = end - start / texture_hieght;
-	while (row_ind < end && row_ind < (int)img->height)
+	txtr_pix_whole.x = (int)data->txtr.x;
+	t4w_ratio = (double)data->texture->height / (data->txtr_end - data->txtr_start);
+	if (data->txtr_start < 0)
 	{
+		data->txtr.y = data->txtr.y + (-data->txtr_start * t4w_ratio);
+	}
+	while (row_ind < data->txtr_end && row_ind < (int)img->height)
+	{
+		txtr_pix_whole.y = (int)data->txtr.y;
+		if (txtr_pix_whole.y >= (int)data->texture->height)
+			txtr_pix_whole.y = data->texture->height - 1;
+		color = get_pixel_color(data->texture, txtr_pix_whole.x, txtr_pix_whole.y);
 		mlx_put_pixel(img, x, row_ind, color);
 		row_ind++;
+		data->txtr.y = data->txtr.y + t4w_ratio;
 	}
-	// {
-	// 	mlx_put_pixel(img, x, start, color);
-	// 	start++;
-	// }
 }
-// 	t_wall_data		wall;
-// 	uint32_t		tex_x;
 
-// 	wall = calculate_wall_dimensions(data, distance_to_wall);
-// 	wall.texture = get_wall_texture(data, ray);
-// 	wall.step = (double)wall.texture->height / wall.height;
-// 	if (wall.height > HEIGHT)
-// 		wall.tex_pos = ((wall.height - HEIGHT) / 2) * wall.step;
-// 	else
-// 		wall.tex_pos = 0;
-// 	tex_x = calculate_tex_x(ray->color, &wall, ray, data);
-// 	draw_wall_slice(data, wall, tex_x, x);
-// 	floor_drawing(data, wall, x);
-// 	ceiling_drawing(data, wall, x);
-// }
-
-static void	draw_vertical_line(mlx_image_t *img, int start, int end, int x)
+static void	draw_vertical_line(mlx_image_t *img, t_renderData *data, int x)
 {
-	int	i;
-	int	color;
+	int	pix_y;
 
-	printf("start: %d, end: %d\n", start, end);
-	fflush(stdout);
-
-	i = 0;
-	color = 0xFFF000FF;
-	if (start > (int)img->height)
-		start = img->height;
-	// if (end > (int)img->height)
-	// {
-	// 	end = img->height;
-	// }
-
-	while (i < start)
+	pix_y = 0;
+	if (data->txtr_start > (int)img->height)
+		data->txtr_start = img->height;
+	while (pix_y < data->txtr_start)
 	{
-		mlx_put_pixel(img, x, i, 0xFF7220FF);
-		i++;
+		mlx_put_pixel(img, x, pix_y, 0xFF7220FF);
+		pix_y++;
 	}
-
-
-	draw_texture_line(img, i, start, end, x, color);
-	i = end;
-
-
-	while (i < (int)img->height)
+	if (data->txtr_start < (int)img->height)
+		draw_texture_line(img, pix_y, data, x);
+	pix_y = data->txtr_end;
+	while (pix_y < (int)img->height)
 	{
-		mlx_put_pixel(img, x, i, 0xFF0220FF);
-		i++;
+		mlx_put_pixel(img, x, pix_y, 0xFF0220FF);
+		pix_y++;
 	}
-		// mlx_put_pixel(img, x, start, 0xFFFFFFFF);
-		// mlx_put_pixel(img, x, end - 1, 0xFFFFFFFF);
 }
 
 void	draw3d(mlx_image_t *world3d, t_renderData *data, int x)
 {
-	// t_IntPair window_size;
-	// (void)rad_delta;
-
 	double dist_adjusted;
 
 	dist_adjusted = distance(data->hit, data->playerPos) * cos(normalise_radians(data->rayDir - data->playerDir.x));
-
 	double lineH = TILE_SIZE * world3d->height / dist_adjusted;
 	double vertical_offset = (world3d->height / 2) * sin(data->playerDir.y);
 	data->txtr_start = (world3d->height - lineH) / 2 + vertical_offset;
 	data->txtr_end = (world3d->height + lineH) / 2 + vertical_offset;
-
-	draw_vertical_line(world3d, data->txtr_start, data->txtr_end, x);
+	draw_vertical_line(world3d, data, x);
 }
-
-// void	draw3d(mlx_image_t *world3d, double distance, double rad_delta, double pitch, int x)
-// {
-// 	// t_IntPair window_size;
-// 	// (void)rad_delta;
-
-
-// 	distance *= cos(rad_delta);
-// 	double lineH = TILE_SIZE * world3d->height / distance;
-// 	double vertical_offset = (world3d->height / 2) * sin(pitch);
-// 	int top = (world3d->height - lineH) / 2 + vertical_offset;
-// 	int bottom = (world3d->height + lineH) / 2 + vertical_offset;
-// 	// int mid = world3d->height / 2;
-// 	draw_vertical_line(world3d, top, bottom, x);
-// }

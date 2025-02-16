@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:49:48 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/15 20:08:55 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/16 00:54:58 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,9 @@ static void select_texture(t_renderData *data, t_World_Controller *world)
 		data->texture = world->texture_so;
 	else if (data->txtr_code == WEST)
 		data->texture = world->texture_we;
+	data->t2t_ratio = (double)data->texture->width / TILE_SIZE;
+	data->txtr.x *= data->t2t_ratio;
+	data->txtr.y = 0;
 }
 
 void	draw_world(t_World_Controller *world)
@@ -39,16 +42,9 @@ void	draw_world(t_World_Controller *world)
 
 	miniCharImgPos.x = (world->player->pos.x / world->size.x) * world->map_img->width - (world->miniCharacter->width / 2);
 	miniCharImgPos.y = (world->player->pos.y / world->size.y) * world->map_img->height - (world->miniCharacter->height / 2);
-	printf("char image positions x: %d, y: %d\n", miniCharImgPos.x, miniCharImgPos.y);
-	fflush(stdout);
 	mlx_image_to_window(world->window, world->world3d, 0, 0);
 	mlx_image_to_window(world->window, world->map_img, world->window->width / 100, world->window->height - world->map_img->height - world->window->height / 100);
-	// color_mini_map(world->map_img, world->map);
 	mlx_image_to_window(world->window, world->miniCharacter, miniCharImgPos.x, miniCharImgPos.y);
-	// ft_color_mini_character_direction(world->miniCharacter, 0xFF0000FF, world->player);
-
-
-
 }
 
 
@@ -65,13 +61,6 @@ void	redraw(void *param)
 	// sleep(3);
 	raycasting(world); // then we draw the rays
 	ft_color_mini_character(world->miniCharacter, 0x000000FF);
-	// color_rays
-	//ft_color_mini_character_direction(world->miniCharacter, 0xFF0000FF, world->player); // then we draw the player
-	// color_sky
-	// color_floor
-	// color_wall
-	// color_door
-	// color_mini_character_direction
 	write(1, "redraw_end\n", 11);
 }
 
@@ -87,24 +76,14 @@ void	raycasting(t_World_Controller *world)
 	x = 0;
 	data.playerDir = world->player->angle;
 	data.playerPos = world->player->pos;
-	// printf("raycasting loop\n");
-	// fflush(stdout);
-
 	while (x < world->window->width)
 	{
-
+		data.x = x;
 		ray_find_wall(world->mini_map, world->player, &data);
 		select_texture(&data, world);
-		// printf("raycasting loop %d out of %d hit x: %f, y: %f\n", x + 1, world->window->width, hit.x, hit.y);
-
-		// fflush(stdout);
 		drawray(world->player, world->map_img, world->mini_map, data.hit);
 		draw3d(world->world3d, &data, x);
-		//  distance(data.hit, data.playerPos),
-		// 	normalise_radians(
-		// 		data.playerdir.x - data.rayDir), data.plyerdir.y, x);
 		data.rayDir = normalise_radians(data.rayDir + radians_increment);
-		// printf("next loop\n");
 		x++;
 	}
 }
