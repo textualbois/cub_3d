@@ -21,6 +21,7 @@
 #include "draw.h"
 #include "./parser/parser.h"
 #include "types_common.h"
+#include "malloc_counter.h"
 
 t_World_Controller	*init_world(t_config *config);
 

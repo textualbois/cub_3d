@@ -15,6 +15,7 @@
 
 # include "types_numeric.h"
 # include "world.h"
+#include "malloc_counter.h"
 
 typedef struct s_Collision {
 	int				type;

@@ -16,6 +16,7 @@
 #include "world.h"
 #include <math.h>
 #include "MLX42/MLX42.h"
+#include "malloc_counter.h"
 
 void ft_movement_input(void *param);
 //void set_v_rotation(t_World_Controller *world, int angle_delta);

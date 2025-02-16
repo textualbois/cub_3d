@@ -19,6 +19,7 @@
 # include "extra_math.h"
 # include "ray.h"
 # include "types_common.h"
+#include "malloc_counter.h"
 
 void	ft_color_mini_character(mlx_image_t *player, int color);
 void	ft_color_mini_character_direction(mlx_image_t *character, int color, t_character *player);

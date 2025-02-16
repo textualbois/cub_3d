@@ -21,6 +21,7 @@
 #include "libft/libft.h"
 #include "world.h"
 #include "movement.h"
+#include "malloc_counter.h"
 
 // inits //
 

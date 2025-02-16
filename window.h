@@ -15,6 +15,7 @@
 
 #include "MLX42/MLX42.h"
 #include "types_numeric.h"
+#include "malloc_counter.h"
 
 // initialize window
 mlx_t *initialize_window(void);

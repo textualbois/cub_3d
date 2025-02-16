@@ -15,6 +15,7 @@
 
 #include "MLX42/MLX42.h"
 #include "types_common.h"
+#include "malloc_counter.h"
 // #include "world.h"
 
 

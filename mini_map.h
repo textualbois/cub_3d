@@ -18,6 +18,7 @@
 #include "character.h"
 #include "libft/libft.h"
 #include "parser/parser.h"
+#include "malloc_counter.h"
 
 t_mini_map	*init_minimap(t_config *config);
 void		centre_mini_map(t_mini_map *map, t_character *player);

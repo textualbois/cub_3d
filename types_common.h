@@ -15,6 +15,7 @@
 
 # include "types_numeric.h"
 # include "MLX42/MLX42.h"
+#include "malloc_counter.h"
 
 typedef struct s_character
 {
