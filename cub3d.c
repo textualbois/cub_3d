@@ -107,6 +107,7 @@ int main(int argc, char **argv)
 	ft_putstr_fd("Hello, Images!\n", 1);
 	// init_images(world);//, map);
 	ft_putstr_fd("Hello, Draw!\n", 1);
+	mlx_set_setting(MLX_STRETCH_IMAGE, true);
 	draw_world(world);
 	ft_putstr_fd("Hello, Loops and Hooks!\n", 1);
 	init_loops_n_hooks(world);

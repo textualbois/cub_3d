@@ -1,3 +1,6 @@
+#ifndef MALLOC_COUNTER_H
+# define MALLOC_COUNTER_H
+
 #include <stdio.h>
 
 #define MALLOC 0
@@ -7,3 +10,5 @@
 #define RESULT 4
 
 void malloc_counter(int increment, int type, char* info);
+
+#endif
