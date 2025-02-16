@@ -70,13 +70,14 @@ void	raycasting(t_World_Controller *world)
 	t_renderData	data;
 	int				x;
 	double			radians_increment;
+	
 
-	radians_increment = - (FOV * PI / 180 )/ world->window->width;
-	data.rayDir = normalise_radians(world->player->angle.x - radians_increment * (world->window->width / 2));
+	radians_increment = - (FOV * PI / 180 )/ world->world3d->width;
+	data.rayDir = normalise_radians(world->player->angle.x - radians_increment * (world->world3d->width / 2));
 	x = 0;
 	data.playerDir = world->player->angle;
 	data.playerPos = world->player->pos;
-	while (x < world->window->width)
+	while (x < (int)world->world3d->width)
 	{
 		data.x = x;
 		ray_find_wall(world->mini_map, world->player, &data);
