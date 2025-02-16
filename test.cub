@@ -1,10 +1,10 @@
-SO ./textures/south_test.png
+SO ./textures/cluster1.png
 
-EA ./textures/east_test.png
+EA ./textures/banana.png
 
 NO  ./textures/north_test.png
 
-WE ./textures/debug_300_300_alphabet.png
+WE ./textures/orange_bricks_high_reZ.png
 
 C      111, 12, 231
 F 1,111,100,
