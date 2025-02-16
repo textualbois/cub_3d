@@ -22,6 +22,7 @@
 // 		return (1);
 // 	}
 // 	config = (t_config *)malloc(sizeof(t_config));
+//	malloc_counter(1, PARSER, "uhm what malloc\n");
 // 	if (!config)
 // 	{
 // 		perror("Memory allocation failed");
