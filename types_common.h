@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 19:49:07 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/16 00:29:10 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/16 02:06:16 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,21 @@ typedef struct s_renderData {
 	t_IntPair		pixel;
 }	t_renderData;
 
+typedef struct s_FrameCounter {
+	int			frameCounts[INTERVALS];
+	int			intervalIndex;
+	double		lastUpdateTime;
+	mlx_image_t	*first_digit;
+	mlx_image_t	*second_digit;
+	mlx_image_t	*third_digit;
+}	t_FrameCounter;
+
 typedef struct s_World_Controller
 {
 	mlx_t			*window;
 	t_IntPair		size;
 	t_character		*player;
-	t_mini_map *mini_map;
+	t_mini_map		*mini_map;
 
 	mlx_image_t		*map_img;
 	mlx_image_t		*miniCharacter;
@@ -64,7 +73,7 @@ typedef struct s_World_Controller
 	mlx_texture_t	*texture_so;
 	mlx_texture_t	*texture_we;
 	mlx_texture_t	*texture_ea;
-	// t_FrameCounter	*frameCounter;
+	t_FrameCounter	*frameCounter;
 }					t_World_Controller;
 
 #endif

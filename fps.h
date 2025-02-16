@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:44 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/01 21:59:57 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/16 02:36:26 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,13 @@
 #include "libft/libft.h"
 #include <math.h>
 #include <stdlib.h>
+#include "types_common.h"
 
-#define INTERVALS 10
-
-typedef struct s_FrameCounter {
-	int			frameCounts[INTERVALS];
-	int			intervalIndex;
-	double		lastUpdateTime;
-	// mlx_image_t	*text_box;
-}	t_FrameCounter;
-
-t_FrameCounter	*init_frame_counter();
+t_FrameCounter	*init_frame_counter(mlx_t *mlx);
+void			draw_frames(t_FrameCounter *frameCounter);
 // mlx_image_t		*init_text_box(mlx_t *window);
-void			destroy_frame_counter(t_FrameCounter *frameCounter);
+void			destroy_frame_counter(mlx_t *mlx, t_FrameCounter *frameCounte);
 void			update_frame_counter(t_FrameCounter *frameCounter);
-double			get_frame_count(t_FrameCounter *frameCounter);
+int			get_frame_count(t_FrameCounter *frameCounter);
 
 #endif

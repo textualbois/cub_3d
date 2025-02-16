@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:49:48 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/16 00:54:58 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/16 02:44:18 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,17 @@ static void select_texture(t_renderData *data, t_World_Controller *world)
 void	draw_world(t_World_Controller *world)
 {
 	t_IntPair	miniCharImgPos;
+	mlx_t *mlx;
 
+	mlx = world->window;
 	miniCharImgPos.x = (world->player->pos.x / world->size.x) * world->map_img->width - (world->miniCharacter->width / 2);
 	miniCharImgPos.y = (world->player->pos.y / world->size.y) * world->map_img->height - (world->miniCharacter->height / 2);
-	mlx_image_to_window(world->window, world->world3d, 0, 0);
-	mlx_image_to_window(world->window, world->map_img, world->window->width / 100, world->window->height - world->map_img->height - world->window->height / 100);
-	mlx_image_to_window(world->window, world->miniCharacter, miniCharImgPos.x, miniCharImgPos.y);
+	mlx_image_to_window(mlx, world->world3d, 0, 0);
+	mlx_image_to_window(mlx, world->map_img, world->window->width / 100, world->window->height - world->map_img->height - world->window->height / 100);
+	mlx_image_to_window(mlx, world->miniCharacter, miniCharImgPos.x, miniCharImgPos.y);
+	mlx_image_to_window(mlx, world->frameCounter->first_digit, 0, 0);
+	mlx_image_to_window(mlx, world->frameCounter->second_digit, world->frameCounter->first_digit->height * 1.1, 0);
+	mlx_image_to_window(mlx, world->frameCounter->third_digit, world->frameCounter->second_digit->height * 1.1, 0);
 }
 
 
@@ -54,13 +59,13 @@ void	redraw(void *param)
 
 	world = (t_World_Controller *)param;
 	write(1, "redraw\n", 7);
-	centre_mini_map(world->mini_map, world->player); // if player moves we first try to move the map view
+	centre_mini_map(world->mini_map, world->player);
 	color_mini_map(world->map_img, world->mini_map);
-	// player is drawn relative to his image, so we need to move the image
-	centre_character_img(world, world->mini_map, world->player->pos); // then we move the player image box, if hes close to a border
-	// sleep(3);
+	centre_character_img(world, world->mini_map, world->player->pos);
 	raycasting(world); // then we draw the rays
 	ft_color_mini_character(world->miniCharacter, 0x000000FF);
+	draw_frames(world->frameCounter);
+	update_frame_counter(world->frameCounter);
 	write(1, "redraw_end\n", 11);
 }
 

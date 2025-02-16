@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:53 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/15 17:02:51 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/16 02:42:10 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,21 +48,16 @@ t_World_Controller *init_world(t_config *config)
 		printf("init textures failed\n");
 		free(world->player);
 		free(world->mini_map);
-		free(world->texture_ea);
-		free(world->texture_no);
-		free(world->texture_so);
-		free(world->texture_we);
+		//destroy_images(world);
 		free(world);
 		return (NULL);
 	}
-
-	// world->frameCounter = init_frame_counter();
-	// if (!world->frameCounter)
-	// {
-	// 	free(world->player);
-	// 	free(world);
-	// 	return (NULL);
-	// }
+		world->frameCounter = init_frame_counter(world->window);
+	if (!world->frameCounter)
+	{
+		free(world->player);
+		free(world);
+	}
 	return (world);
 }
 

@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:12:10 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/15 19:06:31 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/16 02:06:43 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@
 #define EAST 1
 #define SOUTH 2
 #define WEST 3
+
+#define INTERVALS 10
 
 typedef struct s_IntPair{
 	int32_t x;

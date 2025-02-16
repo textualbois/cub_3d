@@ -12,7 +12,7 @@ SRCS     = cub3d.c loops_hooks.c init_world.c minimap_init.c \
 		   ./parser/parse_textures_colors.c ./parser/parser_free_utils.c\
 		   ./parser/string_utils.c ./parser/validate_map_utils.c\
 		   ./parser/validate_map.c\
-		   init_textures.c \
+		   init_textures.c fps.c\
 
 OBJ_DIR  = obj
 OBJS     = $(addprefix $(OBJ_DIR)/,$(SRCS:.c=.o))
