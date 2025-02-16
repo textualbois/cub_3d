@@ -18,6 +18,7 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 	char			*res;
 
 	res = (char *) malloc(ft_strlen(s) + 1);
+	malloc_counter(1, PARSER, "ft_strmapi malloc\n");
 	if (res == NULL)
 		return (NULL);
 	i = 0;

@@ -20,6 +20,7 @@ char	*pad_line(char *line, int width)
 
 	len = ft_strlen(line);
 	new_line = malloc(width + 1);
+	malloc_counter(1, PARSER, "pad_line libft malloc\n");
 	if (!new_line)
 		return (NULL);
 	i = 0;

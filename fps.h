@@ -18,6 +18,7 @@
 #include "libft/libft.h"
 #include <math.h>
 #include <stdlib.h>
+#include "malloc_counter.h"
 
 #define INTERVALS 10
 

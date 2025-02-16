@@ -30,10 +30,13 @@ void	ft_exit_button(void *param)
 			world->miniCharacter = NULL;
 		}
 		free(world->player);
+		malloc_counter(-1, MALLOC, "world->player free\n");
 		world->player = NULL;
 		mlx_close_window(world->window);
 		free(world);
+		malloc_counter(-1, MALLOC, "world free\n");
 		world = NULL;
+		malloc_counter(0, RESULT, "malloc counter results\n");
 		exit(EXIT_SUCCESS);
 	}
 }
@@ -46,6 +49,9 @@ void	init_loops_n_hooks(t_World_Controller *world)
 	//mlx_resize_hook(world->window, resize_all, world);
 	mlx_cursor_hook(world->window, ft_cursor_input, world);
 	mlx_loop(world->window);
+	malloc_counter(0, RESULT, "malloc counter results\n");
 	mlx_terminate(world->window);
+
+	malloc_counter(0, RESULT, "malloc counter results\n");
 	// draw_world(world);
 }

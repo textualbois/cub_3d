@@ -8,6 +8,7 @@
 #define TEXTURE 2
 #define OTHER 3
 #define RESULT 4
+#define PARSER 5
 
 void malloc_counter(int increment, int type, char* info);
 

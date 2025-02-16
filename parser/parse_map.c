@@ -63,6 +63,7 @@ int	allocate_map_grid(t_config *config, char **lines)
 
 	calculate_map_dimensions(&config->map, lines);
 	config->map.grid = malloc(sizeof(char *) * (config->map.height + 1));
+	malloc_counter(1, PARSER, "parsing map_grid malloc\n");
 	if (!config->map.grid)
 		return (0);
 	j = 0;

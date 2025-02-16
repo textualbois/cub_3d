@@ -56,9 +56,11 @@ int	parse_floor_color(char *trimmed, t_config *config)
 	if (!parse_color(value, config->floor_color))
 	{
 		free(value);
+		malloc_counter(-1, PARSER, "parsing floor color value free\n");
 		return (0);
 	}
 	free(value);
+	malloc_counter(-1, PARSER, "parsing floor color value free\n");
 	return (1);
 }
 
@@ -72,9 +74,11 @@ int	parse_ceiling_color(char *trimmed, t_config *config)
 	if (!parse_color(value, config->ceiling_color))
 	{
 		free(value);
+		malloc_counter(-1, PARSER, "parsing ceiling color value free\n");
 		free_config(config);
 		return (0);
 	}
 	free(value);
+	malloc_counter(-1, PARSER, "parsing ceiling color value free\n");
 	return (1);
 }

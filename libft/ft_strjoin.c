@@ -19,6 +19,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	size_t	s1len;
 
 	res_str = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	malloc_counter(1, PARSER, "ft_strjoin malloc\n");
 	if (res_str == NULL)
 		return (NULL);
 	i = 0;

@@ -24,6 +24,7 @@ int	parse_texture(char *trimmed, char **texture)
 	if (fd < 0)
 	{
 		free(value);
+		malloc_counter(-1, PARSER, "parsing texture value free\n");
 		return (0);
 	}
 	close(fd);
@@ -99,9 +100,11 @@ int	parse_line(char *line, t_config *config)
 	if (ft_strlen(trimmed) == 0)
 	{
 		free(trimmed);
+		malloc_counter(-1, PARSER, "parsing line trimmed free\n");
 		return (1);
 	}
 	ret = process_config_line(trimmed, config);
 	free(trimmed);
+	malloc_counter(-1, PARSER, "parsing line trimmed free\n");
 	return (ret);
 }

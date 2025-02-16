@@ -20,14 +20,17 @@ static int	handle_config_line(char *line, t_config *config)
 	if (ft_strlen(trimmed) == 0)
 	{
 		free(trimmed);
+		malloc_counter(-1, PARSER, "parsing config line trimmed free\n");
 		return (0);
 	}
 	if (!parse_line(trimmed, config))
 	{
 		free(trimmed);
+		malloc_counter(-1, PARSER, "parsing config line trimmed free\n");
 		return (-1);
 	}
 	free(trimmed);
+	malloc_counter(-1, PARSER, "parsing config line trimmed free\n");
 	return (1);
 }
 
@@ -72,6 +75,7 @@ static char	**extract_remaining_lines(char **lines, int index)
 
 	remaining_lines = count_remaining_lines(lines, index);
 	new_lines = malloc(sizeof(char *) * (remaining_lines + 1));
+	malloc_counter(1, PARSER, "parsing remaining lines malloc\n");
 	new_index = 0;
 	if (!new_lines)
 		return (NULL);

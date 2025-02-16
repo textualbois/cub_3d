@@ -28,6 +28,7 @@ char	*ft_substr(const char *s, unsigned int start, size_t len)
 	if (s_len < len)
 		len = s_len;
 	res_str = (char *)malloc(len + 1);
+	malloc_counter(1, PARSER, "ft_substr malloc\n");
 	if (res_str == NULL)
 		return (NULL);
 	ft_strlcpy(res_str, s, len + 1);

@@ -78,13 +78,16 @@ t_mini_map	*init_minimap(t_config *config)
 	int			j;
 
 	minimap = malloc(sizeof(t_mini_map));
+	malloc_counter(1, MALLOC, "init minimap malloc\n");
 	if (!minimap)
 		return (NULL);
 	/* Выделяем память для массива указателей на строки (количество строк = config.map.height) */
 	minimap->map = malloc(sizeof(int *) * config->map.height);
+	malloc_counter(1, MALLOC, "map rows malloc\n");
 	if (!minimap->map)
 	{
 		free(minimap);
+		malloc_counter(-1, MALLOC, "minimap free\n");
 		return (NULL);
 	}
 	/* Для каждой строки карты выделяем память и заполняем её значениями,
@@ -93,12 +96,18 @@ t_mini_map	*init_minimap(t_config *config)
 	while (i < config->map.height)
 	{
 		minimap->map[i] = malloc(sizeof(int) * config->map.width);
+		malloc_counter(1, MALLOC, "map cell malloc\n");
 		if (!minimap->map[i])
 		{
 			while (--i >= 0)
+			{
 				free(minimap->map[i]);
+				malloc_counter(-1, MALLOC, "map cell free\n");
+			}
 			free(minimap->map);
+			malloc_counter(-1, MALLOC, "map rows free\n");
 			free(minimap);
+			malloc_counter(-1, MALLOC, "map free\n");
 			return (NULL);
 		}
 		j = 0;

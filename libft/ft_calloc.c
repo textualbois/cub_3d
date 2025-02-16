@@ -18,6 +18,7 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	size_t	i;
 
 	res_ptr = (char *) malloc(nmemb * size);
+	malloc_counter(1, PARSER, "generic calloc\n");
 	i = 0;
 	if (res_ptr == NULL)
 		return (NULL);

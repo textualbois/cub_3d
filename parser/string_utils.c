@@ -61,10 +61,13 @@ void	free_split_lines(char ***lines)
 	while ((*lines)[i])
 	{
 		free((*lines)[i]);
+		malloc_counter(-1, PARSER, "parsing split line free\n");
 		(*lines)[i] = NULL;
 		i++;
 	}
 	free(*lines);
+
+		malloc_counter(-1, PARSER, "parsing split lines head free\n");
 	*lines = NULL;
 }
 
@@ -99,6 +102,7 @@ char	**split_lines_manual(char *file_content)
 		return (NULL);
 	count = count_lines(file_content);
 	lines = malloc(sizeof(char *) * (count + 1));
+	malloc_counter(1, PARSER, "split_lines_manual malloc\n");
 	if (!lines)
 		return (NULL);
 	lines = fill_lines_array(lines, file_content);

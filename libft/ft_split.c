@@ -50,6 +50,7 @@ static char	*attempt_storage(const char *s, size_t offset, size_t limit)
 	char	*res;
 
 	res = malloc(limit - offset + 1);
+	malloc_counter(1, PARSER, "part of ft_split\n");
 	if (res == NULL)
 		return (NULL);
 	ft_strlcpy(res, s + offset, (limit - offset + 1));
@@ -64,10 +65,12 @@ static void	*clear_all(char **res_arr, size_t arr_len)
 	while (count < arr_len)
 	{
 		free(res_arr[count]);
+		malloc_counter(-1, PARSER, "ft_split iter free\n");
 		res_arr[count] = NULL;
 		count++;
 	}
 	free(res_arr);
+	malloc_counter(-1, PARSER, "ft_split free\n");
 	res_arr = NULL;
 	return (NULL);
 }
@@ -81,6 +84,7 @@ char	**ft_split(const char *s, char c)
 	size_t			limit;
 
 	res_arr = malloc(sizeof(char **) * (ft_get_split_count(s, c) + 1));
+	malloc_counter(1, PARSER, "generic ft_split\n");
 	if (res_arr == NULL)
 		return (NULL);
 	offset = 0;

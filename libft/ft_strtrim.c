@@ -43,6 +43,7 @@ char	*ft_strtrim(const char *s1, const char *set)
 	if (start > end)
 	{
 		res_str = (char *)malloc(1);
+		malloc_counter(1, PARSER, "ft_strtrim malloc small\n");
 		if (res_str == NULL)
 			return (NULL);
 		res_str[0] = '\0';
@@ -50,6 +51,7 @@ char	*ft_strtrim(const char *s1, const char *set)
 	else
 	{
 		res_str = (char *)malloc(end - start + 1 + 1 - (ft_strlen(s1) == end));
+		malloc_counter(1, PARSER, "ft_strtrim malloc\n");
 		if (res_str == NULL)
 			return (NULL);
 		ft_strlcpy(res_str, s1 + start, end - start + 1 + 1);

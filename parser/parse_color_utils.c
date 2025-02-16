@@ -39,10 +39,12 @@ int	convert_color_value(char *str)
 	if (!is_valid_color_value(trimmed_token))
 	{
 		free(trimmed_token);
+		malloc_counter(-1, PARSER, "parsing trimmed token free\n");
 		return (-1);
 	}
 	value = ft_atoi(trimmed_token);
 	free(trimmed_token);
+	malloc_counter(-1, PARSER, "parsing trimmed token free\n");
 	if (value < 0 || value > 255)
 		return (-1);
 	return (value);

@@ -41,6 +41,7 @@ char	*read_file_content(int fd)
 		buffer[bytes_read] = '\0';
 		temp = ft_strjoin(file_content, buffer);
 		free(file_content);
+		malloc_counter(-1, PARSER, "parsing file content free\n");
 		file_content = temp;
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
 	}
@@ -61,6 +62,7 @@ int	read_and_split_file(const char *filename, char ***lines)
 		return (0);
 	*lines = split_lines_manual(file_content);
 	free(file_content);
+	malloc_counter(-1, PARSER, "parsing file content free\n");
 	if (!(*lines))
 		return (0);
 	return (1);

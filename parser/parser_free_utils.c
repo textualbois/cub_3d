@@ -22,10 +22,12 @@ void	free_lines(char **lines)
 	while (lines[i])
 	{
 		free(lines[i]);
+		malloc_counter(-1, PARSER, "parsing single line free\n");
 		lines[i] = NULL;
 		i++;
 	}
 	free(lines);
+	malloc_counter(-1, PARSER, "parsing lines head free\n");
 	lines = NULL;
 }
 
@@ -57,21 +59,25 @@ void	free_textures(t_config *config)
 	if (config->no_texture)
 	{
 		free(config->no_texture);
+		malloc_counter(-1, PARSER, "parsing texture north free\n");
 		config->no_texture = NULL;
 	}
 	if (config->so_texture)
 	{
 		free(config->so_texture);
+		malloc_counter(-1, PARSER, "parsing texture south free\n");
 		config->so_texture = NULL;
 	}
 	if (config->we_texture)
 	{
 		free(config->we_texture);
+		malloc_counter(-1, PARSER, "parsing texture west free\n");
 		config->we_texture = NULL;
 	}
 	if (config->ea_texture)
 	{
 		free(config->ea_texture);
+		malloc_counter(-1, PARSER, "parsing texture east free\n");
 		config->ea_texture = NULL;
 	}
 }

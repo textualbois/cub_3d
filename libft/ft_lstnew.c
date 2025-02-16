@@ -17,6 +17,7 @@ t_list	*ft_lstnew(void *content)
 	t_list	*new_list_head;
 
 	new_list_head = (t_list *)malloc(sizeof(t_list));
+	malloc_counter(1, PARSER, "list head malloc\n");
 	if (new_list_head == NULL)
 		return (NULL);
 	new_list_head->content = content;

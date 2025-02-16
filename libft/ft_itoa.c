@@ -32,6 +32,7 @@ char	*ft_itoa(int n)
 
 	pos = int_len(n);
 	res = (char *) malloc(pos + 1);
+	malloc_counter(1, PARSER, "generic itoa malloc\n");
 	if (res == NULL)
 		return (NULL);
 	if (n == -2147483648)

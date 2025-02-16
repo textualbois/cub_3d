@@ -18,6 +18,7 @@ t_FrameCounter	*init_frame_counter()
 	t_FrameCounter	*frameCounter;
 
 	frameCounter = malloc(sizeof(t_FrameCounter));
+	malloc_counter(1, MALLOC, "frame counter malloc\n");
 	if (frameCounter == NULL) {
 		fprintf(stderr, "Failed to allocate memory for the frame counter\n");
 		return(NULL);
@@ -32,6 +33,7 @@ t_FrameCounter	*init_frame_counter()
 void	destroy_frame_counter(t_FrameCounter *frameCounter)
 {
 	free(frameCounter);
+	malloc_counter(-1, MALLOC, "frame_counter free\n");
 	frameCounter = NULL;
 }
 

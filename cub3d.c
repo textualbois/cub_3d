@@ -62,6 +62,7 @@ int main(int argc, char **argv)
 		return (1);
 	}
 	config = (t_config *)malloc(sizeof(t_config));
+	malloc_counter(1, MALLOC, "main config malloc\n");
 	if (!config)
 	{
 		perror("Memory allocation failed");
@@ -73,6 +74,7 @@ int main(int argc, char **argv)
 	{
 		free_config(config);
 		free(config);
+		malloc_counter(-1, MALLOC, "config main free\n");
 		return (1);
 	}
 	// printf("Textures:\n");
@@ -114,5 +116,6 @@ int main(int argc, char **argv)
 	ft_putstr_fd("Bye all!\n", 1);
 	free_config(config);
 	free(config);
+	malloc_counter(-1, MALLOC, "config main free\n");
 	return (EXIT_SUCCESS);
 }

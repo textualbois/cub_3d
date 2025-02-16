@@ -17,6 +17,7 @@ t_character	*init_mini_character(t_IntPair size, t_character player)
 	t_character	*mini_player;
 
 	mini_player = (t_character *)malloc(sizeof(t_character));
+	malloc_counter(1, MALLOC, "INIT_MINI_CHARACTER\n");
 	if (mini_player)
 	{
 		mini_player->size = size;
