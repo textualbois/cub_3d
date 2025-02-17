@@ -6,7 +6,7 @@
 /*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 23:32:15 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/17 14:19:23 by vmamoten         ###   ########.fr       */
+/*   Updated: 2025/02/17 17:39:26 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,8 @@ void	draw3d(mlx_image_t *world3d, t_renderData *data, int x)
 	// 	data->txtr_start = 0;
 
 	data->txtr_end = (world3d->height + lineH) / 2 + vertical_offset;
-	 if (data->txtr_end > 1024)
-	 	data->txtr_end = 1024;
+	//  if (data->txtr_end > 1024)
+	//  	data->txtr_end = 1024;
 	printf("[DEBUG] draw3d: x=%d, dist_adjusted=%.6f, lineH=%.6f, vertical_offset=%.6f, txtr_start=%.6d, txtr_end=%.6d\n", x, dist_adjusted, lineH, vertical_offset, data->txtr_start, data->txtr_end);
 	draw_vertical_line(world3d, data, x);
 }

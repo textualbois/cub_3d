@@ -6,7 +6,7 @@
 /*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 06:35:51 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/17 14:12:56 by vmamoten         ###   ########.fr       */
+/*   Updated: 2025/02/17 19:37:05 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ void	ray_result(t_renderData *data, t_DoublePair hit, int direction,
 {
 	if (!data)
 	{
-		// printf("[ERROR] ray_result: data is NULL\n");
+		printf("[ERROR] ray_result: data is NULL\n");
 		return ;
 	}
 	data->hit = hit;
-	// printf("[DEBUG] ray_result: hit=(%.2f, %.2f), direction=%d, hit_type=%d\n",
-	// 	hit.x, hit.y, direction, hit_type);
+	printf("[DEBUG] ray_result: hit=(%.2f, %.2f), direction=%d, hit_type=%d\n",
+		hit.x, hit.y, direction, hit_type);
 	if (hit_type == VERTICAL)
 	{
 		if (direction == -1)
@@ -94,14 +94,14 @@ static int	check_hit_bounds(t_DoublePair *hit, t_mini_map *mini_map)
 {
 	if (!hit || !mini_map)
 	{
-		// printf("[ERROR] check_hit_bounds: NULL pointer detected\n");
+		printf("[ERROR] check_hit_bounds: NULL pointer detected\n");
 		return (false);
 	}
 	if (hit->x < 0 || hit->x >= mini_map->size.x || hit->y < 0
 		|| hit->y >= mini_map->size.y)
 	{
-		// printf("[WARNING] check_hit_bounds: hit out of bounds (%.2f, %.2f)\n",
-		// 	hit->x, hit->y);
+		printf("[WARNING] check_hit_bounds: hit out of bounds (%.2f, %.2f)\n",
+			hit->x, hit->y);
 		return (false);
 	}
 	return (true);
@@ -157,6 +157,8 @@ bool	is_wall(t_mini_map *mini_map, t_DoublePair hit, t_IntPair direction,
 		int caller)
 {
 	t_IntPair	modifier;
+	int			map_x;
+	int			map_y;
 
 	modifier.x = 0;
 	modifier.y = 0;
@@ -168,8 +170,21 @@ bool	is_wall(t_mini_map *mini_map, t_DoublePair hit, t_IntPair direction,
 		modifier.y = 0;
 	else if (caller == HORIZONTAL)
 		modifier.y = -1;
-	if (mini_map->map[modifier.y + (int)hit.y / TILE_SIZE][modifier.x
-		+ (int)hit.x / TILE_SIZE] == '1')
+	/* Вычисляем индексы в карте с учетом смещения */
+	map_x = modifier.x + ((int)hit.x / TILE_SIZE);
+	map_y = modifier.y + ((int)hit.y / TILE_SIZE);
+	/* Проверяем, что индексы не выходят за пределы карты */
+	if (map_x < 0 || map_x >= mini_map->size.x || map_y < 0
+		|| map_y >= mini_map->size.y)
+	{
+		printf("[WARNING] is_wall: computed index out of bounds (%d, %d)\n",
+			map_x, map_y);
+		/* Если индекс вне границ, можно считать,
+			что за пределами карты стена */
+		return (true);
+	}
+	/* Если на найденной позиции стоит '1', значит это стена */
+	if (mini_map->map[map_y][map_x] == '1')
 		return (true);
 	return (false);
 }

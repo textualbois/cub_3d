@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_ray_mmap.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 21:39:44 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/12 23:44:35 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/17 19:23:36 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ void	drawray(t_character *player, mlx_image_t *map_img, t_mini_map *mini_map, t_
 	end.y = (hit.y - mini_map->view_port.y) / mini_map->visible_size.y * map_img->height;
 	// if (map_img == NULL)
 		// printf("map_img is NULL\n");
-	// if (end.x >= 0 && end.y >= 0)
+	if (end.x >= 0 && end.y >= 0)
 	highlight_line_between_pixels(map_img, start, end);
-	// draw_line_between_pixels(map_img, start, end, 0xFFFFFFFF);
+	draw_line_between_pixels(map_img, start, end, 0xFFFFFFFF);
 	// printf("drew a line\n");
 }
 
