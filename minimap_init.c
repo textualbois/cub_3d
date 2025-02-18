@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap_init.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:12:01 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/12 20:05:36 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/18 17:54:15 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,26 @@
 #include "mini_map.h"
 #include "parser/parser.h"
 
-void	print_minimap_map(t_mini_map *minimap, t_config *config)
-{
-	int	i;
-	int	j;
+// void	print_minimap_map(t_mini_map *minimap, t_config *config)
+// {
+// 	int	i;
+// 	int	j;
 
-	i = 0;
-	if (!minimap || !minimap->map)
-		return ;
-	while (i < config->map.height)
-	{
-		j = 0;
-		while (j < config->map.width)
-		{
-			printf("%c", (char)minimap->map[i][j]);
-			j++;
-		}
-		printf("\n");
-		i++;
-	}
-}
+// 	i = 0;
+// 	if (!minimap || !minimap->map)
+// 		return ;
+// 	while (i < config->map.height)
+// 	{
+// 		j = 0;
+// 		while (j < config->map.width)
+// 		{
+// 			printf("%c", (char)minimap->map[i][j]);
+// 			j++;
+// 		}
+// 		printf("\n");
+// 		i++;
+// 	}
+// }
 
 /* Преобразует символ карты в числовое значение для мини-карты.
    Например, если символ '1' означает стену, то возвращается 1,
@@ -118,7 +118,7 @@ t_mini_map	*init_minimap(t_config *config)
 		}
 		i++;
 	}
-	print_minimap_map(minimap, config);
+	// print_minimap_map(minimap, config);
 	/* Настройка размеров мини-карты. Эти значения могут зависеть от логики приложения.
 		Здесь, например,
 			фиксируется размер в тайлах и вычисляется размер в пикселях. */

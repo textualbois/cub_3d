@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validate_map_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 19:52:42 by admin             #+#    #+#             */
-/*   Updated: 2025/02/15 20:07:47 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/18 17:39:24 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,9 @@ double	get_angle_from_char(char dir)
 	if (dir == 'N')
 		return (M_PI_2);
 	if (dir == 'W')
-		return (0);
-	if (dir == 'E')
 		return (M_PI);
+	if (dir == 'E')
+		return (0);
 	return (0);
 }
 

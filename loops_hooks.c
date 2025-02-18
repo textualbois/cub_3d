@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loops_hooks.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:56 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/12 22:56:31 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/18 17:53:43 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ void	ft_exit_button(void *param)
 		free(world);
 		malloc_counter(-1, MALLOC, "world free\n");
 		world = NULL;
+		// free_config(config);   this MUST be free.. here or   when t_World_Controller	  *world - initialization passed sucsessfully
+		// free(config);		  this MUST be free..
 		malloc_counter(0, RESULT, "malloc counter results\n");
 		exit(EXIT_SUCCESS);
 	}

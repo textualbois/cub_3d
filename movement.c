@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movement.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:12:04 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/15 20:08:12 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/18 17:43:08 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,8 @@ void	ft_movement_input(void *param)
 		set_movement(world, (t_DoublePair){1 * sin(world->player->angle.x + PI / 2), 1 * cos(world->player->angle.x + PI / 2)});
 	if (mlx_is_key_down(world->window, MLX_KEY_S))
 		set_movement(world, (t_DoublePair){1 * sin(world->player->angle.x - PI / 2), 1 * cos(world->player->angle.x - PI / 2)});
-	printf("player pos x: %f, y: %f\n", world->player->pos.x,
-		world->player->pos.y);
+	// printf("player pos x: %f, y: %f\n", world->player->pos.x,
+	// 	world->player->pos.y);
 	// Остальные обновления (например, рендер и т.п.)
 
 		world = (t_World_Controller *)param;
