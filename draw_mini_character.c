@@ -6,7 +6,7 @@
 /*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:37 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/18 14:51:01 by vmamoten         ###   ########.fr       */
+/*   Updated: 2025/02/19 15:05:31 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,14 @@ void	ft_bresenham_init(t_line_params *params, t_DoublePair start,
 {
 	params->delta.x = fabs(end.x - start.x);
 	params->delta.y = fabs(end.y - start.y);
-	params->sign.x = (start.x < end.x) ? 1 : -1;
-	params->sign.y = (start.y < end.y) ? 1 : -1;
+	if (start.x < end.x)
+		params->sign.x = 1;
+	else
+		params->sign.x = -1;
+	if (start.y < end.y)
+		params->sign.y = 1;
+	else
+		params->sign.y = -1;
 	params->error.x = params->delta.x - params->delta.y;
 	params->iter = start;
 }

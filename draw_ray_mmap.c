@@ -6,7 +6,7 @@
 /*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 21:39:44 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/18 14:52:12 by vmamoten         ###   ########.fr       */
+/*   Updated: 2025/02/19 15:12:55 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,22 @@
 
 static void	ft_mlx_highlight_pixel(uint8_t *pixel, uint32_t color)
 {
-	uint8_t		alpha;
-	uint8_t		red;
-	uint8_t		green;
-	uint8_t		blue;
-	uint8_t		newRed;
-	uint8_t		newGreen;
-	uint8_t		newBlue;
-	uint32_t	newColor;
+	uint8_t		channels[4];
+	uint32_t	new_color;
+	int			i;
 
-	alpha = (color >> 24) & 0xFF;
-	red = (color >> 16) & 0xFF;
-	green = (color >> 8) & 0xFF;
-	blue = color & 0xFF;
-	newRed = (uint8_t)fmin(255, red * 1.05);
-	newGreen = (uint8_t)fmin(255, green * 1.05);
-	newBlue = (uint8_t)fmin(255, blue * 1.05);
-	newColor = (alpha << 24) | (newRed << 16) | (newGreen << 8) | newBlue;
-	*(uint32_t *)pixel = newColor;
+	channels[0] = (color >> 24) & 0xFF;
+	channels[1] = (color >> 16) & 0xFF;
+	channels[2] = (color >> 8) & 0xFF;
+	channels[3] = color & 0xFF;
+	i = 1;
+	while (i < 4)
+	{
+		channels[i] = (uint8_t)fmin(255, channels[i] * 1.05);
+		i++;
+	}
+	new_color = (channels[0] << 24) | (channels[1] << 16) | (channels[2] << 8) | channels[3];
+	*(uint32_t *)pixel = new_color;
 }
 
 void	drawray(t_character *player, mlx_image_t *map_img, t_mini_map *mini_map,
