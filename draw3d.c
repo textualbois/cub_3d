@@ -6,7 +6,7 @@
 /*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 23:32:15 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/17 17:39:26 by vmamoten         ###   ########.fr       */
+/*   Updated: 2025/02/19 17:29:55 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,31 +78,20 @@ static void	draw_vertical_line(mlx_image_t *img, t_renderData *data, int x)
 void	draw3d(mlx_image_t *world3d, t_renderData *data, int x)
 {
 	double	dist_adjusted;
-	double	lineH;
+	double	line_h;
 	double	vertical_offset;
 
 	if (!world3d || !data)
-	{
-		//printf("[ERROR] draw3d: NULL pointer detected (world3d: %p, data: %p)\n", world3d, data);
 		return ;
-	}
 	dist_adjusted = distance(data->hit, data->playerPos)
 		* cos(normalise_radians(data->rayDir - data->playerDir.x));
-	if (dist_adjusted < 0.001) // Защита от деления на ноль
+	if (dist_adjusted < 0.001)
 		dist_adjusted = 0.001;
-		
-	lineH = TILE_SIZE * world3d->height / dist_adjusted;
-	 if (lineH > 10000) // Ограничение высоты проекции
-    	lineH = 10000;
-
+	line_h = TILE_SIZE * world3d->height / dist_adjusted;
+	if (line_h > 10000)
+		line_h = 10000;
 	vertical_offset = (world3d->height / 2) * sin(data->playerDir.y);
-	data->txtr_start = (world3d->height - lineH) / 2 + vertical_offset;
-	// if (data->txtr_start < 0)
-	// 	data->txtr_start = 0;
-
-	data->txtr_end = (world3d->height + lineH) / 2 + vertical_offset;
-	//  if (data->txtr_end > 1024)
-	//  	data->txtr_end = 1024;
-	printf("[DEBUG] draw3d: x=%d, dist_adjusted=%.6f, lineH=%.6f, vertical_offset=%.6f, txtr_start=%.6d, txtr_end=%.6d\n", x, dist_adjusted, lineH, vertical_offset, data->txtr_start, data->txtr_end);
+	data->txtr_start = (world3d->height - line_h) / 2 + vertical_offset;
+	data->txtr_end = (world3d->height + line_h) / 2 + vertical_offset;
 	draw_vertical_line(world3d, data, x);
 }

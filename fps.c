@@ -3,66 +3,67 @@
 /*                                                        :::      ::::::::   */
 /*   fps.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:41 by isemin            #+#    #+#             */
-/*   Updated: 2025/01/26 17:12:41 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/19 17:40:30 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fps.h"
 
-// Initializes the frame counter
-t_FrameCounter	*init_frame_counter()
+t_frame_counter	*init_frame_counter(void)
 {
-	t_FrameCounter	*frameCounter;
+	t_frame_counter	*fr_counter;
 
-	frameCounter = malloc(sizeof(t_FrameCounter));
+	fr_counter = malloc(sizeof(t_frame_counter));
 	malloc_counter(1, MALLOC, "frame counter malloc\n");
-	if (frameCounter == NULL) {
+	if (fr_counter == NULL)
+	{
 		fprintf(stderr, "Failed to allocate memory for the frame counter\n");
-		return(NULL);
+		return (NULL);
 	}
-	ft_memset(frameCounter->frameCounts, 0, sizeof(frameCounter->frameCounts));
-	frameCounter->intervalIndex = 0;
-	frameCounter->lastUpdateTime = mlx_get_time();
-	return (frameCounter);
+	ft_memset(fr_counter->frame_counts, 0, sizeof(fr_counter->frame_counts));
+	fr_counter->interval_index = 0;
+	fr_counter->last_update_time = mlx_get_time();
+	return (fr_counter);
 }
 
-// Destroys the frame counter
-void	destroy_frame_counter(t_FrameCounter *frameCounter)
+void	destroy_frame_counter(t_frame_counter *fr_counter)
 {
-	free(frameCounter);
+	free(fr_counter);
 	malloc_counter(-1, MALLOC, "frame_counter free\n");
-	frameCounter = NULL;
+	fr_counter = NULL;
 }
 
-// Updates the frame counter
-void update_frame_counter(t_FrameCounter *frameCounter)
+void	update_frame_counter(t_frame_counter *fr_counter)
 {
-	double currentTime;
-	double deltaTime;
+	double	current_time;
+	double	delta_time;
 
-	currentTime = mlx_get_time();
-	deltaTime = currentTime - frameCounter->lastUpdateTime;
-	if (deltaTime >= 0.1)
+	current_time = mlx_get_time();
+	delta_time = current_time - fr_counter->last_update_time;
+	if (delta_time >= 0.1)
 	{
-		frameCounter->intervalIndex = (frameCounter->intervalIndex + 1) % INTERVALS;
-		frameCounter->frameCounts[frameCounter->intervalIndex] = 0;
-		frameCounter->lastUpdateTime = currentTime;
+		fr_counter->interval_index = (fr_counter->interval_index + 1)
+			% INTERVALS;
+		fr_counter->frame_counts[fr_counter->interval_index] = 0;
+		fr_counter->last_update_time = current_time;
 	}
-	frameCounter->frameCounts[frameCounter->intervalIndex]++;
+	fr_counter->frame_counts[fr_counter->interval_index]++;
 }
 
-// Gets the current frame count (FPS)
-int	get_frame_count(t_FrameCounter *frameCounter)
+int	get_frame_count(t_frame_counter *fr_counter)
 {
-	int	totalFrames;
+	int	total_frames;
+	int	i;
 
-	totalFrames = 0;
-	for (int i = 0; i < INTERVALS; i++)
+	total_frames = 0;
+	i = 0;
+	while (i < INTERVALS)
 	{
-		totalFrames += frameCounter->frameCounts[i];
+		total_frames += fr_counter->frame_counts[i];
+		i++;
 	}
-	return (totalFrames);
+	return (total_frames);
 }
