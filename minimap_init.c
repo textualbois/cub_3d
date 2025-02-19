@@ -6,7 +6,7 @@
 /*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:12:01 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/18 17:54:15 by vmamoten         ###   ########.fr       */
+/*   Updated: 2025/02/19 18:16:44 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,74 +14,35 @@
 #include "mini_map.h"
 #include "parser/parser.h"
 
-// void	print_minimap_map(t_mini_map *minimap, t_config *config)
-// {
-// 	int	i;
-// 	int	j;
-
-// 	i = 0;
-// 	if (!minimap || !minimap->map)
-// 		return ;
-// 	while (i < config->map.height)
-// 	{
-// 		j = 0;
-// 		while (j < config->map.width)
-// 		{
-// 			printf("%c", (char)minimap->map[i][j]);
-// 			j++;
-// 		}
-// 		printf("\n");
-// 		i++;
-// 	}
-// }
-
-/* Преобразует символ карты в числовое значение для мини-карты.
-   Например, если символ '1' означает стену, то возвращается 1,
-   а для остальных (например, '0', 'N', 'S', 'E', 'W', ' ') — 0.
-   При необходимости настройте логику преобразования. */
 int	convert_tile(char c)
 {
-	// if (c == '1')
-	// 	return ('1');
-	// if (c == ' ')
-	// 	return (' ');
-	// return ('0');
 	return (c);
 }
 
-t_IntPair	calculateVisibleSize(int visibleTiles, int tileSize, int mapWidth,
+t_IntPair	calc_vis_size(int vis_tiles, int tile_size, int map_width,
 		int mapHeight)
 {
 	int	size;
 
-	size = visibleTiles * tileSize;
-	if (size > mapWidth * tileSize || size > mapHeight * tileSize)
+	size = vis_tiles * tile_size;
+	if (size > map_width * tile_size || size > mapHeight * tile_size)
 	{
-		if (mapWidth < mapHeight)
-		{
-			size = mapWidth * tileSize;
-		}
+		if (map_width < mapHeight)
+			size = map_width * tile_size;
 		else
-		{
-			size = mapHeight * tileSize;
-		}
+			size = mapHeight * tile_size;
 	}
 	return ((t_IntPair){size, size});
 }
-/* Инициализирует структуру мини-карты на основе данных карты из config.
-   Выделяется память для структуры и для двумерного массива целых чисел,
-   в который копируются значения из config.map.grid с преобразованием символов. */
-t_mini_map	*init_minimap(t_config *config)
+
+t_mini_map	*allocate_minimap_struct(t_config *config)
 {
 	t_mini_map	*minimap;
-	int			i;
-	int			j;
 
 	minimap = malloc(sizeof(t_mini_map));
 	malloc_counter(1, MALLOC, "init minimap malloc\n");
 	if (!minimap)
 		return (NULL);
-	/* Выделяем память для массива указателей на строки (количество строк = config.map.height) */
 	minimap->map = malloc(sizeof(int *) * config->map.height);
 	malloc_counter(1, MALLOC, "map rows malloc\n");
 	if (!minimap->map)
@@ -90,8 +51,13 @@ t_mini_map	*init_minimap(t_config *config)
 		malloc_counter(-1, MALLOC, "minimap free\n");
 		return (NULL);
 	}
-	/* Для каждой строки карты выделяем память и заполняем её значениями,
-		преобразованными функцией convert_tile() */
+	return (minimap);
+}
+
+int	allocate_minimap_rows(t_mini_map *minimap, t_config *config)
+{
+	int	i;
+
 	i = 0;
 	while (i < config->map.height)
 	{
@@ -107,9 +73,34 @@ t_mini_map	*init_minimap(t_config *config)
 			free(minimap->map);
 			malloc_counter(-1, MALLOC, "map rows free\n");
 			free(minimap);
-			malloc_counter(-1, MALLOC, "map free\n");
-			return (NULL);
+			malloc_counter(-1, MALLOC, "minimap free\n");
+			return (1);
 		}
+		i++;
+	}
+	return (0);
+}
+
+t_mini_map	*allocate_minimap_memory(t_config *config)
+{
+	t_mini_map	*minimap;
+
+	minimap = allocate_minimap_struct(config);
+	if (!minimap)
+		return (NULL);
+	if (allocate_minimap_rows(minimap, config) != 0)
+		return (NULL);
+	return (minimap);
+}
+
+void	fill_minimap_tiles(t_mini_map *minimap, t_config *config)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < config->map.height)
+	{
 		j = 0;
 		while (j < config->map.width)
 		{
@@ -118,15 +109,21 @@ t_mini_map	*init_minimap(t_config *config)
 		}
 		i++;
 	}
-	// print_minimap_map(minimap, config);
-	/* Настройка размеров мини-карты. Эти значения могут зависеть от логики приложения.
-		Здесь, например,
-			фиксируется размер в тайлах и вычисляется размер в пикселях. */
+}
+
+t_mini_map	*init_minimap(t_config *config)
+{
+	t_mini_map	*minimap;
+
+	minimap = allocate_minimap_memory(config);
+	if (!minimap)
+		return (NULL);
+	fill_minimap_tiles(minimap, config);
 	minimap->size_int = (t_IntPair){config->map.width, config->map.height};
-		// Например, 8x8 тайлов (поменяйте при необходимости)
-	minimap->size = (t_IntPair){minimap->size_int.x * TILE_SIZE, minimap->size_int.y * TILE_SIZE};
-	minimap->visible_size = calculateVisibleSize(VISIBLE_TILES, TILE_SIZE,
-			config->map.width, config->map.height) ;
-	minimap->ppu = PPU /5 ;
+	minimap->size = (t_IntPair){minimap->size_int.x * TILE_SIZE,
+		minimap->size_int.y * TILE_SIZE};
+	minimap->visible_size = calc_vis_size(VISIBLE_TILES, TILE_SIZE,
+			config->map.width, config->map.height);
+	minimap->ppu = PPU / 5;
 	return (minimap);
 }

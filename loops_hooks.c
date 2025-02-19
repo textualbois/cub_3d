@@ -6,7 +6,7 @@
 /*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:56 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/19 17:22:53 by vmamoten         ###   ########.fr       */
+/*   Updated: 2025/02/19 18:03:00 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ void	ft_exit_button(void *param)
 		free(world);
 		malloc_counter(-1, MALLOC, "world free\n");
 		world = NULL;
-		// free_config(config);   this MUST be free.. here or   when t_World_Controller	  *world - initialization passed sucsessfully
-		// free(config);		  this MUST be free..
 		malloc_counter(0, RESULT, "malloc counter results\n");
 		exit(EXIT_SUCCESS);
 	}
@@ -48,12 +46,9 @@ void	init_loops_n_hooks(t_World_Controller *world)
 	mlx_loop_hook(world->window, ft_exit_button, world);
 	mlx_loop_hook(world->window, ft_movement_input, world);
 	mlx_loop_hook(world->window, redraw, world);
-	//mlx_resize_hook(world->window, resize_all, world);
 	mlx_cursor_hook(world->window, ft_cursor_input, world);
 	mlx_loop(world->window);
 	malloc_counter(0, RESULT, "malloc counter results\n");
 	mlx_terminate(world->window);
-
 	malloc_counter(0, RESULT, "malloc counter results\n");
-	// draw_world(world);
 }
