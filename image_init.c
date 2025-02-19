@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   image_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:23 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/12 19:56:08 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/19 17:23:16 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,9 @@ int	init_images(t_World_Controller *world) //, int map[8][8])
 	world->map_img = init_image_minimap(world->window, world->mini_map);
 	if (!world->map_img)
 		return (1);
-	world->miniCharacter = init_image_mini_character(world->window,
+	world->mini_character = init_image_mini_character(world->window,
 			world->player, mini_player_img_size);
-	if (!world->miniCharacter)
+	if (!world->mini_character)
 	{
 		mlx_delete_image(world->window, world->map_img);
 		return (1);
@@ -73,7 +73,7 @@ int	init_images(t_World_Controller *world) //, int map[8][8])
 	if (!world->world3d)
 	{
 		mlx_delete_image(world->window, world->map_img);
-		mlx_delete_image(world->window, world->miniCharacter);
+		mlx_delete_image(world->window, world->mini_character);
 		return (1);
 	}
 	return (0);

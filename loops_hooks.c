@@ -6,7 +6,7 @@
 /*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:56 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/18 17:53:43 by vmamoten         ###   ########.fr       */
+/*   Updated: 2025/02/19 17:22:53 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ void	ft_exit_button(void *param)
 			mlx_delete_image(world->window, world->map_img);
 			world->map_img = NULL;
 		}
-		if (world->miniCharacter)
+		if (world->mini_character)
 		{
-			mlx_delete_image(world->window, world->miniCharacter);
-			world->miniCharacter = NULL;
+			mlx_delete_image(world->window, world->mini_character);
+			world->mini_character = NULL;
 		}
 		free(world->player);
 		malloc_counter(-1, MALLOC, "world->player free\n");

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   types_common.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 19:49:07 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/16 00:29:10 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/19 17:20:32 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ typedef struct s_World_Controller
 	t_mini_map *mini_map;
 
 	mlx_image_t		*map_img;
-	mlx_image_t		*miniCharacter;
+	mlx_image_t		*mini_character;
 	mlx_image_t		*world3d;
 	mlx_texture_t	*texture_no;
 	mlx_texture_t	*texture_so;
