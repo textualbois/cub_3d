@@ -6,7 +6,7 @@
 /*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:49:48 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/20 16:15:47 by vmamoten         ###   ########.fr       */
+/*   Updated: 2025/02/20 17:27:23 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,11 @@ void	redraw(void *param)
 	t_World_Controller	*world;
 
 	world = (t_World_Controller *)param;
-	write(1, "redraw\n", 7);
 	centre_mini_map(world->mini_map, world->player);
 	color_mini_map(world->map_img, world->mini_map);
 	centre_character_img(world, world->mini_map, world->player->pos);
 	raycasting(world);
 	ft_color_mini_character(world->mini_character, 0x000000FF);
-	write(1, "redraw_end\n", 11);
 }
 
 void	raycasting(t_World_Controller *world)
