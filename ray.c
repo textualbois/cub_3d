@@ -6,7 +6,7 @@
 /*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 06:35:51 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/20 13:54:41 by vmamoten         ###   ########.fr       */
+/*   Updated: 2025/02/20 14:59:39 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,10 +77,10 @@ void	ray_find_wall(t_mini_map *mini_map, t_character *player,
 	t_DoublePair	horizontal_hit;
 	t_IntPair		direction;
 
-	direction = directions(data->rayDir);
-	vertical_hit = ray_find_vertical_hit(mini_map, player, data->rayDir,
+	direction = directions(data->ray_dir);
+	vertical_hit = ray_find_vertical_hit(mini_map, player, data->ray_dir,
 			direction);
-	horizontal_hit = ray_find_horizontal_hit(mini_map, player, data->rayDir,
+	horizontal_hit = ray_find_horizontal_hit(mini_map, player, data->ray_dir,
 			direction);
 	if (vertical_hit.x == -1)
 		ray_result(data, horizontal_hit, direction.y, HORIZONTAL);

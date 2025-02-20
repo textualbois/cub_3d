@@ -6,11 +6,23 @@
 /*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:53 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/19 17:57:05 by vmamoten         ###   ########.fr       */
+/*   Updated: 2025/02/20 16:24:12 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "world.h"
+
+void	copy_colors(int dest[3], int src[3])
+{
+	int	i;
+
+	i = 0;
+	while (i < 3)
+	{
+		dest[i] = src[i];
+		i++;
+	}
+}
 
 t_World_Controller	*allocate_world(t_config *config)
 {
@@ -84,5 +96,7 @@ t_World_Controller	*init_world(t_config *config)
 		return (NULL);
 	if (init_world_resources(world, config) != 0)
 		return (NULL);
+	copy_colors(world->ceiling_color, config->ceiling_color);
+	copy_colors(world->floor_color, config->floor_color);
 	return (world);
 }

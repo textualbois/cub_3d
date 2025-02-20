@@ -6,7 +6,7 @@
 /*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:49:48 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/19 17:21:31 by vmamoten         ###   ########.fr       */
+/*   Updated: 2025/02/20 16:15:47 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,19 +64,19 @@ void	raycasting(t_World_Controller *world)
 	double			radians_increment;
 
 	radians_increment = -(FOV * PI / 180) / world->world3d->width;
-	data.rayDir = normalise_radians(world->player->angle.x - radians_increment
+	data.ray_dir = normalise_radians(world->player->angle.x - radians_increment
 			* (world->world3d->width / 2));
 	x = 0;
-	data.playerDir = world->player->angle;
-	data.playerPos = world->player->pos;
+	data.player_dir = world->player->angle;
+	data.player_pos = world->player->pos;
 	while (x < (int)world->world3d->width)
 	{
 		data.x = x;
 		ray_find_wall(world->mini_map, world->player, &data);
 		select_texture(&data, world);
 		drawray(world->player, world->map_img, world->mini_map, data.hit);
-		draw3d(world->world3d, &data, x);
-		data.rayDir = normalise_radians(data.rayDir + radians_increment);
+		draw3d(world->world3d, &data, x, world);
+		data.ray_dir = normalise_radians(data.ray_dir + radians_increment);
 		x++;
 	}
 }

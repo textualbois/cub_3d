@@ -6,8 +6,8 @@ NO  ./textures/north_test.png
 
 WE ./textures/orange_bricks_high_reZ.png
 
-C      111, 12, 231
-F 1,111,100,
+C      211, 112, 31
+F       111,111,100,
 
            
   111111111111

@@ -6,7 +6,7 @@
 /*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:12:01 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/19 18:16:44 by vmamoten         ###   ########.fr       */
+/*   Updated: 2025/02/20 14:56:20 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,17 @@ int	convert_tile(char c)
 }
 
 t_IntPair	calc_vis_size(int vis_tiles, int tile_size, int map_width,
-		int mapHeight)
+		int map_height)
 {
 	int	size;
 
 	size = vis_tiles * tile_size;
-	if (size > map_width * tile_size || size > mapHeight * tile_size)
+	if (size > map_width * tile_size || size > map_height * tile_size)
 	{
-		if (map_width < mapHeight)
+		if (map_width < map_height)
 			size = map_width * tile_size;
 		else
-			size = mapHeight * tile_size;
+			size = map_height * tile_size;
 	}
 	return ((t_IntPair){size, size});
 }

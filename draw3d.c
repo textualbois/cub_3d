@@ -6,12 +6,17 @@
 /*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 23:32:15 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/19 17:29:55 by vmamoten         ###   ########.fr       */
+/*   Updated: 2025/02/20 16:33:31 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "draw.h"
 #include <stdio.h>
+
+uint32_t	rgb_to_uint32(int color[3])
+{
+	return (0xFF << 24 | (color[0] & 0xFF) << 16 | (color[1] & 0xFF) << 8 | (color[2] & 0xFF));
+}
 
 static uint32_t	get_pixel_color(mlx_texture_t *texture, uint32_t tex_x,
 		uint32_t tex_y)
@@ -53,7 +58,7 @@ static void	draw_texture_line(mlx_image_t *img, int row_ind, t_renderData *data,
 	}
 }
 
-static void	draw_vertical_line(mlx_image_t *img, t_renderData *data, int x)
+static void	draw_vertical_line(mlx_image_t *img, t_renderData *data, int x, t_World_Controller *world)
 {
 	int	pix_y;
 
@@ -62,7 +67,7 @@ static void	draw_vertical_line(mlx_image_t *img, t_renderData *data, int x)
 		data->txtr_start = img->height;
 	while (pix_y < data->txtr_start)
 	{
-		mlx_put_pixel(img, x, pix_y, 0xFF7220FF);
+		mlx_put_pixel(img, x, pix_y, rgb_to_uint32(world->ceiling_color));
 		pix_y++;
 	}
 	if (data->txtr_start < (int)img->height)
@@ -70,12 +75,12 @@ static void	draw_vertical_line(mlx_image_t *img, t_renderData *data, int x)
 	pix_y = data->txtr_end;
 	while (pix_y < (int)img->height)
 	{
-		mlx_put_pixel(img, x, pix_y, 0xFF0220FF);
+		mlx_put_pixel(img, x, pix_y, rgb_to_uint32(world->floor_color));
 		pix_y++;
 	}
 }
 
-void	draw3d(mlx_image_t *world3d, t_renderData *data, int x)
+void	draw3d(mlx_image_t *world3d, t_renderData *data, int x, t_World_Controller *world)
 {
 	double	dist_adjusted;
 	double	line_h;
@@ -83,15 +88,15 @@ void	draw3d(mlx_image_t *world3d, t_renderData *data, int x)
 
 	if (!world3d || !data)
 		return ;
-	dist_adjusted = distance(data->hit, data->playerPos)
-		* cos(normalise_radians(data->rayDir - data->playerDir.x));
+	dist_adjusted = distance(data->hit, data->player_pos)
+		* cos(normalise_radians(data->ray_dir - data->player_dir.x));
 	if (dist_adjusted < 0.001)
 		dist_adjusted = 0.001;
 	line_h = TILE_SIZE * world3d->height / dist_adjusted;
 	if (line_h > 10000)
 		line_h = 10000;
-	vertical_offset = (world3d->height / 2) * sin(data->playerDir.y);
+	vertical_offset = (world3d->height / 2) * sin(data->player_dir.y);
 	data->txtr_start = (world3d->height - line_h) / 2 + vertical_offset;
 	data->txtr_end = (world3d->height + line_h) / 2 + vertical_offset;
-	draw_vertical_line(world3d, data, x);
+	draw_vertical_line(world3d, data, x, world);
 }

@@ -6,7 +6,7 @@
 /*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 19:49:07 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/20 14:05:28 by vmamoten         ###   ########.fr       */
+/*   Updated: 2025/02/20 16:09:20 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,14 @@ typedef struct s_World_Controller
 	mlx_image_t		*map_img;
 	mlx_image_t		*mini_character;
 	mlx_image_t		*world3d;
+
 	mlx_texture_t	*texture_no;
 	mlx_texture_t	*texture_so;
 	mlx_texture_t	*texture_we;
 	mlx_texture_t	*texture_ea;
+
+	int				floor_color[3];
+	int				ceiling_color[3];
 
 }					t_World_Controller;
 
