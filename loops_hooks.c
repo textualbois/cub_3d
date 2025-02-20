@@ -6,7 +6,7 @@
 /*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:56 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/19 18:03:00 by vmamoten         ###   ########.fr       */
+/*   Updated: 2025/02/20 13:50:23 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	ft_exit_button(void *param)
 void	init_loops_n_hooks(t_World_Controller *world)
 {
 	mlx_loop_hook(world->window, ft_exit_button, world);
-	mlx_loop_hook(world->window, ft_movement_input, world);
+	mlx_loop_hook(world->window, ft_handle_input, world);
 	mlx_loop_hook(world->window, redraw, world);
 	mlx_cursor_hook(world->window, ft_cursor_input, world);
 	mlx_loop(world->window);

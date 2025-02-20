@@ -6,7 +6,7 @@
 /*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:12:07 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/19 18:26:42 by vmamoten         ###   ########.fr       */
+/*   Updated: 2025/02/20 13:50:41 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include "world.h"
 # include <math.h>
 
-void	ft_movement_input(void *param);
+void	ft_handle_input(void *param);
 
 void	set_h_rotation(t_World_Controller *world, double angle_delta);
 void	set_v_rotation(t_World_Controller *world, double angle_delta);

@@ -6,7 +6,7 @@
 /*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:12:04 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/19 18:26:30 by vmamoten         ###   ########.fr       */
+/*   Updated: 2025/02/20 13:51:33 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,26 +15,27 @@
 
 #include "movement.h"
 
-static int	hitbox_collision(t_World_Controller *world, double center_x,
-		double center_y)
+static void	set_corners(double corners[4][2], double center_x, double center_y)
 {
-	double	half_w;
-	double	half_h;
-	double	corners[4][2];
-	int		tile_x;
-	int		tile_y;
-	int		i;
+	double	offset;
 
-	half_w = 0;
-	half_h = 0;
-	corners[0][0] = center_x - half_w - 2;
-	corners[0][1] = center_y - half_h - 2;
-	corners[1][0] = center_x + half_w;
-	corners[1][1] = center_y - half_h;
-	corners[2][0] = center_x - half_w - 2;
-	corners[2][1] = center_y + half_h;
-	corners[3][0] = center_x + half_w;
-	corners[3][1] = center_y + half_h;
+	offset = 2;
+	corners[0][0] = center_x - offset;
+	corners[0][1] = center_y - offset;
+	corners[1][0] = center_x;
+	corners[1][1] = center_y;
+	corners[2][0] = center_x - offset;
+	corners[2][1] = center_y;
+	corners[3][0] = center_x;
+	corners[3][1] = center_y;
+}
+
+static int	check_collision(t_World_Controller *world, double corners[4][2])
+{
+	int	i;
+	int	tile_x;
+	int	tile_y;
+
 	i = 0;
 	while (i < 4)
 	{
@@ -50,11 +51,17 @@ static int	hitbox_collision(t_World_Controller *world, double center_x,
 	return (0);
 }
 
-void	ft_movement_input(void *param)
+static int	hitbox_collision(t_World_Controller *world, double center_x,
+		double center_y)
 {
-	t_World_Controller	*world;
+	double	corners[4][2];
 
-	world = (t_World_Controller *)param;
+	set_corners(corners, center_x, center_y);
+	return (check_collision(world, corners));
+}
+
+static void	ft_rotation_input(t_World_Controller *world)
+{
 	if (mlx_is_key_down(world->window, MLX_KEY_E)
 		|| mlx_is_key_down(world->window, MLX_KEY_RIGHT))
 		set_h_rotation(world, -0.05);
@@ -65,19 +72,34 @@ void	ft_movement_input(void *param)
 		set_v_rotation(world, 0.05);
 	if (mlx_is_key_down(world->window, MLX_KEY_DOWN))
 		set_v_rotation(world, -0.05);
-	if (mlx_is_key_down(world->window, MLX_KEY_D))
-		set_movement(world, (t_DoublePair){1 * sin(world->player->angle.x), 1
-			* cos(world->player->angle.x)});
-	if (mlx_is_key_down(world->window, MLX_KEY_A))
-		set_movement(world, (t_DoublePair){-1 * sin(world->player->angle.x), -1
-			* cos(world->player->angle.x)});
-	if (mlx_is_key_down(world->window, MLX_KEY_W))
-		set_movement(world, (t_DoublePair){1 * sin(world->player->angle.x + PI
-				/ 2), 1 * cos(world->player->angle.x + PI / 2)});
-	if (mlx_is_key_down(world->window, MLX_KEY_S))
-		set_movement(world, (t_DoublePair){1 * sin(world->player->angle.x - PI
-				/ 2), 1 * cos(world->player->angle.x - PI / 2)});
+}
+
+void	ft_movement_input(void *param)
+{
+	t_World_Controller	*world;
+
 	world = (t_World_Controller *)param;
+	if (mlx_is_key_down(world->window, MLX_KEY_D))
+		set_movement(world, (t_DoublePair){sin(world->player->angle.x),
+			cos(world->player->angle.x)});
+	if (mlx_is_key_down(world->window, MLX_KEY_A))
+		set_movement(world, (t_DoublePair){-sin(world->player->angle.x),
+			-cos(world->player->angle.x)});
+	if (mlx_is_key_down(world->window, MLX_KEY_W))
+		set_movement(world, (t_DoublePair){sin(world->player->angle.x + PI / 2),
+			cos(world->player->angle.x + PI / 2)});
+	if (mlx_is_key_down(world->window, MLX_KEY_S))
+		set_movement(world, (t_DoublePair){sin(world->player->angle.x - PI / 2),
+			cos(world->player->angle.x - PI / 2)});
+}
+
+void	ft_handle_input(void *param)
+{
+	t_World_Controller	*world;
+
+	world = (t_World_Controller *)param;
+	ft_rotation_input(world);
+	ft_movement_input(world);
 }
 
 void	set_h_rotation(t_World_Controller *world, double angle_delta)
