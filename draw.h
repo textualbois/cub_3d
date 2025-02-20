@@ -6,7 +6,7 @@
 /*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:48:32 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/20 16:24:57 by vmamoten         ###   ########.fr       */
+/*   Updated: 2025/02/20 16:38:56 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void				draw_line_between_pixels(mlx_image_t *img, t_IntPair start,
 						t_IntPair end, int color);
 void				highlight_line_between_pixels(mlx_image_t *img,
 						t_IntPair start, t_IntPair end);
-void				draw3d(mlx_image_t *world3d, t_renderData *data, int x, t_World_Controller *world);
+void				draw3d(mlx_image_t *world3d, t_renderData *data, int x,
+						t_World_Controller *world);
 
 #endif

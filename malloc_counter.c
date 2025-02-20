@@ -1,6 +1,6 @@
 #include "malloc_counter.h"
 
-void malloc_counter(int increment, int type, char* info)
+void	malloc_counter(int increment, int type, char *info)
 {
 	static int our_malloc_delta = 0;
 	static int parser_delta = 0;
@@ -39,14 +39,17 @@ void malloc_counter(int increment, int type, char* info)
 			printf("Other: current delta %d\n", increment);
 		else
 			printf("Free other: current delta %d\n", increment);
-	} else if (type == PARSER)
+	}
+	else if (type == PARSER)
 	{
 		parser_delta += increment;
 		if (increment > 0)
 			printf("parser malloc: current delta %d\n", parser_delta);
 		else
 			printf("parser free: current delta %d\n", parser_delta);
-	} else {
+	}
+	else
+	{
 		printf("results at end of program:\n");
 		printf("main Malloc: %d\n", our_malloc_delta);
 		printf("parser and libft: %d\n", parser_delta);

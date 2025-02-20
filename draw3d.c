@@ -6,7 +6,7 @@
 /*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 23:32:15 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/20 16:33:31 by vmamoten         ###   ########.fr       */
+/*   Updated: 2025/02/20 16:39:00 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ static void	draw_texture_line(mlx_image_t *img, int row_ind, t_renderData *data,
 	}
 }
 
-static void	draw_vertical_line(mlx_image_t *img, t_renderData *data, int x, t_World_Controller *world)
+static void	draw_vertical_line(mlx_image_t *img, t_renderData *data, int x,
+		t_World_Controller *world)
 {
 	int	pix_y;
 
@@ -80,7 +81,8 @@ static void	draw_vertical_line(mlx_image_t *img, t_renderData *data, int x, t_Wo
 	}
 }
 
-void	draw3d(mlx_image_t *world3d, t_renderData *data, int x, t_World_Controller *world)
+void	draw3d(mlx_image_t *world3d, t_renderData *data, int x,
+		t_World_Controller *world)
 {
 	double	dist_adjusted;
 	double	line_h;
