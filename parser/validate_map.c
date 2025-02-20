@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validate_map.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 19:25:36 by admin             #+#    #+#             */
-/*   Updated: 2025/02/08 00:07:55 by admin            ###   ########.fr       */
+/*   Updated: 2025/02/20 14:03:48 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,9 @@ int	has_invalid_spaces(t_map *map)
 
 int	count_players(t_map *map, t_config *config)
 {
-	int	i;
+	int		i;
 	size_t	j;
-	int	count;
+	int		count;
 
 	count = 0;
 	i = 0;

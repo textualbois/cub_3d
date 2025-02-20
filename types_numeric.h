@@ -3,55 +3,58 @@
 /*                                                        :::      ::::::::   */
 /*   types_numeric.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:12:10 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/15 19:06:31 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/20 13:58:47 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TYPES_NUMERIC_H
 # define TYPES_NUMERIC_H
 
-#include <math.h>
-#include <stdlib.h>
+# include <math.h>
+# include <stdlib.h>
 
-// default window size
-#define WIDTH 800
-#define HEIGHT 800
-#define VISIBLE_TILES 8 // later maybe make it 16
-#define PPU 10 // pixels per unit
-#define PI 3.1415926
-#define FOV 60
-#define LOD 20
-#define TILE_SIZE 10
-#define VERTICAL 1
-#define HORIZONTAL 0
-#define NOHIT -1
-#define BPP sizeof(int32_t)
-#define NORTH 0
-#define EAST 1
-#define SOUTH 2
-#define WEST 3
+# define WIDTH 800
+# define HEIGHT 800
+# define VISIBLE_TILES 8
+# define PPU 10
+# define PI 3.1415926
+# define FOV 60
+# define LOD 20
+# define TILE_SIZE 10
+# define VERTICAL 1
+# define HORIZONTAL 0
+# define NOHIT -1
+# define BPP sizeof(int32_t)
+# define NORTH 0
+# define EAST 1
+# define SOUTH 2
+# define WEST 3
 
-typedef struct s_IntPair{
-	int32_t x;
-	int32_t y;
-}	t_IntPair;
+typedef struct s_IntPair
+{
+	int32_t	x;
+	int32_t	y;
+}			t_IntPair;
 
-typedef struct s_IntPtrPair{
-	int32_t *x;
-	int32_t *y;
-}	t_IntPtrPair;
+typedef struct s_IntPtrPair
+{
+	int32_t	*x;
+	int32_t	*y;
+}			t_IntPtrPair;
 
-typedef struct s_DoublePair{
-	double x;
-	double y;
-}	t_DoublePair;
+typedef struct s_DoublePair
+{
+	double	x;
+	double	y;
+}			t_DoublePair;
 
-typedef struct s_DoublePtrPair{
-	double *x;
-	double *y;
-}	t_DoublePtrPair;
+typedef struct s_DoublePtrPair
+{
+	double	*x;
+	double	*y;
+}			t_DoublePtrPair;
 
 #endif
