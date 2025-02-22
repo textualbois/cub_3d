@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:53 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/22 22:50:14 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/22 23:01:51 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,10 @@ t_World_Controller	*init_world(t_config *config)
 		return (NULL);
 	if (init_world_resources(world, config) != 0)
 		return (NULL);
-	copy_colors(world->ceiling_color, config->ceiling_color);
-	copy_colors(world->floor_color, config->floor_color);
+	copy_colors(world->ceiling_color, (config)->ceiling_color);
+	copy_colors(world->floor_color, (config)->floor_color);
 	free_config(config);
+	malloc_counter(__FILE__, __func__, __LINE__,-1, MALLOC, "config main free\n", config);
+	free(config);
 	return (world);
 }
