@@ -1,3 +1,11 @@
+
+# MLX2
+MLX42
+
+#cub3d project files
+cub3d
+*.log
+
 Dockerfile
 
 # macOS system files
