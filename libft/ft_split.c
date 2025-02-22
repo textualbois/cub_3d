@@ -3,102 +3,104 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
+/*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/12 11:02:50 by vmamoten          #+#    #+#             */
-/*   Updated: 2025/02/20 17:07:48 by vmamoten         ###   ########.fr       */
+/*   Created: 2023/10/15 21:24:47 by isemin            #+#    #+#             */
+/*   Updated: 2023/10/15 21:45:25 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdio.h>
 
-static size_t	ft_count_word(const char *str, char c)
+static size_t	ft_get_split_count(const char *s, char deli)
 {
-	size_t	i;
+	size_t	split_count;
+	size_t	iter;
+	size_t	s_len;
+
+	s_len = ft_strlen(s);
+	split_count = 0;
+	iter = 0;
+	while (iter <= s_len)
+	{
+		while (iter <= s_len && s[iter] != deli)
+		{
+			iter++;
+			if (iter <= s_len && (s[iter] == deli || iter == s_len))
+				split_count++;
+		}
+		while (iter <= s_len && s[iter] == deli)
+			iter++;
+	}
+	return (split_count);
+}
+
+static size_t	get_limit(const char *s, size_t offset, char deli)
+{
+	char	*limit;
+
+	limit = ft_strchr((s + offset), deli);
+	if (limit == NULL)
+		return (ft_strlen(s));
+	return ((size_t)(limit - s));
+}
+
+static char	*attempt_storage(const char *s, size_t offset, size_t limit)
+{
+	char	*res;
+
+	res = malloc(limit - offset + 1);
+	malloc_counter(1, PARSER, "part of ft_split\n");
+	if (res == NULL)
+		return (NULL);
+	ft_strlcpy(res, s + offset, (limit - offset + 1));
+	return (res);
+}
+
+static void	*clear_all(char **res_arr, size_t arr_len)
+{
 	size_t	count;
 
-	i = 0;
 	count = 0;
-	while (str[i] != '\0')
+	while (count < arr_len)
 	{
-		if (str[i] != c && (i == 0 || str[i - 1] == c))
-			count++;
-		i++;
+		free(res_arr[count]);
+		malloc_counter(-1, PARSER, "ft_split iter free\n");
+		res_arr[count] = NULL;
+		count++;
 	}
-	return (count);
+	free(res_arr);
+	malloc_counter(-1, PARSER, "ft_split free\n");
+	res_arr = NULL;
+	return (NULL);
 }
 
-static size_t	ft_get_word(const char *s, char c, size_t indx)
+char	**ft_split(const char *s, char c)
 {
-	size_t	i;
+	unsigned int	split_count;
+	char			**res_arr;
+	size_t			offset;
+	size_t			s_len;
+	size_t			limit;
 
-	i = 0;
-	if (c == '\0')
+	res_arr = malloc(sizeof(char **) * (ft_get_split_count(s, c) + 1));
+	malloc_counter(1, PARSER, "generic ft_split\n");
+	if (res_arr == NULL)
+		return (NULL);
+	offset = 0;
+	s_len = ft_strlen(s);
+	split_count = 0;
+	while (offset < s_len)
 	{
-		while (s[indx + i] != '\0')
-			i++;
-	}
-	else
-	{
-		while (s[indx + i] != c && s[indx + i] != '\0')
-			i++;
-	}
-	return (i);
-}
-
-static void	ft_fill_str(const char *s, char **str, char c)
-{
-	size_t	i;
-	size_t	k;
-	size_t	leng_w;
-
-	i = 0;
-	k = 0;
-	while (s[i])
-	{
-		if (s[i] != c && (i == 0 || s[i - 1] == c))
+		limit = get_limit(s, offset, c);
+		if (offset != limit)
 		{
-			leng_w = ft_get_word(s, c, i);
-			str[k] = ft_substr(s, i, leng_w);
-			if (!str[k])
-			{
-				while (k > 0)
-					free(str[--k]);
-				str[0] = NULL;
-				return ;
-			}
-			k++;
+			res_arr[split_count] = attempt_storage(s, offset, limit);
+			if (res_arr[split_count++] == NULL)
+				return (clear_all(res_arr, split_count));
 		}
-		i++;
+		offset = limit + 1;
 	}
-}
-
-char	**ft_split(char const *s, char c)
-{
-	size_t	num;
-	char	**str;
-
-	if (!s)
-		return (NULL);
-	num = ft_count_word(s, c);
-	if (num == 0)
-	{
-		str = (char **)malloc((num + 1) * sizeof(char *));
-		if (!str)
-			return (NULL);
-		str[num] = NULL;
-		return (str);
-	}
-	str = (char **)malloc((num + 1) * sizeof(char *));
-	if (!str)
-		return (NULL);
-	ft_fill_str(s, str, c);
-	if (str[0] == NULL)
-	{
-		free(str);
-		return (0);
-	}
-	str[num] = NULL;
-	return (str);
+	res_arr[split_count] = NULL;
+	return (res_arr);
 }

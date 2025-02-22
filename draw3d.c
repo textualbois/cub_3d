@@ -6,7 +6,7 @@
 /*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 23:32:15 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/20 17:05:34 by vmamoten         ###   ########.fr       */
+/*   Updated: 2025/02/20 16:39:00 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,7 @@
 
 uint32_t	rgb_to_uint32(int color[3])
 {
-	uint32_t	alpha;
-	uint32_t	red;
-	uint32_t	green;
-	uint32_t	blue;
-
-	alpha = 0xFF << 24;
-	red = (color[0] & 0xFF) << 16;
-	green = (color[1] & 0xFF) << 8;
-	blue = (color[2] & 0xFF);
-	return (alpha | red | green | blue);
+	return (0xFF << 24 | (color[0] & 0xFF) << 16 | (color[1] & 0xFF) << 8 | (color[2] & 0xFF));
 }
 
 static uint32_t	get_pixel_color(mlx_texture_t *texture, uint32_t tex_x,
