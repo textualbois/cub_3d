@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:20 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/22 22:53:40 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/22 23:47:35 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	main(int argc, char **argv)
 	mlx_set_setting(MLX_STRETCH_IMAGE, true);
 	draw_world(world);
 	init_loops_n_hooks(world);
-	malloc_counter(__FILE__, __func__, __LINE__,-1, MALLOC, "config main free\n", config);
-	free(config);
+	free_world_full(world, 0);
+	malloc_counter(__FILE__, __func__, __LINE__,0, RESULT, "results\n", NULL);
 	return (EXIT_SUCCESS);
 }

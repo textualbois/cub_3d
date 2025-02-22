@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 23:16:27 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/22 23:43:17 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/22 23:46:35 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,14 @@ static void free_world_mini_map(t_World_Controller *world)
 	world->mini_map = NULL;
 }
 
-void free_world_full(t_World_Controller *world)
+void free_world_full(t_World_Controller *world, int terminate_mlx)
 {
 	free_wolrd_images(world);
 	free_world_player(world);
 	free_world_mini_map(world);
 	mlx_close_window(world->window);
-	mlx_terminate(world->window);
+	if (terminate_mlx)
+		mlx_terminate(world->window);
 	malloc_counter(__FILE__, __func__, __LINE__,-1, MALLOC, "world free\n", world);
 	free(world);
 	world = NULL;
