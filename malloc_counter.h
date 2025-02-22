@@ -10,6 +10,7 @@
 # define RESULT 4
 # define PARSER 5
 
-void	malloc_counter(int increment, int type, char *info);
+void	malloc_counter( char* file, char* function, int line, int increment, int type, char* info);
+
 
 #endif
