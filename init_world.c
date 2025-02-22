@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:53 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/22 22:45:32 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/22 22:50:14 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,5 +98,6 @@ t_World_Controller	*init_world(t_config *config)
 		return (NULL);
 	copy_colors(world->ceiling_color, config->ceiling_color);
 	copy_colors(world->floor_color, config->floor_color);
+	free_config(config);
 	return (world);
 }
