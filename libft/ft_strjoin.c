@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 18:26:25 by isemin            #+#    #+#             */
-/*   Updated: 2023/10/15 21:45:10 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/22 21:37:00 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	size_t	s1len;
 
 	res_str = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
-	malloc_counter(1, PARSER, "ft_strjoin malloc\n");
+	malloc_counter(__FILE__, __func__, __LINE__,1, PARSER, "ft_strjoin malloc\n", res_str);
 	if (res_str == NULL)
 		return (NULL);
 	i = 0;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loops_hooks.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
+/*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:56 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/20 13:50:23 by vmamoten         ###   ########.fr       */
+/*   Updated: 2025/02/22 21:32:51 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,14 @@ void	ft_exit_button(void *param)
 			mlx_delete_image(world->window, world->mini_character);
 			world->mini_character = NULL;
 		}
+		malloc_counter(__FILE__, __func__, __LINE__,-1, MALLOC, "world->player free\n", world->player);
 		free(world->player);
-		malloc_counter(-1, MALLOC, "world->player free\n");
 		world->player = NULL;
 		mlx_close_window(world->window);
+		malloc_counter(__FILE__, __func__, __LINE__,-1, MALLOC, "world free\n", world);
 		free(world);
-		malloc_counter(-1, MALLOC, "world free\n");
 		world = NULL;
-		malloc_counter(0, RESULT, "malloc counter results\n");
+		malloc_counter(__FILE__, __func__, __LINE__,0, RESULT, "malloc counter results\n", NULL);
 		exit(EXIT_SUCCESS);
 	}
 }
@@ -48,7 +48,7 @@ void	init_loops_n_hooks(t_World_Controller *world)
 	mlx_loop_hook(world->window, redraw, world);
 	mlx_cursor_hook(world->window, ft_cursor_input, world);
 	mlx_loop(world->window);
-	malloc_counter(0, RESULT, "malloc counter results\n");
+	malloc_counter(__FILE__, __func__, __LINE__,0, RESULT, "malloc counter results\n", NULL);
 	mlx_terminate(world->window);
-	malloc_counter(0, RESULT, "malloc counter results\n");
+	malloc_counter(__FILE__, __func__, __LINE__,0, RESULT, "malloc counter results\n", NULL);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
+/*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 19:18:22 by admin             #+#    #+#             */
-/*   Updated: 2025/02/07 20:03:47 by admin            ###   ########.fr       */
+/*   Updated: 2025/02/22 21:40:00 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	allocate_map_grid(t_config *config, char **lines)
 
 	calculate_map_dimensions(&config->map, lines);
 	config->map.grid = malloc(sizeof(char *) * (config->map.height + 1));
-	malloc_counter(1, PARSER, "parsing map_grid malloc\n");
+	malloc_counter(__FILE__, __func__, __LINE__,1, PARSER, "parsing map_grid malloc\n", config->map.grid);
 	if (!config->map.grid)
 		return (0);
 	j = 0;

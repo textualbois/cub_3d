@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_world.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
+/*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:53 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/20 16:24:12 by vmamoten         ###   ########.fr       */
+/*   Updated: 2025/02/22 22:45:32 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_World_Controller	*allocate_world(t_config *config)
 	t_World_Controller	*world;
 
 	world = (t_World_Controller *)malloc(sizeof(t_World_Controller));
-	malloc_counter(1, MALLOC, "world init malloc\n");
+	malloc_counter(__FILE__, __func__, __LINE__,1, MALLOC, "world init malloc\n", world);
 	if (!world)
 		return (NULL);
 	world->size = (t_IntPair){config->map.height * TILE_SIZE, config->map.width
@@ -42,16 +42,16 @@ int	init_world_components(t_World_Controller *world, t_config *config)
 	world->window = initialize_window();
 	if (!world->window)
 	{
+		malloc_counter(__FILE__, __func__, __LINE__,-1, MALLOC, "world free\n", world);
 		free(world);
-		malloc_counter(-1, MALLOC, "world free\n");
 		return (1);
 	}
 	world->player = init_mini_character((t_IntPair){config->player.pos.x,
 			config->player.pos.y}, config->player);
 	if (!world->player)
 	{
+		malloc_counter(__FILE__, __func__, __LINE__,-1, MALLOC, "world free\n", world);
 		free(world);
-		malloc_counter(-1, MALLOC, "world free\n");
 		return (1);
 	}
 	world->mini_map = init_minimap(config);
@@ -63,23 +63,23 @@ int	init_world_resources(t_World_Controller *world, t_config *config)
 	if (init_images(world) != 0)
 	{
 		printf("init images failed\n");
+		malloc_counter(__FILE__, __func__, __LINE__,-1, MALLOC, "world->player free\n", world->player);
 		free(world->player);
-		malloc_counter(-1, MALLOC, "world->player free\n");
+		malloc_counter(__FILE__, __func__, __LINE__,-1, MALLOC, "world->minimap free\n", world->mini_map);
 		free(world->mini_map);
-		malloc_counter(-1, MALLOC, "world->minimap free\n");
+		malloc_counter(__FILE__, __func__, __LINE__,-1, MALLOC, "world free\n", world);
 		free(world);
-		malloc_counter(-1, MALLOC, "world free\n");
 		return (1);
 	}
-	if (init_textures(world, config) != 0)
+	if (init_textures(world, config) != 0) // add delete_images(world)
 	{
 		printf("init textures failed\n");
+		malloc_counter(__FILE__, __func__, __LINE__,-1, MALLOC, "world->player free\n", world->player);
 		free(world->player);
-		malloc_counter(-1, MALLOC, "world->player free\n");
+		malloc_counter(__FILE__, __func__, __LINE__,-1, MALLOC, "world->minimap free\n", world->mini_map);
 		free(world->mini_map);
-		malloc_counter(-1, MALLOC, "world->minimap free\n");
+		malloc_counter(__FILE__, __func__, __LINE__,-1, MALLOC, "world free\n", world);
 		free(world);
-		malloc_counter(-1, MALLOC, "world free\n");
 		return (1);
 	}
 	return (0);

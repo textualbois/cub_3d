@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
+/*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 20:00:16 by admin             #+#    #+#             */
-/*   Updated: 2025/02/08 00:06:53 by admin            ###   ########.fr       */
+/*   Updated: 2025/02/22 21:43:01 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,14 @@ void	free_split_lines(char ***lines)
 		return ;
 	while ((*lines)[i])
 	{
+		malloc_counter(__FILE__, __func__, __LINE__,-1, PARSER, "parsing split line free\n", (*lines)[i]);
 		free((*lines)[i]);
-		malloc_counter(-1, PARSER, "parsing split line free\n");
 		(*lines)[i] = NULL;
 		i++;
 	}
+
+	malloc_counter(__FILE__, __func__, __LINE__,-1, PARSER, "parsing split lines head free\n", *lines);
 	free(*lines);
-	malloc_counter(-1, PARSER, "parsing split lines head free\n");
 	*lines = NULL;
 }
 
@@ -83,8 +84,8 @@ char	**fill_lines_array(char **lines, char *file_content)
 		if (!lines[i])
 		{
 			free_split_lines(&lines);
+			malloc_counter(__FILE__, __func__, __LINE__,-1, PARSER, "parsing fill_lines_array free\n", file_content);
 			free(file_content);
-			malloc_counter(-1, PARSER, "parsing fill_lines_array free\n");
 			return (NULL);
 		}
 		i++;
@@ -102,7 +103,7 @@ char	**split_lines_manual(char *file_content)
 		return (NULL);
 	count = count_lines(file_content);
 	lines = malloc(sizeof(char *) * (count + 1));
-	malloc_counter(1, PARSER, "split_lines_manual malloc\n");
+	malloc_counter(__FILE__, __func__, __LINE__,1, PARSER, "split_lines_manual malloc\n", lines);
 	if (!lines)
 		return (NULL);
 	lines = fill_lines_array(lines, file_content);

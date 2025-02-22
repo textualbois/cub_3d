@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
+/*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:20 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/20 16:38:18 by vmamoten         ###   ########.fr       */
+/*   Updated: 2025/02/22 22:45:23 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	main(int argc, char **argv)
 	if (argc != 2 || !has_cub_extension(argv[1]))
 		return (printf("Usage: %s <file.cub>\n", argv[0]), 1);
 	config = (t_config *)malloc(sizeof(t_config));
-	malloc_counter(1, MALLOC, "main config malloc\n");
+	malloc_counter(__FILE__, __func__, __LINE__,1, MALLOC, "main config malloc\n", config);
 	if (!config)
 		return (1);
 	ft_bzero(config, sizeof(t_config));
@@ -55,16 +55,16 @@ int	main(int argc, char **argv)
 	if (!parse_cub_file(argv[1], config))
 	{
 		free_config(config);
+		malloc_counter(__FILE__, __func__, __LINE__,-1, MALLOC, "config main free\n", config);
 		free(config);
-		malloc_counter(-1, MALLOC, "config main free\n");
 		return (1);
 	}
 	world = init_world(config);
 	mlx_set_setting(MLX_STRETCH_IMAGE, true);
 	draw_world(world);
 	init_loops_n_hooks(world);
-	free_config(config);
+	// free_config(config);
+	malloc_counter(__FILE__, __func__, __LINE__,-1, MALLOC, "config main free\n", config);
 	free(config);
-	malloc_counter(-1, MALLOC, "config main free\n");
 	return (EXIT_SUCCESS);
 }

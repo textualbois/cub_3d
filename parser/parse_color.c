@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_color.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
+/*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 21:13:31 by admin             #+#    #+#             */
-/*   Updated: 2025/02/07 14:28:47 by admin            ###   ########.fr       */
+/*   Updated: 2025/02/22 21:39:19 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,12 @@ int	parse_floor_color(char *trimmed, t_config *config)
 		return (0);
 	if (!parse_color(value, config->floor_color))
 	{
+		malloc_counter(__FILE__, __func__, __LINE__,-1, PARSER, "parsing floor color value free\n", value);
 		free(value);
-		malloc_counter(-1, PARSER, "parsing floor color value free\n");
 		return (0);
 	}
+	malloc_counter(__FILE__, __func__, __LINE__,-1, PARSER, "parsing floor color value free\n", value);
 	free(value);
-	malloc_counter(-1, PARSER, "parsing floor color value free\n");
 	return (1);
 }
 
@@ -73,12 +73,12 @@ int	parse_ceiling_color(char *trimmed, t_config *config)
 		return (0);
 	if (!parse_color(value, config->ceiling_color))
 	{
+		malloc_counter(__FILE__, __func__, __LINE__,-1, PARSER, "parsing ceiling color value free\n", value);
 		free(value);
-		malloc_counter(-1, PARSER, "parsing ceiling color value free\n");
 		free_config(config);
 		return (0);
 	}
+	malloc_counter(__FILE__, __func__, __LINE__,-1, PARSER, "parsing ceiling color value free\n", value);
 	free(value);
-	malloc_counter(-1, PARSER, "parsing ceiling color value free\n");
 	return (1);
 }

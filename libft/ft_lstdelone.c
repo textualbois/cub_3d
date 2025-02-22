@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 20:48:32 by isemin            #+#    #+#             */
-/*   Updated: 2023/10/15 21:46:17 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/22 21:35:40 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ void	ft_lstdelone(t_list *lst, void (*del)(void *))
 	{
 		if (lst->content != NULL)
 			del(lst->content);
+		malloc_counter(__FILE__, __func__, __LINE__,-1, PARSER, "lstdelone free\n", lst);
 		free(lst);
-		malloc_counter(-1, PARSER, "lstdelone free\n");
 		lst = NULL;
 	}
 }

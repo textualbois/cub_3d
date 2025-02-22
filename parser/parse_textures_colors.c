@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_textures_colors.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
+/*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 16:35:18 by admin             #+#    #+#             */
-/*   Updated: 2025/02/07 18:45:06 by admin            ###   ########.fr       */
+/*   Updated: 2025/02/22 21:40:45 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,18 @@ static int	handle_config_line(char *line, t_config *config)
 	trimmed = trim_and_validate_line(line);
 	if (ft_strlen(trimmed) == 0)
 	{
+		malloc_counter(__FILE__, __func__, __LINE__,-1, PARSER, "parsing config line trimmed free\n", trimmed);
 		free(trimmed);
-		malloc_counter(-1, PARSER, "parsing config line trimmed free\n");
 		return (0);
 	}
 	if (!parse_line(trimmed, config))
 	{
+		malloc_counter(__FILE__, __func__, __LINE__,-1, PARSER, "parsing config line trimmed free\n", trimmed);
 		free(trimmed);
-		malloc_counter(-1, PARSER, "parsing config line trimmed free\n");
 		return (-1);
 	}
+	malloc_counter(__FILE__, __func__, __LINE__,-1, PARSER, "parsing config line trimmed free\n", trimmed);
 	free(trimmed);
-	malloc_counter(-1, PARSER, "parsing config line trimmed free\n");
 	return (1);
 }
 
@@ -75,7 +75,7 @@ static char	**extract_remaining_lines(char **lines, int index)
 
 	remaining_lines = count_remaining_lines(lines, index);
 	new_lines = malloc(sizeof(char *) * (remaining_lines + 1));
-	malloc_counter(1, PARSER, "parsing remaining lines malloc\n");
+	malloc_counter(__FILE__, __func__, __LINE__,1, PARSER, "parsing remaining lines malloc\n", new_lines);
 	new_index = 0;
 	if (!new_lines)
 		return (NULL);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_color_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
+/*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 20:01:08 by admin             #+#    #+#             */
-/*   Updated: 2025/02/07 14:27:59 by admin            ###   ########.fr       */
+/*   Updated: 2025/02/22 21:38:39 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,13 @@ int	convert_color_value(char *str)
 		return (-1);
 	if (!is_valid_color_value(trimmed_token))
 	{
+		malloc_counter(__FILE__, __func__, __LINE__,-1, PARSER, "parsing trimmed token free\n", trimmed_token);
 		free(trimmed_token);
-		malloc_counter(-1, PARSER, "parsing trimmed token free\n");
 		return (-1);
 	}
 	value = ft_atoi(trimmed_token);
+	malloc_counter(__FILE__, __func__, __LINE__,-1, PARSER, "parsing trimmed token free\n", trimmed_token);
 	free(trimmed_token);
-	malloc_counter(-1, PARSER, "parsing trimmed token free\n");
 	if (value < 0 || value > 255)
 		return (-1);
 	return (value);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
+/*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 15:26:10 by vmamoten          #+#    #+#             */
-/*   Updated: 2025/02/08 11:59:25 by vmamoten         ###   ########.fr       */
+/*   Updated: 2025/02/22 21:42:12 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 // 		return (1);
 // 	}
 // 	config = (t_config *)malloc(sizeof(t_config));
-//	malloc_counter(1, PARSER, "uhm what malloc\n");
+//	malloc_counter(__FILE__, __func__, __LINE__,1, PARSER, "uhm what malloc\n", config);
 // 	if (!config)
 // 	{
 // 		perror("Memory allocation failed");

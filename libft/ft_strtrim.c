@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 18:35:21 by isemin            #+#    #+#             */
-/*   Updated: 2023/10/15 21:44:41 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/22 21:37:19 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	*ft_strtrim(const char *s1, const char *set)
 	if (start > end)
 	{
 		res_str = (char *)malloc(1);
-		malloc_counter(1, PARSER, "ft_strtrim malloc small\n");
+		malloc_counter(__FILE__, __func__, __LINE__,1, PARSER, "ft_strtrim malloc small\n", res_str);
 		if (res_str == NULL)
 			return (NULL);
 		res_str[0] = '\0';
@@ -51,7 +51,7 @@ char	*ft_strtrim(const char *s1, const char *set)
 	else
 	{
 		res_str = (char *)malloc(end - start + 1 + 1 - (ft_strlen(s1) == end));
-		malloc_counter(1, PARSER, "ft_strtrim malloc\n");
+		malloc_counter(__FILE__, __func__, __LINE__,1, PARSER, "ft_strtrim malloc\n", res_str);
 		if (res_str == NULL)
 			return (NULL);
 		ft_strlcpy(res_str, s1 + start, end - start + 1 + 1);

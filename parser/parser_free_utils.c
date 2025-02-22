@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 23:47:57 by admin             #+#    #+#             */
-/*   Updated: 2025/02/15 20:08:12 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/22 21:41:56 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ void	free_lines(char **lines)
 	i = 0;
 	while (lines[i])
 	{
+		malloc_counter(__FILE__, __func__, __LINE__,-1, PARSER, "parsing single line free\n", lines[i]);
 		free(lines[i]);
-		malloc_counter(-1, PARSER, "parsing single line free\n");
 		lines[i] = NULL;
 		i++;
 	}
+	malloc_counter(__FILE__, __func__, __LINE__,-1, PARSER, "parsing lines head free\n", lines);
 	free(lines);
-	malloc_counter(-1, PARSER, "parsing lines head free\n");
 	lines = NULL;
 }
 
@@ -58,26 +58,26 @@ void	free_textures(t_config *config)
 		return ;
 	if (config->no_texture)
 	{
+		malloc_counter(__FILE__, __func__, __LINE__,-1, PARSER, "parsing texture north free\n", config->no_texture);
 		free(config->no_texture);
-		malloc_counter(-1, PARSER, "parsing texture north free\n");
 		config->no_texture = NULL;
 	}
 	if (config->so_texture)
 	{
+		malloc_counter(__FILE__, __func__, __LINE__,-1, PARSER, "parsing texture south free\n", config->so_texture);
 		free(config->so_texture);
-		malloc_counter(-1, PARSER, "parsing texture south free\n");
 		config->so_texture = NULL;
 	}
 	if (config->we_texture)
 	{
+		malloc_counter(__FILE__, __func__, __LINE__,-1, PARSER, "parsing texture west free\n", config->we_texture);
 		free(config->we_texture);
-		malloc_counter(-1, PARSER, "parsing texture west free\n");
 		config->we_texture = NULL;
 	}
 	if (config->ea_texture)
 	{
+		malloc_counter(__FILE__, __func__, __LINE__,-1, PARSER, "parsing texture east free\n", config->ea_texture);
 		free(config->ea_texture);
-		malloc_counter(-1, PARSER, "parsing texture east free\n");
 		config->ea_texture = NULL;
 	}
 }

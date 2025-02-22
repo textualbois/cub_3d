@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 18:45:48 by isemin            #+#    #+#             */
-/*   Updated: 2023/10/15 21:44:43 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/22 21:37:26 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*ft_substr(const char *s, unsigned int start, size_t len)
 	if (s_len < len)
 		len = s_len;
 	res_str = (char *)malloc(len + 1);
-	malloc_counter(1, PARSER, "ft_substr malloc\n");
+	malloc_counter(__FILE__, __func__, __LINE__,1, PARSER, "ft_substr malloc\n", res_str);
 	if (res_str == NULL)
 		return (NULL);
 	ft_strlcpy(res_str, s, len + 1);
