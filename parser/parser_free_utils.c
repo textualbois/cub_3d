@@ -6,7 +6,7 @@
 /*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 23:47:57 by admin             #+#    #+#             */
-/*   Updated: 2025/02/23 18:50:23 by vmamoten         ###   ########.fr       */
+/*   Updated: 2025/02/23 19:16:40 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,10 +89,4 @@ void	free_config(t_config *config)
 	config->ceiling_color[0] = 0;
 	config->ceiling_color[1] = 0;
 	config->ceiling_color[2] = 0;
-}
-
-void	free_free_config(t_config *config)
-{
-	free_config(config);
-	free(config);
 }

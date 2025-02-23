@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 06:33:40 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/23 18:44:59 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/23 19:26:24 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@ typedef struct s_Collision
 	t_DoublePair	hit;
 }					t_Collision;
 
+void				ray_result(t_renderData *data, t_DoublePair hit,
+						int direction, int hit_type);
+t_IntPair			directions(double rayDir);
 void				ray_find_wall(t_mini_map *mini_map, t_character *player,
 						t_renderData *data);
 t_DoublePair		ray_find_vertical_hit(t_mini_map *mini_map,

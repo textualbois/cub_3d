@@ -6,13 +6,13 @@
 /*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:59:15 by vmamoten          #+#    #+#             */
-/*   Updated: 2025/02/20 13:59:27 by vmamoten         ###   ########.fr       */
+/*   Updated: 2025/02/23 19:28:15 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ray.h"
 
-static t_IntPair	directions(double rayDir)
+t_IntPair	directions(double rayDir)
 {
 	t_IntPair	directions;
 

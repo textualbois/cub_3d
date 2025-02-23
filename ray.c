@@ -6,69 +6,12 @@
 /*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 06:35:51 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/20 14:59:39 by vmamoten         ###   ########.fr       */
+/*   Updated: 2025/02/23 19:27:03 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ray.h"
 #include <stdio.h>
-
-static void	set_vertical_texture(t_renderData *data, t_DoublePair hit,
-		int direction)
-{
-	if (direction == -1)
-	{
-		data->txtr_code = WEST;
-		data->txtr.x = ceil(hit.y / TILE_SIZE) * TILE_SIZE - hit.y;
-	}
-	else
-	{
-		data->txtr_code = EAST;
-		data->txtr.x = hit.y - floor(hit.y / TILE_SIZE) * TILE_SIZE;
-	}
-}
-
-static void	set_horizontal_texture(t_renderData *data, t_DoublePair hit,
-		int direction)
-{
-	if (direction == -1)
-	{
-		data->txtr_code = NORTH;
-		data->txtr.x = hit.x - floor(hit.x / TILE_SIZE) * TILE_SIZE;
-	}
-	else
-	{
-		data->txtr_code = SOUTH;
-		data->txtr.x = ceil(hit.x / TILE_SIZE) * TILE_SIZE - hit.x;
-	}
-}
-
-void	ray_result(t_renderData *data, t_DoublePair hit, int direction,
-		int hit_type)
-{
-	if (!data)
-		return ;
-	data->hit = hit;
-	if (hit_type == VERTICAL)
-		set_vertical_texture(data, hit, direction);
-	else
-		set_horizontal_texture(data, hit, direction);
-}
-
-static t_IntPair	directions(double rayDir)
-{
-	t_IntPair	directions;
-
-	if (rayDir < PI / 2 || rayDir > 3 * PI / 2)
-		directions.x = 1;
-	else
-		directions.x = -1;
-	if (rayDir < PI)
-		directions.y = -1;
-	else
-		directions.y = 1;
-	return (directions);
-}
 
 void	ray_find_wall(t_mini_map *mini_map, t_character *player,
 		t_renderData *data)

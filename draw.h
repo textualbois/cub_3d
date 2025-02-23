@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:48:32 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/23 18:44:59 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/23 19:33:29 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ typedef struct s_line_params
 	t_DoublePair	iter;
 }					t_line_params;
 
+void				draw_line_step(t_IntPair *start, t_IntPair direction,
+						t_IntPair d, int *err);
 void				ft_color_mini_character(mlx_image_t *player, int color);
 void				ft_color_mini_character_direction(mlx_image_t *character,
 						int color, t_character *player);

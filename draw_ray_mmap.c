@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_ray_mmap.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 21:39:44 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/22 19:50:21 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/23 19:33:40 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,24 +49,6 @@ void	drawray(t_character *player, mlx_image_t *map_img, t_mini_map *mini_map,
 	end.y = (hit.y - mini_map->view_port.y) / mini_map->visible_size.y
 		* map_img->height;
 	highlight_line_between_pixels(map_img, start, end);
-}
-
-void	draw_line_step(t_IntPair *start, t_IntPair direction, t_IntPair d,
-		int *err)
-{
-	int	e2;
-
-	e2 = 2 * (*err);
-	if (e2 >= d.y)
-	{
-		*err += d.y;
-		start->x += direction.x;
-	}
-	if (e2 <= d.x)
-	{
-		*err += d.x;
-		start->y += direction.y;
-	}
 }
 
 void	draw_line_between_pixels(mlx_image_t *img, t_IntPair start,
