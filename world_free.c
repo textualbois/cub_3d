@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   world_free.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
+/*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 23:16:27 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/23 18:55:40 by vmamoten         ###   ########.fr       */
+/*   Updated: 2025/02/23 19:27:54 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void	free_world_player(t_World_Controller *world)
 	world->player = NULL;
 }
 
-static void	free_world_mini_map(t_World_Controller *world)
+void	free_world_mini_map(t_World_Controller *world)
 {
 	int	i;
 

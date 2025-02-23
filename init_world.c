@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_world.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
+/*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:53 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/23 18:53:48 by vmamoten         ###   ########.fr       */
+/*   Updated: 2025/02/23 19:28:46 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	init_world_resources(t_World_Controller *world, t_config *config)
 	{
 		printf("init images failed\n");
 		free(world->player);
-		free(world->mini_map);
+		free_world_mini_map(world);
 		free(world);
 		return (1);
 	}
@@ -70,7 +70,7 @@ int	init_world_resources(t_World_Controller *world, t_config *config)
 		free_wolrd_images(world);
 		printf("init textures failed\n");
 		free(world->player);
-		free(world->mini_map);
+		free_world_mini_map(world);
 		free(world);
 		return (1);
 	}
