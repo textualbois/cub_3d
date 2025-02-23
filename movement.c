@@ -6,12 +6,9 @@
 /*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:12:04 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/23 19:45:48 by vmamoten         ###   ########.fr       */
+/*   Updated: 2025/02/23 20:07:47 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-// #define PLAYER_COLLISION_HALF_WIDTH (5.0 / 2.0)
-// #define PLAYER_COLLISION_HALF_HEIGHT (5.0 / 2.0)
 
 #include "movement.h"
 
