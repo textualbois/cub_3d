@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   types_common.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
+/*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 19:49:07 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/20 16:09:20 by vmamoten         ###   ########.fr       */
+/*   Updated: 2025/02/23 18:44:59 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define TYPES_COMMON_H
 
 # include "MLX42/MLX42.h"
-# include "malloc_counter.h"
 # include "types_numeric.h"
 
 typedef struct s_character

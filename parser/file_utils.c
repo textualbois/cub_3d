@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 20:20:37 by admin             #+#    #+#             */
-/*   Updated: 2025/02/22 21:37:55 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/23 18:43:30 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	*read_file_content(int fd)
 	{
 		buffer[bytes_read] = '\0';
 		temp = ft_strjoin(file_content, buffer);
-		malloc_counter(__FILE__, __func__, __LINE__,-1, PARSER, "parsing file content free\n", file_content);
+
 		free(file_content);
 		file_content = temp;
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
@@ -61,7 +61,7 @@ int	read_and_split_file(const char *filename, char ***lines)
 	if (!file_content)
 		return (0);
 	*lines = split_lines_manual(file_content);
-	malloc_counter(__FILE__, __func__, __LINE__, -1, PARSER, "parsing file content free\n", file_content);
+
 	free(file_content);
 	if (!(*lines))
 		return (0);

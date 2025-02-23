@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:27 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/22 21:27:15 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/23 18:43:30 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_character	*init_mini_character(t_IntPair size, t_character player)
 	t_character	*mini_player;
 
 	mini_player = (t_character *)malloc(sizeof(t_character));
-	malloc_counter(__FILE__, __func__, __LINE__,1, MALLOC, "INIT_MINI_CHARACTER\n", mini_player);
+
 	if (mini_player)
 	{
 		mini_player->size = size;

@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ray.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
+/*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 06:33:40 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/19 18:29:13 by vmamoten         ###   ########.fr       */
+/*   Updated: 2025/02/23 18:44:59 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RAY_H
 # define RAY_H
 
-# include "malloc_counter.h"
 # include "types_numeric.h"
 # include "world.h"
 

@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:12:18 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/23 18:25:01 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/23 18:44:59 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 # include "character.h"
 # include "draw.h"
 # include "fps.h"
-# include "malloc_counter.h"
 # include "mini_map.h"
 # include "types_common.h"
 # include "window.h"

@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:41 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/22 21:28:37 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/23 18:43:30 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_frame_counter	*init_frame_counter(void)
 	t_frame_counter	*fr_counter;
 
 	fr_counter = malloc(sizeof(t_frame_counter));
-	malloc_counter(__FILE__, __func__, __LINE__,1, MALLOC, "frame counter malloc\n", fr_counter);
+
 	if (fr_counter == NULL)
 	{
 		fprintf(stderr, "Failed to allocate memory for the frame counter\n");
@@ -31,7 +31,7 @@ t_frame_counter	*init_frame_counter(void)
 
 void	destroy_frame_counter(t_frame_counter *fr_counter)
 {
-	malloc_counter(__FILE__, __func__, __LINE__,-1, MALLOC, "frame_counter free\n", fr_counter);
+
 	free(fr_counter);
 	fr_counter = NULL;
 }

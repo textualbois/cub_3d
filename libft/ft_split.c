@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 21:24:47 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/22 21:36:42 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/23 18:43:30 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static char	*attempt_storage(const char *s, size_t offset, size_t limit)
 	char	*res;
 
 	res = malloc(limit - offset + 1);
-	malloc_counter(__FILE__, __func__, __LINE__,1, PARSER, "part of ft_split\n", res);
+
 	if (res == NULL)
 		return (NULL);
 	ft_strlcpy(res, s + offset, (limit - offset + 1));
@@ -64,12 +64,12 @@ static void	*clear_all(char **res_arr, size_t arr_len)
 	count = 0;
 	while (count < arr_len)
 	{
-		malloc_counter(__FILE__, __func__, __LINE__,-1, PARSER, "ft_split iter free\n", res_arr[count]);
+
 		free(res_arr[count]);
 		res_arr[count] = NULL;
 		count++;
 	}
-	malloc_counter(__FILE__, __func__, __LINE__,-1, PARSER, "ft_split free\n", res_arr);
+
 	free(res_arr);
 	res_arr = NULL;
 	return (NULL);
@@ -84,7 +84,7 @@ char	**ft_split(const char *s, char c)
 	size_t			limit;
 
 	res_arr = malloc(sizeof(char **) * (ft_get_split_count(s, c) + 1));
-	malloc_counter(__FILE__, __func__, __LINE__,1, PARSER, "generic ft_split\n", res_arr);
+
 	if (res_arr == NULL)
 		return (NULL);
 	offset = 0;

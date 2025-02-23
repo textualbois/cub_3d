@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 23:47:57 by admin             #+#    #+#             */
-/*   Updated: 2025/02/23 18:32:46 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/23 18:43:30 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ void	free_lines(char **lines)
 	i = 0;
 	while (lines[i])
 	{
-		malloc_counter(__FILE__, __func__, __LINE__,-1, PARSER, "parsing single line free\n", lines[i]);
+
 		free(lines[i]);
 		lines[i] = NULL;
 		i++;
 	}
-	malloc_counter(__FILE__, __func__, __LINE__,-1, PARSER, "parsing lines head free\n", lines);
+
 	free(lines);
 	lines = NULL;
 }
@@ -58,25 +58,25 @@ void	free_textures(t_config *config)
 		return ;
 	if (config->no_texture)
 	{
-		malloc_counter(__FILE__, __func__, __LINE__,-1, PARSER, "parsing texture north free\n", config->no_texture);
+
 		free(config->no_texture);
 		config->no_texture = NULL;
 	}
 	if (config->so_texture)
 	{
-		malloc_counter(__FILE__, __func__, __LINE__,-1, PARSER, "parsing texture south free\n", config->so_texture);
+
 		free(config->so_texture);
 		config->so_texture = NULL;
 	}
 	if (config->we_texture)
 	{
-		malloc_counter(__FILE__, __func__, __LINE__,-1, PARSER, "parsing texture west free\n", config->we_texture);
+
 		free(config->we_texture);
 		config->we_texture = NULL;
 	}
 	if (config->ea_texture)
 	{
-		malloc_counter(__FILE__, __func__, __LINE__,-1, PARSER, "parsing texture east free\n", config->ea_texture);
+
 		free(config->ea_texture);
 		config->ea_texture = NULL;
 	}
@@ -100,6 +100,6 @@ void	free_config(t_config *config)
 void	free_free_config(t_config *config)
 {
 	free_config(config);
-	malloc_counter(__FILE__, __func__, __LINE__,-1, MALLOC, "config main free\n", config);
+
 	free(config);
 }

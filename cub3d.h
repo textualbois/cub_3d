@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
+/*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:33 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/17 12:09:46 by vmamoten         ###   ########.fr       */
+/*   Updated: 2025/02/23 18:44:59 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include "MLX42/MLX42.h"
 # include "draw.h"
 # include "libft/libft.h"
-# include "malloc_counter.h"
 # include "movement.h"
 # include "world.h"
 # include <stdbool.h>

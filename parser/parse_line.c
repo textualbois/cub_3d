@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 18:07:45 by admin             #+#    #+#             */
-/*   Updated: 2025/02/22 21:39:51 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/23 18:43:30 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	parse_texture(char *trimmed, char **texture)
 	fd = open(value, O_RDONLY);
 	if (fd < 0)
 	{
-		malloc_counter(__FILE__, __func__, __LINE__,-1, PARSER, "parsing texture value free\n", value);
+
 		free(value);
 		return (0);
 	}
@@ -99,12 +99,12 @@ int	parse_line(char *line, t_config *config)
 		return (0);
 	if (ft_strlen(trimmed) == 0)
 	{
-		malloc_counter(__FILE__, __func__, __LINE__,-1, PARSER, "parsing line trimmed free\n", trimmed);
+
 		free(trimmed);
 		return (1);
 	}
 	ret = process_config_line(trimmed, config);
-	malloc_counter(__FILE__, __func__, __LINE__,-1, PARSER, "parsing line trimmed free\n", trimmed);
+
 	free(trimmed);
 	return (ret);
 }

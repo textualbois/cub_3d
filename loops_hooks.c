@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:56 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/23 00:09:19 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/23 18:43:30 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ft_exit_button(void *param)
 	if (mlx_is_key_down(world->window, MLX_KEY_ESCAPE))
 	{
 		free_world_full(world, 1);
-		malloc_counter(__FILE__, __func__, __LINE__,0, RESULT, "results\n", NULL);
+
 		exit(EXIT_SUCCESS);
 	}
 }

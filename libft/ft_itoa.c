@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 18:17:45 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/22 21:35:24 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/23 18:43:30 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*ft_itoa(int n)
 
 	pos = int_len(n);
 	res = (char *) malloc(pos + 1);
-	malloc_counter(__FILE__, __func__, __LINE__,1, PARSER, "generic itoa malloc\n", res);
+
 	if (res == NULL)
 		return (NULL);
 	if (n == -2147483648)

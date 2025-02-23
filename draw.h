@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
+/*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:48:32 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/20 16:38:56 by vmamoten         ###   ########.fr       */
+/*   Updated: 2025/02/23 18:44:59 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include "MLX42/MLX42.h"
 # include "colors.h"
 # include "extra_math.h"
-# include "malloc_counter.h"
 # include "ray.h"
 # include "types_common.h"
 # include "world.h"

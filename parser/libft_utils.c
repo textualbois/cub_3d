@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 15:53:22 by admin             #+#    #+#             */
-/*   Updated: 2025/02/22 21:38:22 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/23 18:43:30 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*pad_line(char *line, int width)
 
 	len = ft_strlen(line);
 	new_line = malloc(width + 1);
-	malloc_counter(__FILE__, __func__, __LINE__,1, PARSER, "pad_line libft malloc\n", new_line);
+
 	if (!new_line)
 		return (NULL);
 	i = 0;

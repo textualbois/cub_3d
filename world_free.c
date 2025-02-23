@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 23:16:27 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/23 18:27:50 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/23 18:43:30 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void free_wolrd_images(t_World_Controller *world)
 
 static void free_world_player(t_World_Controller *world)
 {
-	malloc_counter(__FILE__, __func__, __LINE__,-1, MALLOC, "world->player free\n", world->player);
+
 	free(world->player);
 	world->player = NULL;
 }
@@ -48,15 +48,15 @@ static void free_world_mini_map(t_World_Controller *world)
 	i = 0;
 	while (i < world->mini_map->size_int.y)
 	{
-		malloc_counter(__FILE__, __func__, __LINE__,-1, MALLOC, "world->mini_map->map[i] free\n", world->mini_map->map[i]);
+
 		free(world->mini_map->map[i]);
 		world->mini_map->map[i] = NULL;
 		i++;
 	}
-	malloc_counter(__FILE__, __func__, __LINE__,-1, MALLOC, "world->mini_map->map free\n", world->mini_map->map);
+
 	free(world->mini_map->map);
 	world->mini_map->map = NULL;
-	malloc_counter(__FILE__, __func__, __LINE__,-1, MALLOC, "world->mini_map free\n", world->mini_map);
+
 	free(world->mini_map);
 	world->mini_map = NULL;
 }
@@ -70,7 +70,7 @@ void free_world_full(t_World_Controller *world, int terminate_mlx)
 	mlx_close_window(world->window);
 	if (terminate_mlx)
 		mlx_terminate(world->window);
-	malloc_counter(__FILE__, __func__, __LINE__,-1, MALLOC, "world free\n", world);
+
 	free(world);
 	world = NULL;
 }

@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:12:01 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/22 21:34:51 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/23 18:43:30 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,14 @@ t_mini_map	*allocate_minimap_struct(t_config *config)
 	t_mini_map	*minimap;
 
 	minimap = malloc(sizeof(t_mini_map));
-	malloc_counter(__FILE__, __func__, __LINE__,1, MALLOC, "init minimap malloc\n", minimap);
+
 	if (!minimap)
 		return (NULL);
 	minimap->map = malloc(sizeof(int *) * config->map.height);
-	malloc_counter(__FILE__, __func__, __LINE__,1, MALLOC, "map rows malloc\n", minimap->map);
+
 	if (!minimap->map)
 	{
-		malloc_counter(__FILE__, __func__, __LINE__,-1, MALLOC, "minimap free\n", minimap);
+
 		free(minimap);
 		return (NULL);
 	}
@@ -62,17 +62,17 @@ int	allocate_minimap_rows(t_mini_map *minimap, t_config *config)
 	while (i < config->map.height)
 	{
 		minimap->map[i] = malloc(sizeof(int) * config->map.width);
-		malloc_counter(__FILE__, __func__, __LINE__,1, MALLOC, "map cell malloc\n", minimap->map[i]);
+
 		if (!minimap->map[i])
 		{
 			while (--i >= 0)
 			{
-				malloc_counter(__FILE__, __func__, __LINE__,-1, MALLOC, "map cell free\n", minimap->map[i]);
+
 				free(minimap->map[i]);
 			}
-			malloc_counter(__FILE__, __func__, __LINE__,-1, MALLOC, "map rows free\n", minimap->map);
+
 			free(minimap->map);
-			malloc_counter(__FILE__, __func__, __LINE__,-1, MALLOC, "minimap free\n", minimap);
+
 			free(minimap);
 			return (1);
 		}

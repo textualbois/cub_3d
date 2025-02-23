@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fps.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
+/*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:44 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/19 17:35:51 by vmamoten         ###   ########.fr       */
+/*   Updated: 2025/02/23 18:44:59 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include "MLX42/MLX42.h"
 # include "libft/libft.h"
-# include "malloc_counter.h"
 # include <math.h>
 # include <stdio.h>
 # include <stdlib.h>
