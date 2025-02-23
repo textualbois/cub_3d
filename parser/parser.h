@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 14:09:33 by admin             #+#    #+#             */
-/*   Updated: 2025/02/12 22:00:19 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/23 18:21:22 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct s_config
 
 // parser_free_utils.c
 void			free_config(t_config *config);
+void			free_free_config(t_config *config);
 
 void			free_lines(char **lines);
 
