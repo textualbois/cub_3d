@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 23:47:57 by admin             #+#    #+#             */
-/*   Updated: 2025/02/22 21:41:56 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/23 18:32:46 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,4 +95,11 @@ void	free_config(t_config *config)
 	config->ceiling_color[0] = 0;
 	config->ceiling_color[1] = 0;
 	config->ceiling_color[2] = 0;
+}
+
+void	free_free_config(t_config *config)
+{
+	free_config(config);
+	malloc_counter(__FILE__, __func__, __LINE__,-1, MALLOC, "config main free\n", config);
+	free(config);
 }

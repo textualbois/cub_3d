@@ -6,13 +6,21 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 23:16:27 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/22 23:46:35 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/23 18:27:50 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "world.h"
 
-static void free_wolrd_images(t_World_Controller *world)
+static void free_world_textures(t_World_Controller *world)
+{
+	mlx_delete_texture(world->texture_no);
+	mlx_delete_texture(world->texture_so);
+	mlx_delete_texture(world->texture_we);
+	mlx_delete_texture(world->texture_ea);
+}
+
+void free_wolrd_images(t_World_Controller *world)
 {
 	if (world->map_img)
 	{
@@ -56,6 +64,7 @@ static void free_world_mini_map(t_World_Controller *world)
 void free_world_full(t_World_Controller *world, int terminate_mlx)
 {
 	free_wolrd_images(world);
+	free_world_textures(world);
 	free_world_player(world);
 	free_world_mini_map(world);
 	mlx_close_window(world->window);
@@ -65,4 +74,3 @@ void free_world_full(t_World_Controller *world, int terminate_mlx)
 	free(world);
 	world = NULL;
 }
-

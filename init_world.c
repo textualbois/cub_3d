@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:53 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/22 23:01:51 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/23 18:29:18 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,9 @@ int	init_world_resources(t_World_Controller *world, t_config *config)
 		free(world);
 		return (1);
 	}
-	if (init_textures(world, config) != 0) // add delete_images(world)
+	if (init_textures(world, config) != 0)
 	{
+		free_wolrd_images(world);
 		printf("init textures failed\n");
 		malloc_counter(__FILE__, __func__, __LINE__,-1, MALLOC, "world->player free\n", world->player);
 		free(world->player);
@@ -91,15 +92,13 @@ t_World_Controller	*init_world(t_config *config)
 
 	world = allocate_world(config);
 	if (!world)
-		return (NULL);
+		return (free_free_config(config), NULL);
 	if (init_world_components(world, config) != 0)
-		return (NULL);
+		return (free_free_config(config), NULL);
 	if (init_world_resources(world, config) != 0)
-		return (NULL);
+		return (free_free_config(config), NULL);
 	copy_colors(world->ceiling_color, (config)->ceiling_color);
 	copy_colors(world->floor_color, (config)->floor_color);
-	free_config(config);
-	malloc_counter(__FILE__, __func__, __LINE__,-1, MALLOC, "config main free\n", config);
-	free(config);
+	free_free_config(config);
 	return (world);
 }

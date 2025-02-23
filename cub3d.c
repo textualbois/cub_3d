@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:20 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/22 23:47:35 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/23 18:30:43 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,25 +45,25 @@ int	main(int argc, char **argv)
 	t_World_Controller	*world;
 
 	if (argc != 2 || !has_cub_extension(argv[1]))
-		return (printf("Usage: %s <file.cub>\n", argv[0]), 1);
+		return (printf("Usage: %s <file.cub>\n", argv[0]), EXIT_FAILURE);
 	config = (t_config *)malloc(sizeof(t_config));
 	malloc_counter(__FILE__, __func__, __LINE__,1, MALLOC, "main config malloc\n", config);
 	if (!config)
-		return (1);
+		return (EXIT_FAILURE);
 	ft_bzero(config, sizeof(t_config));
 	init_config_flags(config);
 	if (!parse_cub_file(argv[1], config))
-	{
-		free_config(config);
-		malloc_counter(__FILE__, __func__, __LINE__,-1, MALLOC, "config main free\n", config);
-		free(config);
-		return (1);
-	}
+		return (free_free_config(config), EXIT_FAILURE);
 	world = init_world(config);
-	mlx_set_setting(MLX_STRETCH_IMAGE, true);
-	draw_world(world);
-	init_loops_n_hooks(world);
-	free_world_full(world, 0);
+	if (world != NULL)
+	{
+		mlx_set_setting(MLX_STRETCH_IMAGE, true);
+		draw_world(world);
+		init_loops_n_hooks(world);
+		free_world_full(world, 0);
+		malloc_counter(__FILE__, __func__, __LINE__,0, RESULT, "results\n", NULL);
+		return (EXIT_SUCCESS);
+	}
 	malloc_counter(__FILE__, __func__, __LINE__,0, RESULT, "results\n", NULL);
-	return (EXIT_SUCCESS);
+	return (EXIT_FAILURE);
 }

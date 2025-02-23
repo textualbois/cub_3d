@@ -6,7 +6,7 @@
 /*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:12:18 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/22 23:47:44 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/23 18:25:01 by isemin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 
 t_World_Controller	*init_world(t_config *config);
 void				free_world_full(t_World_Controller *world, int terminate_mlx);
+void				free_wolrd_images(t_World_Controller *world);
 
 int					init_images(t_World_Controller *world);
 mlx_image_t			*init_image_mini_character(mlx_t *window,
