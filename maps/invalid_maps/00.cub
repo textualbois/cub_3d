@@ -1,0 +1,16 @@
+NO ./textures/banana.png
+SO ./textures/cluster1.png
+WE ./textures/north_test.png
+EA ./textures/orange_bricks_high_reZ.png
+
+C 0,0,0
+F 35,206,235
+F 35,206,235
+
+
+11111111
+10010S01
+10010001
+11000111
+11010011
+11111111
