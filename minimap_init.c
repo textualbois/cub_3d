@@ -6,18 +6,13 @@
 /*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:12:01 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/23 18:54:30 by vmamoten         ###   ########.fr       */
+/*   Updated: 2025/02/23 19:38:22 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "MLX42/MLX42.h"
 #include "mini_map.h"
 #include "parser/parser.h"
-
-int	convert_tile(char c)
-{
-	return (c);
-}
 
 t_IntPair	calc_vis_size(int vis_tiles, int tile_size, int map_width,
 		int map_height)
@@ -84,24 +79,6 @@ t_mini_map	*allocate_minimap_memory(t_config *config)
 	if (allocate_minimap_rows(minimap, config) != 0)
 		return (NULL);
 	return (minimap);
-}
-
-void	fill_minimap_tiles(t_mini_map *minimap, t_config *config)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < config->map.height)
-	{
-		j = 0;
-		while (j < config->map.width)
-		{
-			minimap->map[i][j] = convert_tile(config->map.grid[i][j]);
-			j++;
-		}
-		i++;
-	}
 }
 
 t_mini_map	*init_minimap(t_config *config)

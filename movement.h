@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movement.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:12:07 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/23 18:44:59 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/23 19:45:29 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,7 @@ void	set_h_rotation(t_World_Controller *world, double angle_delta);
 void	set_v_rotation(t_World_Controller *world, double angle_delta);
 void	set_movement(t_World_Controller *world, t_DoublePair delta_x_y);
 void	ft_cursor_input(double x_pos, double y_pos, void *param);
+int		hitbox_collision(t_World_Controller *world, double center_x,
+			double center_y);
 
 #endif

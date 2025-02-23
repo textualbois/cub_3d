@@ -5,8 +5,8 @@ SRCS     = cub3d.c loops_hooks.c init_world.c minimap_init.c \
            window_init.c image_init.c draw.c draw_minimap.c extra_math.c \
 		   minimap_view_box.c player_mini_img_centring.c \
 		   draw_ray_mmap.c ray.c ray_2.c ray_helpers.c \
-		   draw3d.c draw_ray_mmap2.c\
-		   wall_collision.c \
+		   draw3d.c draw_ray_mmap2.c minimap_init_2.c\
+		   wall_collision.c movement_2.c\
 		   ./parser/file_utils.c ./parser/libft_utils.c ./parser/parse_color.c\
 		   ./parser/parse_color_utils.c ./parser/parse_line.c ./parser/parse_map.c\
 		   ./parser/parse_textures_colors.c ./parser/parser_free_utils.c\

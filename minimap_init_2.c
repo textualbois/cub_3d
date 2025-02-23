@@ -1,26 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mini_map.h                                         :+:      :+:    :+:   */
+/*   minimap_init_2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/26 17:11:59 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/23 19:38:55 by vmamoten         ###   ########.fr       */
+/*   Created: 2025/02/23 19:37:45 by vmamoten          #+#    #+#             */
+/*   Updated: 2025/02/23 19:39:16 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINI_MAP_H
-# define MINI_MAP_H
+#include "mini_map.h"
 
-# include "MLX42/MLX42.h"
-# include "character.h"
-# include "libft/libft.h"
-# include "parser/parser.h"
-# include "types_common.h"
+int	convert_tile(char c)
+{
+	return (c);
+}
 
-t_mini_map	*init_minimap(t_config *config);
-void		fill_minimap_tiles(t_mini_map *minimap, t_config *config);
-void		centre_mini_map(t_mini_map *map, t_character *player);
+void	fill_minimap_tiles(t_mini_map *minimap, t_config *config)
+{
+	int	i;
+	int	j;
 
-#endif
+	i = 0;
+	while (i < config->map.height)
+	{
+		j = 0;
+		while (j < config->map.width)
+		{
+			minimap->map[i][j] = convert_tile(config->map.grid[i][j]);
+			j++;
+		}
+		i++;
+	}
+}
