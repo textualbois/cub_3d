@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_world.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:53 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/23 18:43:30 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/23 18:53:48 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ t_World_Controller	*allocate_world(t_config *config)
 	t_World_Controller	*world;
 
 	world = (t_World_Controller *)malloc(sizeof(t_World_Controller));
-
 	if (!world)
 		return (NULL);
 	world->size = (t_IntPair){config->map.height * TILE_SIZE, config->map.width
@@ -42,7 +41,6 @@ int	init_world_components(t_World_Controller *world, t_config *config)
 	world->window = initialize_window();
 	if (!world->window)
 	{
-
 		free(world);
 		return (1);
 	}
@@ -50,7 +48,6 @@ int	init_world_components(t_World_Controller *world, t_config *config)
 			config->player.pos.y}, config->player);
 	if (!world->player)
 	{
-
 		free(world);
 		return (1);
 	}
@@ -63,11 +60,8 @@ int	init_world_resources(t_World_Controller *world, t_config *config)
 	if (init_images(world) != 0)
 	{
 		printf("init images failed\n");
-
 		free(world->player);
-
 		free(world->mini_map);
-
 		free(world);
 		return (1);
 	}
@@ -75,11 +69,8 @@ int	init_world_resources(t_World_Controller *world, t_config *config)
 	{
 		free_wolrd_images(world);
 		printf("init textures failed\n");
-
 		free(world->player);
-
 		free(world->mini_map);
-
 		free(world);
 		return (1);
 	}

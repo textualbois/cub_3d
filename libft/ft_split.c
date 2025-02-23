@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 21:24:47 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/23 18:43:30 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/23 19:00:59 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ static char	*attempt_storage(const char *s, size_t offset, size_t limit)
 	char	*res;
 
 	res = malloc(limit - offset + 1);
-
 	if (res == NULL)
 		return (NULL);
 	ft_strlcpy(res, s + offset, (limit - offset + 1));
@@ -64,12 +63,10 @@ static void	*clear_all(char **res_arr, size_t arr_len)
 	count = 0;
 	while (count < arr_len)
 	{
-
 		free(res_arr[count]);
 		res_arr[count] = NULL;
 		count++;
 	}
-
 	free(res_arr);
 	res_arr = NULL;
 	return (NULL);
@@ -84,7 +81,6 @@ char	**ft_split(const char *s, char c)
 	size_t			limit;
 
 	res_arr = malloc(sizeof(char **) * (ft_get_split_count(s, c) + 1));
-
 	if (res_arr == NULL)
 		return (NULL);
 	offset = 0;

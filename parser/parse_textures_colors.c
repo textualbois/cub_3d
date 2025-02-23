@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_textures_colors.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 16:35:18 by admin             #+#    #+#             */
-/*   Updated: 2025/02/23 18:43:30 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/23 18:50:18 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,14 @@ static int	handle_config_line(char *line, t_config *config)
 	trimmed = trim_and_validate_line(line);
 	if (ft_strlen(trimmed) == 0)
 	{
-
 		free(trimmed);
 		return (0);
 	}
 	if (!parse_line(trimmed, config))
 	{
-
 		free(trimmed);
 		return (-1);
 	}
-
 	free(trimmed);
 	return (1);
 }
@@ -75,7 +72,6 @@ static char	**extract_remaining_lines(char **lines, int index)
 
 	remaining_lines = count_remaining_lines(lines, index);
 	new_lines = malloc(sizeof(char *) * (remaining_lines + 1));
-
 	new_index = 0;
 	if (!new_lines)
 		return (NULL);

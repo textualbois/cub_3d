@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap_init.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:12:01 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/23 18:43:30 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/23 18:54:30 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,11 @@ t_mini_map	*allocate_minimap_struct(t_config *config)
 	t_mini_map	*minimap;
 
 	minimap = malloc(sizeof(t_mini_map));
-
 	if (!minimap)
 		return (NULL);
 	minimap->map = malloc(sizeof(int *) * config->map.height);
-
 	if (!minimap->map)
 	{
-
 		free(minimap);
 		return (NULL);
 	}
@@ -62,17 +59,13 @@ int	allocate_minimap_rows(t_mini_map *minimap, t_config *config)
 	while (i < config->map.height)
 	{
 		minimap->map[i] = malloc(sizeof(int) * config->map.width);
-
 		if (!minimap->map[i])
 		{
 			while (--i >= 0)
 			{
-
 				free(minimap->map[i]);
 			}
-
 			free(minimap->map);
-
 			free(minimap);
 			return (1);
 		}

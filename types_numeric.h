@@ -6,7 +6,7 @@
 /*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:12:10 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/20 13:58:47 by vmamoten         ###   ########.fr       */
+/*   Updated: 2025/02/23 19:09:08 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # define VERTICAL 1
 # define HORIZONTAL 0
 # define NOHIT -1
-# define BPP sizeof(int32_t)
+# define BPP 4
 # define NORTH 0
 # define EAST 1
 # define SOUTH 2

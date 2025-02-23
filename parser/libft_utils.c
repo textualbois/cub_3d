@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 15:53:22 by admin             #+#    #+#             */
-/*   Updated: 2025/02/23 18:43:30 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/23 18:49:48 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ char	*pad_line(char *line, int width)
 
 	len = ft_strlen(line);
 	new_line = malloc(width + 1);
-
 	if (!new_line)
 		return (NULL);
 	i = 0;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:11:20 by isemin            #+#    #+#             */
-/*   Updated: 2025/02/23 18:43:30 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/23 18:52:03 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ int	main(int argc, char **argv)
 	if (argc != 2 || !has_cub_extension(argv[1]))
 		return (printf("Usage: %s <file.cub>\n", argv[0]), EXIT_FAILURE);
 	config = (t_config *)malloc(sizeof(t_config));
-
 	if (!config)
 		return (EXIT_FAILURE);
 	ft_bzero(config, sizeof(t_config));
@@ -61,9 +60,7 @@ int	main(int argc, char **argv)
 		draw_world(world);
 		init_loops_n_hooks(world);
 		free_world_full(world, 0);
-
 		return (EXIT_SUCCESS);
 	}
-
 	return (EXIT_FAILURE);
 }

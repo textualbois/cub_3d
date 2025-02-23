@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_color.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 21:13:31 by admin             #+#    #+#             */
-/*   Updated: 2025/02/23 18:43:30 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/23 18:50:06 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,9 @@ int	parse_floor_color(char *trimmed, t_config *config)
 		return (0);
 	if (!parse_color(value, config->floor_color))
 	{
-
 		free(value);
 		return (0);
 	}
-
 	free(value);
 	return (1);
 }
@@ -73,12 +71,10 @@ int	parse_ceiling_color(char *trimmed, t_config *config)
 		return (0);
 	if (!parse_color(value, config->ceiling_color))
 	{
-
 		free(value);
 		free_config(config);
 		return (0);
 	}
-
 	free(value);
 	return (1);
 }

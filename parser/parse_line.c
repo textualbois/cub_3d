@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_line.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 18:07:45 by admin             #+#    #+#             */
-/*   Updated: 2025/02/23 18:43:30 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/23 18:50:11 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int	parse_texture(char *trimmed, char **texture)
 	fd = open(value, O_RDONLY);
 	if (fd < 0)
 	{
-
 		free(value);
 		return (0);
 	}
@@ -99,12 +98,10 @@ int	parse_line(char *line, t_config *config)
 		return (0);
 	if (ft_strlen(trimmed) == 0)
 	{
-
 		free(trimmed);
 		return (1);
 	}
 	ret = process_config_line(trimmed, config);
-
 	free(trimmed);
 	return (ret);
 }

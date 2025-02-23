@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 20:00:16 by admin             #+#    #+#             */
-/*   Updated: 2025/02/23 18:43:30 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/23 18:50:43 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,10 @@ void	free_split_lines(char ***lines)
 		return ;
 	while ((*lines)[i])
 	{
-
 		free((*lines)[i]);
 		(*lines)[i] = NULL;
 		i++;
 	}
-
-
 	free(*lines);
 	*lines = NULL;
 }
@@ -84,7 +81,6 @@ char	**fill_lines_array(char **lines, char *file_content)
 		if (!lines[i])
 		{
 			free_split_lines(&lines);
-
 			free(file_content);
 			return (NULL);
 		}
@@ -103,7 +99,6 @@ char	**split_lines_manual(char *file_content)
 		return (NULL);
 	count = count_lines(file_content);
 	lines = malloc(sizeof(char *) * (count + 1));
-
 	if (!lines)
 		return (NULL);
 	lines = fill_lines_array(lines, file_content);

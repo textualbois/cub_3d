@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   file_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isemin <isemin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vmamoten <vmamoten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 20:20:37 by admin             #+#    #+#             */
-/*   Updated: 2025/02/23 18:43:30 by isemin           ###   ########.fr       */
+/*   Updated: 2025/02/23 18:49:43 by vmamoten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ char	*read_file_content(int fd)
 	{
 		buffer[bytes_read] = '\0';
 		temp = ft_strjoin(file_content, buffer);
-
 		free(file_content);
 		file_content = temp;
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
@@ -61,7 +60,6 @@ int	read_and_split_file(const char *filename, char ***lines)
 	if (!file_content)
 		return (0);
 	*lines = split_lines_manual(file_content);
-
 	free(file_content);
 	if (!(*lines))
 		return (0);
