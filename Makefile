@@ -49,6 +49,8 @@ DEPENDENCIES = -L$(MLX_BUILD_PATH) -lmlx42 $(GLFW_LIB) \
 
 .PHONY: all clean fclean re
 
+bonus: all
+
 all: $(NAME)
 
 $(NAME): $(MLX42_LIBFILE) $(LIBFT_LIB) $(OBJS)
